@@ -3,28 +3,50 @@ Dotfiles
 
 Just my 0.02$ to all the dotfile collections.
 
-    archey3     -> config for archey3
-    bash        -> my (nearly default) bash config
-    i3          -> (empty) i3 configuration
-    vim         -> vimrc I got from somewhere I forgot
+    archey3             -> config for archey3
+    bash                -> my (nearly default) bash config
+    i3                  -> (empty) i3 configuration
+    reflector[etc]      -> updates pacman's mirrorlist once a week with German mirrors
+    vim                 -> vimrc I got from somewhere I forgot
 
 All files created on ArchLinux 64Bit machine.
 Filemanagement done with GNU stow.
 
+
 Install
 -------
 
-checkout to ~/.dotfiles/:
+* checkout to ~/.dotfiles/:
     
     $ git clone https://github.com/tryone144/dotfiles.git ~/.dotfiles
 
-cd to ~/.dotfiles/:
+* cd to ~/.dotfiles/:
     
     $ cd ~/.dotfiles/
 
-use stow FOLDER to symlink configfiles for a specific programm, for example vim:
+* use stow FOLDER to symlink configfiles for a specific programm (for example
+vim):
     
     $ stow vim
+
+* to remove the symlinks use stow -D FOLDER (vim again):
+
+    $ stow -D vim
+
+The folders with [etc] mark need to be linked to /etc/ on your system. To do so
+use stow with the -t DIR option (reflector this time):
+
+    $ sudo stow -t / reflector
+
+
+Warnings
+--------
+
+There is a "bug" (seems to be an inteded feature) in systemd, that prevents
+systemctl from enabling symlinked .service files.
+
+* *ranger* needs to be copied by hand.
+
 
 License
 -------

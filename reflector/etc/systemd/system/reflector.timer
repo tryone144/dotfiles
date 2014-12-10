@@ -1,0 +1,22 @@
+#
+# REFLECTOR
+# systemd.timer to run reflector once a week
+# 
+# file: /etc/systemd/system/reflector.timer
+# v1.0 / 2014.12.10
+#
+# © 2014 Bernd Busse
+# found at: https://wiki.archlinux.org/index.php/Reflector
+#
+
+[Unit]
+Description=Run reflector weekly
+
+[Timer]
+OnCalendar=weekly
+AccuracySec=12h
+Persistent=true
+
+[Install]
+WantedBy=timers.target
+
