@@ -1,9 +1,11 @@
 "
 " ~/.vimrc
-"
 " Personal Vim configuration
+" 
+" file: ~/.vimrc
+" v0.1 / 2014.12.10
 "
-" (c) 2012 Bernd Busse
+" © 2014 Bernd Busse
 "
 
 set nocompatible
