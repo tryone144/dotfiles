@@ -6,12 +6,13 @@ Just my 0.02$ to all the dotfile collections.
     archey3             -> config for archey3
     bash                -> my (nearly default) bash config
     i3                  -> (empty) i3 configuration
+    htop                -> automaticaly generated htoprc
     reflector[etc]      -> updates pacman's mirrorlist once a week with German mirrors
     urxvt               -> urxvt config
     vim                 -> vimrc I got from somewhere I forgot
 
 All files created on ArchLinux 64Bit machine.
-Filemanagement done with GNU stow.
+Filemanagement is done with GNU stow.
 
 
 Install
@@ -46,7 +47,7 @@ Warnings
 There is a "bug" (seems to be an inteded feature) in systemd, that prevents
 systemctl from enabling symlinked .service files.
 
-* *ranger* needs to be copied by hand.
+* *reflector* needs to be copied by hand.
 
 
 License
