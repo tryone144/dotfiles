@@ -7,6 +7,7 @@ Just my 0.02$ to all the dotfile collections.
     bash                -> my (nearly default) bash config
     i3                  -> (empty) i3 configuration
     reflector[etc]      -> updates pacman's mirrorlist once a week with German mirrors
+    urxvt               -> urxvt config
     vim                 -> vimrc I got from somewhere I forgot
 
 All files created on ArchLinux 64Bit machine.
