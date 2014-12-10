@@ -20,23 +20,28 @@ Install
 
 * checkout to ~/.dotfiles/:
     
+
     $ git clone https://github.com/tryone144/dotfiles.git ~/.dotfiles
 
 * cd to ~/.dotfiles/:
     
+
     $ cd ~/.dotfiles/
 
 * use stow FOLDER to symlink configfiles for a specific programm (for example
 vim):
     
+
     $ stow vim
 
 * to remove the symlinks use stow -D FOLDER (vim again):
+
 
     $ stow -D vim
 
 The folders with [etc] mark need to be linked to /etc/ on your system. To do so
 use stow with the -t DIR option (reflector this time):
+
 
     $ sudo stow -t / reflector
 
