@@ -1,9 +1,17 @@
 #
-# ~/.bash_profile
+# BASH
+# .bash_profile with custom functions
+# 
+# file: ~/.bashrc
+# v0.1 / 2014.12.10
+#
+# © 2014 Bernd Busse
 #
 
+# run .bashrc
 [[ -f ~/.bashrc ]] && . ~/.bashrc
 
+# Simple Stopwatch
 function stopwatch(){
     date1=`date +%s`; 
     while true; do 

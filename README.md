@@ -3,6 +3,11 @@ Dotfiles
 
 Just my 0.02$ to all the dotfile collections.
 
+    archey3     -> config for archey3
+    bash        -> my (nearly default) bash config
+    i3          -> (empty) i3 configuration
+    vim         -> vimrc I got from somewhere I forgot
+
 All files created on ArchLinux 64Bit machine.
 Filemanagement done with GNU stow.
 
@@ -10,12 +15,15 @@ Install
 -------
 
 checkout to ~/.dotfiles/:
+    
     $ git clone https://github.com/tryone144/dotfiles.git ~/.dotfiles
 
 cd to ~/.dotfiles/:
+    
     $ cd ~/.dotfiles/
 
 use stow FOLDER to symlink configfiles for a specific programm, for example vim:
+    
     $ stow vim
 
 License

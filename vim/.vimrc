@@ -1,5 +1,5 @@
 "
-" ~/.vimrc
+" VIM
 " Personal Vim configuration
 " 
 " file: ~/.vimrc
