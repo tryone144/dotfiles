@@ -5,6 +5,7 @@ Just my 0.02$ to all the dotfile collections.
 
     archey3             -> config for archey3
     bash                -> my (nearly default) bash config
+    dunst               -> dunst config (default)
     i3                  -> i3 configuration
     htop                -> automaticaly generated htoprc
     lightdm[etc]        -> gtk-greeter with custom the and wallpaper
@@ -48,6 +49,9 @@ Warnings
 
 Some scripts may require additional software to be installed on your system.
 If so, I tried to mention them at the top of the file.
+
+If you just link the folders marked with [etc], you may get problems with file
+permissions in different cases.
 
 There is a "bug" (seems to be an inteded feature) in systemd, that prevents
 systemctl from enabling symlinked .service files.
