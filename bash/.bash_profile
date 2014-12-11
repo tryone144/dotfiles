@@ -5,7 +5,7 @@
 # file: ~/.bashrc
 # v0.1 / 2014.12.10
 #
-# © 2014 Bernd Busse
+# (c) 2014 Bernd Busse
 #
 
 # run .bashrc

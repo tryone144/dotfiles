@@ -46,6 +46,9 @@ use stow with the -t DIR option (lightdm this time):
 Warnings
 --------
 
+Some scripts may require additional software to be installed on your system.
+If so, I tried to mention them at the top of the file.
+
 There is a "bug" (seems to be an inteded feature) in systemd, that prevents
 systemctl from enabling symlinked .service files.
 

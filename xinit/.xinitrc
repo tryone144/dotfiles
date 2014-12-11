@@ -6,7 +6,7 @@
 # file: ~/.xinitrc
 # v0.1 / 2014.12.11
 #
-# 2014 Bernd Busse
+# (c) 2014 Bernd Busse
 #
 
 # Executed by startx (run your window manager from here)

@@ -1,12 +1,13 @@
 #
 # REFLECTOR
 # systemd.service to update pacman's mirrorlist with German mirrors
+#   needs: [reflector]
 # 
 # file: /etc/systemd/system/reflector.service
 # v1.0 / 2014.12.10
 #
-# © 2014 Bernd Busse
-# found at: https://wiki.archlinux.org/index.php/Reflector
+# (c) 2014 Bernd Busse
+# original found at: https://wiki.archlinux.org/index.php/Reflector
 #
 
 [Unit]

@@ -1,11 +1,12 @@
 #
 # BASH
 # .bashrc with archey greeting and default prompt
+#   needs: [archey3]
 # 
 # file: ~/.bashrc
 # v0.1 / 2014.12.10
 #
-# © 2014 Bernd Busse
+# (c) 2014 Bernd Busse
 #
 
 # If not running interactively, don't do anything
