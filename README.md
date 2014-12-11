@@ -7,6 +7,7 @@ Just my 0.02$ to all the dotfile collections.
     bash                -> my (nearly default) bash config
     i3                  -> (empty) i3 configuration
     htop                -> automaticaly generated htoprc
+    lightdm[etc]        -> gtk-greeter with custom the and wallpaper
     reflector[etc]      -> updates pacman's mirrorlist once a week with German mirrors
     urxvt               -> urxvt config
     vim                 -> .vimrc I got from somewhere I forgot
@@ -37,9 +38,9 @@ vim):
         $ stow -D vim
 
 The folders with [etc] mark need to be linked to /etc/ on your system. To do so
-use stow with the -t DIR option (reflector this time):
+use stow with the -t DIR option (lightdm this time):
 
-    $ sudo stow -t / reflector
+    $ sudo stow -t / lightdm
 
 
 Warnings
