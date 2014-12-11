@@ -1,0 +1,35 @@
+#!/bin/bash
+#
+# I3WM
+# autostart apps without desktop entry (started with dapper)
+#   needs: [nitrogen]
+#          [dunst]
+#          [compton]
+#          [pasystray]
+#
+# file: ~/.config/i3/autostart
+# v0.1 / 2014.12.09
+#
+# (c) 2014 Bernd Busse
+#
+
+# (re)set wallpaper with nitrogen
+nitrogen --restore &
+
+# start notification-daemon 'dunst'
+dunst &
+
+# start compositor 'compton'
+compton &
+
+# start dock docky
+#if [ $(pgrep docky | wc -l) -qe 0 ]; then
+#    docky &
+#fi
+
+# start audio 'jack-rack'; 'qjackctl'; 'pavol.sh'
+jack-rack -n -c 6 ${HOME}/.config/jack/equalizer &
+qjackctl &
+pasystray &
+pavol.sh &
+

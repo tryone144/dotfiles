@@ -5,7 +5,7 @@ Just my 0.02$ to all the dotfile collections.
 
     archey3             -> config for archey3
     bash                -> my (nearly default) bash config
-    i3                  -> (empty) i3 configuration
+    i3                  -> i3 configuration
     htop                -> automaticaly generated htoprc
     lightdm[etc]        -> gtk-greeter with custom the and wallpaper
     reflector[etc]      -> updates pacman's mirrorlist once a week with German mirrors
