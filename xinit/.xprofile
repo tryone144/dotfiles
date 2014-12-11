@@ -1,0 +1,20 @@
+#!/bin/sh
+#
+# XINIT
+# set relevant settings for specific wms
+#
+# file: ~/.xprofile
+# v0.1 / 2014.12.11
+#
+# 2014 Bernd Busse
+#
+
+# set config dir and run autostart files with dapper
+if [[ "${DESKTOP_SESSION}" == *herbstluftwm ]]; then
+    export HLWM_CONFIG="$HOME/.config/herbstluftwm/"
+    dapper -sd MATE
+elif [[ "${DESKTOP_SESSION}" == *i3 ]]; then
+    export I3_CONFIG="$HOME/.config/i3/"
+    dapper -sd MATE
+fi
+

@@ -9,7 +9,8 @@ Just my 0.02$ to all the dotfile collections.
     htop                -> automaticaly generated htoprc
     reflector[etc]      -> updates pacman's mirrorlist once a week with German mirrors
     urxvt               -> urxvt config
-    vim                 -> vimrc I got from somewhere I forgot
+    vim                 -> .vimrc I got from somewhere I forgot
+    xinit               -> .xinitrc and .xprofile for use with lightdm and hlwm/i3
 
 All files created on ArchLinux 64Bit machine.
 Filemanagement is done with GNU stow.
