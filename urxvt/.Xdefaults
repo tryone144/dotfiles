@@ -3,9 +3,10 @@
 # .Xdefaults for urxvt
 #   needs: [urxvt]
 #          [xcursor-oxygen-neon]
+#          [ttf-powerline-fonts-git]
 #
 # file: ~/.Xdefaults
-# v1.0 / 2014.12.10
+# v1.0 / 2014.12.15
 #
 # (c) 2014 Bernd Busse
 #
@@ -15,8 +16,8 @@ Xcursor.theme: Oxygen Neon
 # interface
 URxvt*.iconFile: terminal
 URxvt*.depth: 32
-URxvt*.font: xft:ubuntu mono:size=12
-URxvt*.boldFont: xft:ubuntu mono:bold:size=12
+URxvt*.font: xft:Ubuntu Mono derivative Powerline:size=12
+URxvt*.boldFont: xft:Ubuntu Mono derivative Powerline:bold:size=12
 URxvt*.geometry: 132x43
 URxvt*.scrollstyle: plain
 URxvt*.scrollBar_right: true
