@@ -4,18 +4,22 @@ Dotfiles
 Just my 0.02$ to all the dotfile collections.
 
     archey3             -> config for archey3
-    bash                -> my (nearly default) bash config
+    bash                -> bash config with custom powerline-styled prompt
     dunst               -> dunst config (default)
     i3                  -> i3 configuration
     htop                -> automaticaly generated htoprc
-    lightdm[etc]        -> gtk-greeter with custom the and wallpaper
+    lightdm[etc]        -> gtk-greeter with custom theme and wallpaper
     reflector[etc]      -> updates pacman's mirrorlist once a week with German mirrors
+    tmux                -> tmux config for python-powerline
     urxvt               -> urxvt config
     vim                 -> .vimrc I got from somewhere I forgot
     xinit               -> .xinitrc and .xprofile for use with lightdm and hlwm/i3
 
 All files created on ArchLinux 64Bit machine.
 Filemanagement is done with GNU stow.
+
+This repository is intended for private usage. If you like to use some of my
+config, please create your own fork.
 
 
 Install
@@ -38,10 +42,11 @@ vim):
 
         $ stow -D vim
 
-The folders with [etc] mark need to be linked to /etc/ on your system. To do so
-use stow with the -t DIR option (lightdm this time):
+The folders with [etc] mark need to be linked or moved to /etc/ on your system.
+To do so use stow with the -t DIR option or copy by hand (lightdm this time):
 
     $ sudo stow -t / lightdm
+    $ sudo cp -r lightdm/* /
 
 
 Warnings

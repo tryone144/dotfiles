@@ -1,6 +1,6 @@
 #
 # BASH
-# .bashrc with archey greeting and default prompt
+# .bashrc with archey greeting and powerline-styled prompt
 #   needs: [archey3]
 #          [powerline-fonts]
 # 
