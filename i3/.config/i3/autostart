@@ -8,7 +8,7 @@
 #          [pasystray]
 #
 # file: ~/.config/i3/autostart
-# v0.1 / 2014.12.09
+# v0.2 / 2014.12.17
 #
 # (c) 2014 Bernd Busse
 #
@@ -22,14 +22,13 @@ dunst &
 # start compositor 'compton'
 compton &
 
-# start dock docky
-#if [ $(pgrep docky | wc -l) -qe 0 ]; then
-#    docky &
-#fi
-
-# start audio 'jack-rack'; 'qjackctl'; 'pavol.sh'
-jack-rack -n -c 6 ${HOME}/.config/jack/equalizer &
-qjackctl &
-pasystray &
-pavol.sh &
+# start audio 'jack-rack'; 'qjackctl', 'pavol.sh' only on desktop computer
+if [ ${HOSTNAME} == "sachnix" ]; then
+    # start audio 'pasystray'
+    pasystray &
+    
+    jack-rack -n -c 6 ${HOME}/.config/jack/equalizer &
+    qjackctl &
+    pavol.sh &
+fi
 

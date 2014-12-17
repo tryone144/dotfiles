@@ -1,9 +1,9 @@
 #
 # I3WM
-# default config for conky with JSON output for i3bar
+# laptop config for conky with JSON output for i3bar
 #
-# file: ~/.config/i3/i3bar-conkyrc
-# v1.0 / 2014.12.17
+# file: ~/.config/i3/i3bar-denknix-conkyrc
+# v0.1 / 2014.12.17
 #
 # (c) 2014 Bernd Busse
 #
@@ -23,11 +23,15 @@ use_spacer              left
 cpu_avg_samples         2
 max_text_width          0
 
+# ip with ipecho.net/plain
+
 # JSON for i3bar
 TEXT
 
 [ \
-    {"full_text": "${time %a, %d. %b %H:%M}", "color": "\#ffffff"}, \
+    {"full_text": "BAT: ${battery BAT1}", "color": "${PANEL_FOREGROUND}"}, \
+    {"full_text": "WLAN: ${addr wlan0}", "color": "${PANEL_FOREGROUND}"}, \
+    {"full_text": "${time %a, %d. %b %H:%M}", "color": "${PANEL_FOREGROUND}"}, \
     {"full_text": ""} \
 ], \
 

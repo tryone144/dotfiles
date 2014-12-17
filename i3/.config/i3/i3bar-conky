@@ -12,7 +12,7 @@
 
 # Set Colors for Conky
 export PANEL_BACKGROUND='#0C0C0C'
-export PANEL_FORGEGROUND='#FFFFFF'
+export PANEL_FOREGROUND='#FFFFFF'
 export PANEL_HIGHLIGHT='#1793D1'
 export PANEL_INACTIVE='#3F3F3F'
 
@@ -24,7 +24,12 @@ echo '['
 # Send first empyt block
 echo '[],'
 
-# Send endlessly conky blocks
-_CONFIG="${I3_CONFIG}/i3bar-conkyrc"
+# find config file
+_CONFIG="${I3_CONFIG}/i3bar-${HOSTNAME}-conkyrc"
+if [ ! -e ${_CONFIG} ]; then
+    _CONFIG="${I3_CONFIG}/i3bar-conkyrc"
+fi
+
+# send endless conky updates
 exec conky -c ${_CONFIG}
 
