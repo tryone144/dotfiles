@@ -18,6 +18,7 @@ export EDITOR="vim"
 
 # Aliase
 alias ls='ls --color=auto'
+alias grep='grep --color=auto'
 alias clr='clear; archey3 --config=~/.config/archey3.cfg'
 alias bat='upower -i /org/freedesktop/UPower/devices/battery_BAT1'
 
