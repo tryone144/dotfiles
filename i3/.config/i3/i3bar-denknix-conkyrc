@@ -30,6 +30,7 @@ TEXT
 
 [ \
     {"full_text": "BAT: ${battery BAT1}", "color": "${PANEL_FOREGROUND}"}, \
+    {"full_text": "ETH0: ${addr eth0}", "color": "${PANEL_FOREGROUND}"}, \
     {"full_text": "WLAN: ${addr wlan0}", "color": "${PANEL_FOREGROUND}"}, \
     {"full_text": "${time %a, %d. %b %H:%M}", "color": "${PANEL_FOREGROUND}"}, \
     {"full_text": ""} \
