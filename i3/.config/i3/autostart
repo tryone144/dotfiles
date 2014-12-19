@@ -29,6 +29,6 @@ if [ ${HOSTNAME} == "sachnix" ]; then
     
     jack-rack -n -c 6 ${HOME}/.config/jack/equalizer &
     qjackctl &
-    pavol.sh &
+    #pavol.sh &
 fi
 

@@ -30,7 +30,7 @@ bindsym $mod+Shift+r    reload
 # restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
 bindsym $mod+Control+r  restart
 # exit i3 (logs you out of your X session)
-bindsym $mod+Shift+q    exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -b 'Yes, exit i3' 'i3-msg exit'"
+bindsym $mod+Shift+q    exec --no-startup-id ${I3_CONFIG}/scripts/poweroff.sh
 
 
 #############
@@ -95,15 +95,17 @@ bindsym $mod+p      floating toggle
 # change focus between tiling / floating windows
 bindsym $mod+space  focus mode_toggle
 
-# focus the parent container
-bindsym $mod+a      focus parent
-
-# focus the child container
-#bindsym $mod+d focus child
+# focus the parent / child container
+bindsym $mod+a          focus parent
+bindsym $mod+Shift+a    focus child
 
 # switch to outputs
 bindsym $mod+F1         focus output $left-mon
 bindsym $mod+F2         focus output $right-mon
+
+# move workspaces
+bindsym $mod+Shift+F1   move workspace to output $left-mon
+bindsym $mod+Shift+F2   move workspace to output $right-mon
 
 # switch to workspace
 bindsym $mod+1          workspace 1
