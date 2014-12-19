@@ -16,6 +16,8 @@
 export PATH="$(ruby -e 'puts Gem.user_dir')/bin:$PATH"
 export EDITOR="vim"
 
+unset SSH_ASKPASS
+
 # Aliase
 alias ls='ls --color=auto'
 alias grep='grep --color=auto'
