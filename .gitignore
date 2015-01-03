@@ -1,0 +1,7 @@
+# Compiled python units
+__pycache__/
+*.py[cod]
+
+# VIM cache files
+.*.swp
+

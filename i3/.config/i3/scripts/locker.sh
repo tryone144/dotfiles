@@ -5,7 +5,7 @@
 #   needs: [sxlock]
 #
 # file: ~/.config/i3/scripts/screenlock.sh
-# v0.2 / 2014.12.17
+# v1.0 / 2014.12.24
 #
 # (c) 2014 Bernd Busse
 #

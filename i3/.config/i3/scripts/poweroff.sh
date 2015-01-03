@@ -1,11 +1,11 @@
-#!/bin/sh
+#!/bin/bash
 #
 # I3WM
 # Helper to show a shutdown selection with dmenu
 #   needs: [dmenu2]
 #
 # file: ~/.config/i3/scripts/poweroff.sh
-# v0.1 / 2014.12.18
+# v1.0 / 2014.12.24
 #
 # (c) 2014 Bernd Busse
 #
@@ -14,14 +14,9 @@ screen_geometry="$(xrandr -d "${DISPLAY}" --query | grep ' connected ' | sed -n 
 screen_width="$(echo "${screen_geometry}" | cut -d'x' -f1)"
 screen_height="$(echo "${screen_geometry}" | cut -d'x' -f2)"
 
-lines_num=5
-lines_height=26
-height=$((${lines_num} *${lines_height}))
-width=640
-
-value="$(/usr/bin/dmenu -f -i -nb '#1A1A1A' -nf '#BEBEBE' -sb '#1793D1' -sf '#FFFFFF' -dim 0.5 \
-    -l ${lines_num} -h ${lines_height} -x $(((${screen_width} - ${width}) / 2)) -y $(((${screen_height} - ${height}) / 2)) -w ${width} -fn 'Ubuntu Mono-16:normal' <<EOF
+cmds="$(cat <<EOF
 > poweroff
+> reboot
 > suspend
 > lock screen
 > reload i3
@@ -29,10 +24,21 @@ value="$(/usr/bin/dmenu -f -i -nb '#1A1A1A' -nf '#BEBEBE' -sb '#1793D1' -sf '#FF
 EOF
 )"
 
+lines_num=$(echo "${cmds}" | wc -l)
+lines_height=26
+height=$((${lines_num} * ${lines_height}))
+width=640
+
+value="$(echo "${cmds}" | /usr/bin/dmenu -f -i -nb '#1A1A1A' -nf '#BEBEBE' -sb '#1793D1' -sf '#FFFFFF' -dim 0.5 \
+    -l ${lines_num} -h ${lines_height} -x $(((${screen_width} - ${width}) / 2)) -y $(((${screen_height} - ${height}) / 2)) -w ${width} -fn 'Ubuntu Mono-16:normal')"
+
 # check choosen value
 case "${value:2}" in
     "poweroff") # shutdown computer
         systemctl poweroff
+        ;;
+    "reboot") # reboot computer
+        systemctl reboot
         ;;
     "suspend") # suspend computer
         systemctl suspend

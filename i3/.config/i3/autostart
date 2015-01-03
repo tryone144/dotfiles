@@ -17,18 +17,22 @@
 nitrogen --restore &
 
 # start notification-daemon 'dunst'
-dunst &
+if [[ -z $(pgrep dunst) ]]; then
+    dunst &
+fi
 
 # start compositor 'compton'
-compton &
+if [[ -z $(pgrep compton) ]]; then
+    compton &
+fi
 
-# start audio 'jack-rack'; 'qjackctl', 'pavol.sh' only on desktop computer
+# start audio 'jack-rack' and 'qjackctl' only on desktop computer
 if [ ${HOSTNAME} == "sachnix" ]; then
-    # start audio 'pasystray'
-    pasystray &
-    
-    jack-rack -n -c 6 ${HOME}/.config/jack/equalizer &
-    qjackctl &
-    #pavol.sh &
+    if [[ -z $(pgrep jack-rack) ]]; then
+        jack-rack -n -c 6 ${HOME}/.config/jack/equalizer &
+    fi
+    if [[ -z $(pgrep qjackctl) ]]; then
+        qjackctl &
+    fi
 fi
 
