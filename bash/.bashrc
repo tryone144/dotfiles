@@ -1,13 +1,14 @@
 #
 # BASH
 # .bashrc with archey greeting and powerline-styled prompt
+# declares custom functions
 #   needs: [archey3]
 #          [powerline-fonts]
 # 
 # file: ~/.bashrc
-# v1.1 / 2014.12.16
+# v1.2 / 2015.01.03
 #
-# (c) 2014 Bernd Busse
+# (c) 2015 Bernd Busse
 #
 
 # If not running interactively, don't do anything
@@ -23,6 +24,27 @@ alias ls='ls --color=auto'
 alias grep='grep --color=auto'
 alias clr='clear; archey3 --config=~/.config/archey3.cfg'
 alias bat='upower -i /org/freedesktop/UPower/devices/battery_BAT1'
+
+# Simple Stopwatch
+function stopwatch() {
+    date1=$(date +%s); 
+    while true; do 
+        echo -ne "$(date -u --date @$(($(date +%s) - ${date1})) +%H:%M:%S)\r"; sleep 0.1
+    done
+}
+
+# Simple countdown timer
+function countdown() {
+    seconds=${1};
+    if [ -z ${seconds} ]; then
+        return
+    fi
+    date1=$(($(date +%s) + ${seconds})); 
+    while [ "${date1}" -ne $(date +%s) ]; do 
+        echo -ne "$(date -u --date @$((${date1} - $(date +%s) )) +%H:%M:%S)\r"; 
+    done
+    echo -e "BOOOOOOOMMMM!!!!!!"
+}
 
 # Le Prompts
 #PS1='[\u@\h \W]\$ ' # Default Bash Prompt
