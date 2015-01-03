@@ -34,5 +34,6 @@ if [ ${HOSTNAME} == "sachnix" ]; then
     if [[ -z $(pgrep qjackctl) ]]; then
         qjackctl &
     fi
+    sleep 5 && pactl -- set-sink-volume @DEFAULT_SINK@ 20% &
 fi
 

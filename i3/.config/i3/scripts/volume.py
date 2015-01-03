@@ -28,7 +28,7 @@ def mute_toggle():
     else:
         cmd = amixer_cmd + ['sset', 'Master', 'playback', 'toggle']
     if subprocess.call(cmd, stdout=subprocess.DEVNULL) != 0:
-        sys.stderr.write("Fehler aufgetreten")
+        sys.stderr.write("Fehler aufgetreten\n")
 
 # lower volume by given percent
 def lower_volume(step=10):
@@ -38,7 +38,7 @@ def lower_volume(step=10):
     else:
         cmd = amixer_cmd + ['sset', 'Master', 'playback', '{0}%-'.format(step)]
     if subprocess.call(cmd, stdout=subprocess.DEVNULL) != 0:
-        sys.stderr.write("Fehler aufgetreten")
+        sys.stderr.write("Fehler aufgetreten\n")
 
 # raise volume by given percent
 def raise_volume(step=10):
@@ -51,7 +51,7 @@ def raise_volume(step=10):
     else:
         cmd = amixer_cmd + ['sset', 'Master', 'playback', '{0}%+'.format(step)]
     if subprocess.call(cmd, stdout=subprocess.DEVNULL) != 0:
-        sys.stderr.write("Fehler aufgetreten")
+        sys.stderr.write("Fehler aufgetreten\n")
 
 
 
