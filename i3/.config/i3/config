@@ -5,7 +5,7 @@
 # file: ~/.config/i3/config
 # v0.3 / 2015.01.03
 #
-# (c) 2014 Bernd Busse
+# (c) 2015 Bernd Busse
 #
 
 # Modifier key <win>
@@ -15,7 +15,7 @@ set $mod Mod4
 floating_modifier $mod
 
 # run autostart programs
-exec-always --no-startup-id ${I3_CONFIG}/autostart
+exec_always --no-startup-id ${I3_CONFIG}/autostart
 
 # variable deklaration
 set $left-mon       DVI-I-1

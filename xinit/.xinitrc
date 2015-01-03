@@ -8,7 +8,7 @@
 # file: ~/.xinitrc
 # v1.0 / 2015.01.03
 #
-# (c) 2014 Bernd Busse
+# (c) 2015 Bernd Busse
 #
 
 # Executed by startx (run your window manager from here)

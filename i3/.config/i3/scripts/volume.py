@@ -9,7 +9,7 @@
 # file: ~/.config/i3/scripts/volume.py
 # v0.2 / 2015.01.03
 #
-# (c) 2014 Bernd Busse
+# (c) 2015 Bernd Busse
 #
 # usage: ./volume.py {mute|get} | {lower|raise} [STEP]
 #
