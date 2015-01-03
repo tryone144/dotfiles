@@ -3,9 +3,10 @@
 # XINIT
 # source relevant files before Xsession execution (namely .xprofile)
 # set specific x-settings and run wm
+# (not sourced by lightdm)
 #
 # file: ~/.xinitrc
-# v0.2 / 2014.12.18
+# v1.0 / 2015.01.03
 #
 # (c) 2014 Bernd Busse
 #
@@ -21,17 +22,6 @@ fi
 # Make sure this is before the 'exec' command or it won't be sourced.
 [ -f /etc/xprofile ] && source /etc/xprofile
 [ -f ~/.xprofile ] && source ~/.xprofile
-
-# set primary display, if not allready set
-xrandr -d ${DISPLAY} --query | grep -e 'primary' &> /dev/null
-if (( ${?} == 1 )); then
-    monitor="$(xrandr -d ${DISPLAY} --query | grep -e ' connected '| cut -d' ' -f1)"
-    xrandr --output ${monitor} --primary
-fi
-
-# Log executable
-_date="$(date +'%b %d %H:%M:%S')"
-echo -e "\[${_date}\] ${@}" >> ~/.logincmd.log
 
 # run command
 exec "${@}"
