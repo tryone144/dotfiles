@@ -168,6 +168,18 @@ font pango:Ubuntu Mono 10
 workspace_layout stacking
 
 
+###########
+## RULES ##
+###########
+
+# move jack-rack to workspace 10
+assign [class="^Jack-rack$"] 10
+
+# make minecraft floating
+for_window [class="net-minecraft-bootstrap-Bootstrap"] floating enable
+for_window [class="^Minecraft" instance="^Minecraft"] floating enable
+
+
 #########
 ## BAR ##
 #########
