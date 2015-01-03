@@ -2,11 +2,12 @@
 # -*- coding: utf8 -*-
 #
 # I3WM
-# Helper to change volume of default alsa device
-#   needs: [alsa]
+# Helper to change volume of current pulseaudio or default alsa device
+#   needs: [pactl]
+#          [alsa]
 #
 # file: ~/.config/i3/scripts/volume.py
-# v0.1 / 2014.12.24
+# v0.2 / 2015.01.03
 #
 # (c) 2014 Bernd Busse
 #
@@ -17,53 +18,80 @@ import sys
 import subprocess
 
 amixer_cmd = ['amixer', '-D', 'default', '--']
+pactl_cmd = ['pactl', '--']
 
 # toggle mute
 def mute_toggle():
-#    pactl -- set-sink-mute ${pa_sink} toggle
-    cmd = amixer_cmd + ['sset', 'Master', 'playback', 'toggle']
-    subprocess.call(cmd, stdout=subprocess.DEVNULL)
+    pa_sink = get_sink()
+    if pa_sink is not None:
+        cmd = pactl_cmd + ['set-sink-mute', str(pa_sink), 'toggle']
+    else:
+        cmd = amixer_cmd + ['sset', 'Master', 'playback', 'toggle']
+    if subprocess.call(cmd, stdout=subprocess.DEVNULL) != 0:
+        sys.stderr.write("Fehler aufgetreten")
 
 # lower volume by given percent
 def lower_volume(step=10):
-#    pactl -- set-sink-volume ${pa_sink} -${1}%
-    cmd = amixer_cmd + ['sset', 'Master', 'playback', '{0}%-'.format(step)]
-    subprocess.call(cmd, stdout=subprocess.DEVNULL)
+    pa_sink = get_sink()
+    if pa_sink is not None:
+        cmd = pactl_cmd + ['set-sink-volume', str(pa_sink), '-{0}%'.format(step)]
+    else:
+        cmd = amixer_cmd + ['sset', 'Master', 'playback', '{0}%-'.format(step)]
+    if subprocess.call(cmd, stdout=subprocess.DEVNULL) != 0:
+        sys.stderr.write("Fehler aufgetreten")
 
 # raise volume by given percent
 def raise_volume(step=10):
-#    pactl -- set-sink-volume ${pa_sink} +${1}%
-    cmd = amixer_cmd + ['sset', 'Master', 'playback', '{0}%+'.format(step)]
-    subprocess.call(cmd, stdout=subprocess.DEVNULL)
+    pa_sink = get_sink()
+    if pa_sink is not None:
+        if (int(re.search('^([0-9]+)%.*$', get_volume()).group(1)) + step) > 100:
+            cmd = pactl_cmd + ['set-sink-volume', str(pa_sink), '100%']
+        else:
+            cmd = pactl_cmd + ['set-sink-volume', str(pa_sink), '+{0}%'.format(step)]
+    else:
+        cmd = amixer_cmd + ['sset', 'Master', 'playback', '{0}%+'.format(step)]
+    if subprocess.call(cmd, stdout=subprocess.DEVNULL) != 0:
+        sys.stderr.write("Fehler aufgetreten")
+
+
 
 # get volume level in percent
 def get_volume():
-#    level="$(pactl list sinks | sed -nr -e 's_^\tVolume:.*\w+:\s*[0-9]+\s*/\s*([0-9]+%)\s*/.*_\1_p' | sed -nr -e "$((${pa_sink}+1))p")"
-#    mute=$(pactl list sinks | grep -Pe '^\tMute:' | sed -nr -e "$((${pa_sink}+1))p" | grep -Pe '^\tMute:\s+no$' > /dev/null; echo ${?})
-    cmd = amixer_cmd + ['sget', 'Master', 'playback']
-    out = str(subprocess.check_output(cmd), "utf-8")
-    level = re.search('(?!\n).*\[([0-9]+%)\].*\n', out).group(1)
-    mute = re.search('\[off\]\n', out)
+    pa_sink = get_sink()
+    if pa_sink is not None:
+        cmd = pactl_cmd + ['list', 'sinks']
+        out = str(subprocess.check_output(cmd), "utf-8")
+        levels = re.findall('^\tVolume:.*\w+:\s*[0-9]+\s*/\s*([0-9]+%)\s*/.*$', out, re.M)
+        level = levels[pa_sink]
+        sinks = re.findall('^\tMute:\s(\w+)$', out, re.M)
+        mute = re.match('yes', sinks[pa_sink])
+    else:
+        cmd = amixer_cmd + ['sget', 'Master', 'playback']
+        out = str(subprocess.check_output(cmd), "utf-8")
+        level = re.search('(?!\n).*\[([0-9]+%)\].*\n', out).group(1)
+        mute = re.search('\[off\]\n', out)
+    
     if mute is not None:
         level += " (muted)"
-
     return level
 
 # test for 'pactl'
-#def check_pactl():
-#    pass
-#if [[ -x "$(which pactl)" ]]; then
-#    use_pactl=1
-#    pa_sinklist="$(pactl list sinks short | grep -i "running")"
-#    if [[ ${?} == 0 ]]; then
-#        pa_sink="$(echo "${pa_sinklist}" | cut -f1)"
-#    else
-#        use_pactl=0
-#    fi
-#else
-#    use_pactl=0
-#fi
-
+def get_sink():
+    if subprocess.call(["pactl"], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL) == 127:
+        return None
+    else:
+        cmd = pactl_cmd + ['list', 'sinks', 'short']
+        out = str(subprocess.check_output(cmd), "utf-8")
+        sink = re.search('^([0-9])\t.*\tRUNNING$', out, re.M)
+        if sink is not None:
+            return int(sink.group(1))
+        else:
+            sinks = re.finditer('^([0-9])\t(\w+)\t.*$', out, re.M)
+            for s in sinks:
+                if not re.match('null', s.group(2), re.I):
+                    return int(s.group(1))
+            return None
+        
 commands = [ 'mute',  'm',
              'lower', 'l',
              'raise', 'r',
