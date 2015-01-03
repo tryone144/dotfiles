@@ -3,7 +3,7 @@
 # main config for i3
 #
 # file: ~/.config/i3/config
-# v0.2 / 2014.12.17
+# v0.3 / 2015.01.03
 #
 # (c) 2014 Bernd Busse
 #
@@ -15,7 +15,7 @@ set $mod Mod4
 floating_modifier $mod
 
 # run autostart programs
-exec --no-startup-id ${I3_CONFIG}/autostart
+exec-always --no-startup-id ${I3_CONFIG}/autostart
 
 # variable deklaration
 set $left-mon       DVI-I-1
@@ -28,7 +28,7 @@ set $right-mon      DVI-D-0
 # reload the configuration file
 bindsym $mod+Shift+r    reload
 # restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
-#bindsym $mod+Control+r  restart
+bindsym $mod+Control+r  restart
 # exit i3 (logs you out of your X session)
 bindsym $mod+Shift+q    exec --no-startup-id ${I3_CONFIG}/scripts/poweroff.sh
 
@@ -51,9 +51,9 @@ bindsym $mod+Shift+l    exec --no-startup-id ${I3_CONFIG}/scripts/locker.sh
 bindsym --release $mod+Print    exec ${I3_CONFIG}/scripts/screenshot.sh
 
 # change volume
-bindsym XF86AudioLowerVolume    exec --no-startup-id ${I3_CONFIG}/scripts/volume.py lower 5 && killall -SIGUSR1 j4status
-bindsym XF86AudioRaiseVolume    exec --no-startup-id ${I3_CONFIG}/scripts/volume.py raise 5 && killall -SIGUSR1 j4status
-bindsym XF86AudioMute           exec --no-startup-id ${I3_CONFIG}/scripts/volume.py mute && killall -SIGUSR1 j4status
+bindsym XF86AudioLowerVolume    exec --no-startup-id ${I3_CONFIG}/scripts/volume.py lower 5 && killall -SIGUSR1 i3bar-pystatus
+bindsym XF86AudioRaiseVolume    exec --no-startup-id ${I3_CONFIG}/scripts/volume.py raise 5 && killall -SIGUSR1 i3bar-pystatus
+bindsym XF86AudioMute           exec --no-startup-id ${I3_CONFIG}/scripts/volume.py mute && killall -SIGUSR1 i3bar-pystatus
 
 
 #####################
@@ -174,7 +174,7 @@ workspace_layout stacking
 
 # Start i3bar to display a workspace bar plus conky statusline
 bar {
-    status_command              ${I3_CONFIG}/i3bar-j4status
+    status_command              ${I3_CONFIG}/i3bar-pystatus
     
     mode                        dock
     position                    top
