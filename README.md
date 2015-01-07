@@ -5,6 +5,7 @@ Just my 0.02$ to all the dotfile collections.
 
     archey3             -> config for archey3
     bash                -> bash config with custom powerline-styled prompt
+    compton             -> compton compositor with minmal transparency
     dunst               -> dunst config (default)
     i3                  -> i3 configuration
     htop                -> automaticaly generated htoprc
