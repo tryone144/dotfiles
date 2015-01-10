@@ -11,6 +11,7 @@ Just my 0.02$ to all the dotfile collections.
     htop                -> automaticaly generated htoprc
     lightdm[etc]        -> gtk-greeter with custom theme and wallpaper
     reflector[etc]      -> updates pacman's mirrorlist once a week with German mirrors
+    startpage           -> custom startpage (web) with common links
     tmux                -> tmux config for python-powerline
     urxvt               -> urxvt config
     vim                 -> .vimrc I got from somewhere I forgot

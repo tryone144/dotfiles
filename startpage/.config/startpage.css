@@ -1,0 +1,77 @@
+/* 
+ * STARTPAGE
+ * CSS rules for startpage
+ *
+ * file: ~/.config/home.css
+ * v0.1 / 2015.01.10
+ *
+ * (c) 2015 Bernd Busse
+ */
+html, body {
+    color: #0E3;
+    background: #1A2015;
+}
+
+* {
+    font-family: "Source Code Pro", Courier, monospace;
+}
+
+h1 {
+    text-align: center;
+    color: #0F2;
+}
+
+#container {
+    position: absolute;
+    top: 35%;
+    left: 0;
+    right: 0;
+    margin-left: auto;
+    margin-right: auto;
+	padding: 0 20px 0 20px;
+    width: 800px;
+    height: 600px;
+}
+
+#searchbox {
+    background-color: #000;
+    border: 2px solid #FFF;
+	margin: 4px;
+    padding: 5px;
+}
+
+#boxcontainer {
+	display: -webkit-box;
+	display: -moz-box;
+    width: 100%;
+}
+
+.linkbox {
+    background-color: #000;
+    border: 2px solid #FFF;
+	margin: 4px;
+	padding: 8px;
+    -moz-box-flex: 1;	
+	-webkit-box-flex: 1;
+}
+
+.linkbox a {
+    display: block;
+    color: inherit;
+    text-decoration: none;
+    padding-left: 1em;
+}
+
+.target {
+    font-style: italic;
+}
+
+.linkheader {
+    color: #DED;
+    font-weight: bold;
+}
+
+.blue {
+    color: #00F;
+}
+
