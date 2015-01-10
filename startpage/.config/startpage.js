@@ -7,18 +7,25 @@
  *
  * (c) 2015 Bernd Busse
  */
+
+/* JSON SYNTAX
+ * JSON - LINK ELEMENT:
+        {"name": "[FULL_NAME]", "link": "[TARGET_URL]"}
+ * JSON - SECTION BOX:
+        {"title": "[BOX_TITLE]", "elements": Array<LINK_ELEMENT>}
+*/
+box_media = {"title": "Media", "elements": [
+        {"name": "SoundCloud", "target": "Stream", "link": "https://soundcloud.com/stream"},
+        {"name": "SoundCloud", "target": "Following", "link": "https://soundcloud.com/you/following"} ]};
+box_social = {"title": "Social-Networks", "elements": [
+        {"name": "Facebook", "link": "https://www.facebook.com/?sk=h_chr"} ]};
+box_prog = {"title": "Programming", "elements": [
+        {"name": "GitHub", "link": "http://www.github.com"},
+        {"name": "RegExr v2.0", "link": "http://www.regexr.com"} ]};
+
 var llObject = { "sections": [
-        {"title": "Media", "elements": [
-            {"name": "SoundCloud", "target": "Stream", "link": "https://soundcloud.com/stream"},
-            {"name": "SoundCloud", "target": "Following", "link": "https://soundcloud.com/you/following"},
-        ]},
-        {"title": "Social-Networks", "elements": [
-            {"name": "Facebook", "link": "https://www.facebook.com/?sk=h_chr"},
-        ]},
-        {"title": "Programming", "elements": [
-            {"name": "GitHub", "link": "http://www.github.com"},
-            {"name": "RegExr v2.0", "link": "http://www.regexr.com"},
-        ]},
+        [ box_media, box_social ],
+        [ box_prog ],
     ]};
 
 function genListTitle(container, title) {
@@ -68,7 +75,7 @@ function genListBox(container, list) {
 
     // Generate List Element (HTML)
     var listElement = document.createElement("div");
-    listElement.className = "linkbox";
+    listElement.className = "box floatbox";
     container.appendChild(listElement);
     
     genListTitle(listElement, llTitle);
@@ -78,11 +85,16 @@ function genListBox(container, list) {
 }
 
 function initList() {
-    var listContainer = document.getElementById("boxcontainer");
+    var container = document.getElementById("container");
     var llSections = llObject.sections;
 
-    for (var i = 0; i < llSections.length; i++) {
-        genListBox(listContainer, llSections[i]);
+    for (var c = 0; c < llSections.length; c++) {
+        var listContainer = document.createElement("div");
+        listContainer.className = "boxcontainer";
+        container.appendChild(listContainer);
+        for (var i = 0; i < llSections.length; i++) {
+            genListBox(listContainer, llSections[c][i]);
+        }
     }
 }
 

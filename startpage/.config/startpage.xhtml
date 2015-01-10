@@ -19,14 +19,16 @@
     <script src="startpage.js" type="text/javascript"></script>
 </head>
 <body onload="initList()">
-    <h1>There is no place like \x7f\x00\x00\x01</h1>
+    <h1 class="header">There is no place like \x7f\x00\x00\x01</h1>
 
     <div id="container">
-        <div id="searchbox">
-            Hallo Welt
+        <div class="box" id="searchbox">
+            <h3 class="boxheader">[<span class="blue">Google Search</span>]:</h3>
+            <form method="get" action="https://www.google.com/search">
+			    <input type="text" name="q" /> 
+		    </form>
         </div>
-        
-        <div id="boxcontainer"></div>
+        <!-- Linkbox containers appended here -->
     </div>
 
 </body>

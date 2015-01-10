@@ -7,20 +7,29 @@
  *
  * (c) 2015 Bernd Busse
  */
-html, body {
+body {
+    font-family: "Source Code Pro", Courier, monospace;
     color: #0E3;
     background: #1A2015;
 }
 
-* {
-    font-family: "Source Code Pro", Courier, monospace;
-}
-
-h1 {
+/* Page Header */
+h1.header {
+    font-size: 32pt;
     text-align: center;
     color: #0F2;
 }
 
+/* Box header */
+h3.boxheader {
+    font-size: 12pt;
+    font-weight: bold;
+    color: #DED;
+    margin-top: 2px;
+    margin-bottom: 2px;
+}
+
+/* Container for main Content */
 #container {
     position: absolute;
     top: 35%;
@@ -33,29 +42,42 @@ h1 {
     height: 600px;
 }
 
-#searchbox {
+/* Contentbox */
+.box {
     background-color: #000;
     border: 2px solid #FFF;
 	margin: 4px;
-    padding: 5px;
+    padding: 8px 8px 8px 8px;
 }
 
-#boxcontainer {
-	display: -webkit-box;
-	display: -moz-box;
+/* make input form "invisible" */
+#searchbox > form > input {
+    font-size: 14px;
+    background: none;
+    border: none;
+    border-bottom: 2px dotted #FFF;
+    color: #FFF;
+    padding: 2px;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
     width: 100%;
 }
 
-.linkbox {
-    background-color: #000;
-    border: 2px solid #FFF;
-	margin: 4px;
-	padding: 8px;
+/* Container for Linkboxes */
+.boxcontainer {
+	display: -webkit-box;
+	display: -moz-box;
+    /*width: 100%;*/
+}
+
+/* floating Contentbox */
+.boxcontainer > .floatbox {
     -moz-box-flex: 1;	
 	-webkit-box-flex: 1;
 }
 
-.linkbox a {
+.box > a {
     display: block;
     color: inherit;
     text-decoration: none;
@@ -71,6 +93,7 @@ h1 {
     font-weight: bold;
 }
 
+/* color tags */
 .blue {
     color: #00F;
 }
