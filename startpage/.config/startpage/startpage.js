@@ -33,11 +33,15 @@ box_jw = {"title": "JW.ORG", "elements": [
         {"name": "JW Broadcasting", "link": "http://tv.jw.org/#home"},
         {"name": "WOL", "target": "Daily Text", "link": "http://wol.jw.org/de/wol/h/r10/lp-x"},
         {"name": "WOL", "target": "Bible", "link": "http://wol.jw.org/de/wol/binav/r10/lp-x/Rbi8/X/1986"} ]};
+box_net = {"title": "Networks", "elements": [
+        {"name": "Firewall", "link": "https://ipfire.bussenet.de:444/cgi-bin/index.cgi"},
+        {"name": "RZ-Login", "link": "https://login.rz.ruhr-uni-bochum.de"} ]};
 
 var llObject = { "sections": [
         [ box_media, box_social ],
         [ box_uni, box_jw ],
         [ box_prog ],
+        [ box_net ],
     ]};
 
 function genListTitle(container, title) {
