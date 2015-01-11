@@ -3,20 +3,22 @@
  * CSS rules for startpage
  *
  * file: ~/.config/home.css
- * v0.1 / 2015.01.10
+ * v0.2 / 2015.01.11
  *
  * (c) 2015 Bernd Busse
  */
 body {
     font-family: "Source Code Pro", Courier, monospace;
     color: #0E3;
-    background: #1A2015;
+    background-color: #1A1A1A;
+    background-image: url("startpage-bg.png");
 }
 
 /* Page Header */
 h1.header {
     font-size: 32pt;
     text-align: center;
+    text-shadow: 3px 2px #121;
     color: #0F2;
 }
 
@@ -38,25 +40,40 @@ h3.boxheader {
     margin-left: auto;
     margin-right: auto;
 	padding: 0 20px 0 20px;
-    width: 800px;
-    height: 600px;
+    width: 45%;
 }
 
 /* Contentbox */
 .box {
     background-color: #000;
-    border: 2px solid #FFF;
+    border: 2px solid #CCC;
+    border-radius: 2px;
+    box-shadow: 5px 5px #111;
+    opacity: 0.7;
 	margin: 4px;
     padding: 8px 8px 8px 8px;
 }
 
+.box:hover,
+.focusedbox {
+    opacity: 1.0;
+    border-color: #FFF;
+}
+
+/* Google Search Box */
+#searchbox {
+    margin-bottom: 12px;
+}
+
 /* make input form "invisible" */
-#searchbox > form > input {
-    font-size: 14px;
+#searchbox input {
+    font-size: 12pt;
+    font-family: "Source Code Pro", Courier, monospace;
     background: none;
     border: none;
-    border-bottom: 2px dotted #FFF;
-    color: #FFF;
+    border-bottom: 2px dotted #CCC;
+    outline: none;
+    color: #CCC;
     padding: 2px;
     -webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;
@@ -64,16 +81,25 @@ h3.boxheader {
     width: 100%;
 }
 
+#searchbox:hover input,
+#searchbox input:hover {
+    border-bottom: 2px solid #FFF;
+}
+
+#searchbox input:focus {
+    border-bottom: 2px solid #F00;
+    outline: none;
+}
+
 /* Container for Linkboxes */
 .boxcontainer {
 	display: -webkit-box;
 	display: -moz-box;
-    /*width: 100%;*/
 }
 
 /* floating Contentbox */
 .boxcontainer > .floatbox {
-    -moz-box-flex: 1;	
+    -moz-box-flex: 1;
 	-webkit-box-flex: 1;
 }
 
@@ -88,13 +114,8 @@ h3.boxheader {
     font-style: italic;
 }
 
-.linkheader {
-    color: #DED;
-    font-weight: bold;
-}
-
 /* color tags */
 .blue {
-    color: #00F;
+    color: #3b88df;
 }
 

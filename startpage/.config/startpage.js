@@ -3,7 +3,7 @@
  * listgenerator for startpage
  *
  * file: ~/.config/startpage.js
- * v0.1 / 2015.01.10
+ * v0.2 / 2015.01.11
  *
  * (c) 2015 Bernd Busse
  */
@@ -22,16 +22,21 @@ box_social = {"title": "Social-Networks", "elements": [
 box_prog = {"title": "Programming", "elements": [
         {"name": "GitHub", "link": "http://www.github.com"},
         {"name": "RegExr v2.0", "link": "http://www.regexr.com"} ]};
+box_uni = {"title": "University", "elements": [
+        {"name": "Blackboard", "link": "http://e-learning.rub.de"},
+        {"name": "Moodle", "link": "http://moodle.rub.de"},
+        {"name": "ETIT / ITS", "link": "http://etit.rub.de"} ]};
 
 var llObject = { "sections": [
         [ box_media, box_social ],
+        [ box_uni ],
         [ box_prog ],
     ]};
 
 function genListTitle(container, title) {
     // Generate Title Element (HTML)
-    var listTitle = document.createElement("div");
-    listTitle.className = "linkheader";
+    var listTitle = document.createElement("h3");
+    listTitle.className = "boxheader";
 
     // Add Title Prefix (HTML)
     listTitle.appendChild(document.createTextNode("["));
@@ -61,7 +66,7 @@ function genListElement(container, element) {
     if (element.target) {
         var targetElement = document.createElement("span");
         targetElement.className = "target";
-        targetElement.innerHTML = " [" + element.target + "]";
+        targetElement.innerHTML = "." + element.target;
         listItem.appendChild(targetElement);
     }
 
@@ -92,9 +97,18 @@ function initList() {
         var listContainer = document.createElement("div");
         listContainer.className = "boxcontainer";
         container.appendChild(listContainer);
-        for (var i = 0; i < llSections.length; i++) {
+        for (var i = 0; i < llSections[c].length; i++) {
             genListBox(listContainer, llSections[c][i]);
         }
     }
 }
+
+$(document).ready( function () {
+    $("input").focus(function (e) {
+        $(this).parent().parent().addClass("focusedbox");
+    });
+    $("input").blur(function (e) {
+        $(this).parent().parent().removeClass("focusedbox");
+    });
+});
 
