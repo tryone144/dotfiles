@@ -9,6 +9,7 @@
  */
 body {
     font-family: "Source Code Pro", Courier, monospace;
+    font-size: 11pt;
     color: #0E3;
     background-color: #1A1A1A;
     background-image: url("startpage-bg.png");
@@ -61,13 +62,13 @@ h3.boxheader {
 }
 
 /* Google Search Box */
-#searchbox {
+.searchbox {
     margin-bottom: 12px;
 }
 
 /* make input form "invisible" */
-#searchbox input {
-    font-size: 12pt;
+.searchbox input {
+    font-size: 11pt;
     font-family: "Source Code Pro", Courier, monospace;
     background: none;
     border: none;
@@ -81,13 +82,14 @@ h3.boxheader {
     width: 100%;
 }
 
-#searchbox:hover input,
-#searchbox input:hover {
+.searchbox:hover input,
+.searchbox input:hover {
     border-bottom: 2px solid #FFF;
 }
 
-#searchbox input:focus {
-    border-bottom: 2px solid #F00;
+.searchbox input:focus {
+    color: #0F2;
+    border-bottom: 2px solid #0F2;
     outline: none;
 }
 
@@ -103,11 +105,16 @@ h3.boxheader {
 	-webkit-box-flex: 1;
 }
 
-.box > a {
+.box a {
     display: block;
     color: inherit;
     text-decoration: none;
-    padding-left: 1em;
+    margin-left: 1em;
+    margin-right: auto;
+}
+
+.box a:hover {
+    color: #FFF;
 }
 
 .target {

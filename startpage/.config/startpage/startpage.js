@@ -18,18 +18,25 @@ box_media = {"title": "Media", "elements": [
         {"name": "SoundCloud", "target": "Stream", "link": "https://soundcloud.com/stream"},
         {"name": "SoundCloud", "target": "Following", "link": "https://soundcloud.com/you/following"} ]};
 box_social = {"title": "Social-Networks", "elements": [
-        {"name": "Facebook", "link": "https://www.facebook.com/?sk=h_chr"} ]};
+        {"name": "Facebook", "target": "News", "link": "https://www.facebook.com/?sk=h_chr"},
+        {"name": "Facebook", "target": "Profile", "link": "https://www.facebook.com/me"} ]};
 box_prog = {"title": "Programming", "elements": [
-        {"name": "GitHub", "link": "http://www.github.com"},
-        {"name": "RegExr v2.0", "link": "http://www.regexr.com"} ]};
+        {"name": "RegExr v2.0", "link": "http://www.regexr.com/"},
+        {"name": "JSFiddle", "link": "http://jsfiddle.net/"} ]};
 box_uni = {"title": "University", "elements": [
-        {"name": "Blackboard", "link": "http://e-learning.rub.de"},
-        {"name": "Moodle", "link": "http://moodle.rub.de"},
-        {"name": "ETIT / ITS", "link": "http://etit.rub.de"} ]};
+        {"name": "Blackboard", "link": "https://e-learning.ruhr-uni-bochum.de/bin/bbupdate/bb_login.pl"},
+        {"name": "Moodle", "link": "https://moodle.ruhr-uni-bochum.de/"},
+        {"name": "W3L", "target": "Startseite", "link": "http://w3l.swt.rub.de/w3l/jsp/startseite/index.jsp?navID=startseite"},
+        {"name": "W3L", "target": "Übungen", "link": "http://w3l.swt.rub.de/w3l/jsp/startseite/index.jsp?navID=107_1406594"} ]};
+box_jw = {"title": "JW.ORG", "elements": [
+        {"name": "JW.org", "link": "http://www.jw.org/de/"},
+        {"name": "JW Broadcasting", "link": "http://tv.jw.org/#home"},
+        {"name": "WOL", "target": "Daily Text", "link": "http://wol.jw.org/de/wol/h/r10/lp-x"},
+        {"name": "WOL", "target": "Bible", "link": "http://wol.jw.org/de/wol/binav/r10/lp-x/Rbi8/X/1986"} ]};
 
 var llObject = { "sections": [
         [ box_media, box_social ],
-        [ box_uni ],
+        [ box_uni, box_jw ],
         [ box_prog ],
     ]};
 
