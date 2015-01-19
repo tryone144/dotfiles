@@ -5,9 +5,9 @@
 #   needs: [dmenu2]
 #
 # file: ~/.config/i3/scripts/poweroff.sh
-# v1.0 / 2014.12.24
+# v1.1 / 2015.01.19
 #
-# (c) 2014 Bernd Busse
+# (c) 2015 Bernd Busse
 #
 
 screen_geometry="$(xrandr -d "${DISPLAY}" --query | grep ' connected ' | sed -n '1p' | grep -o -e '[0-9]\+x[0-9]\+')"
@@ -44,7 +44,7 @@ case "${value:2}" in
         systemctl suspend
         ;;
     "lock screen") # lock screen
-        ${I3_CONFIG}/scripts/screenlock.sh
+        ${I3_CONFIG}/scripts/locker.sh
         ;;
     "reload i3") # reload i3
         i3-msg reload
