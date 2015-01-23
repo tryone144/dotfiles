@@ -1,0 +1,27 @@
+"*":
+  "exception-reporting":
+    userId: "9b27ac68-56aa-2c7c-5726-9bcdfbf9b3c9"
+  welcome:
+    showOnStartup: false
+  core:
+    disabledPackages: [
+      "tree-view"
+    ]
+    audioBeep: false
+    autoHideMenuBar: true
+  editor:
+    fontFamily: "Source Code Pro"
+    fontSize: 14
+    showInvisibles: true
+    showIndentGuide: true
+    tabLength: 4
+    softWrap: true
+    invisibles: {}
+  linter:
+    lintOnChangeInterval: 2000
+    showErrorInline: true
+  "vim-surround": {}
+  "linter-cpplint": {}
+  minimap: {}
+  "linter-flake8": {}
+  "linter-clang": {}

@@ -3,6 +3,7 @@ Dotfiles
 
 Just my 0.02$ to all the dotfile collections.
 
+    atom                -> config for atom editor
     archey3             -> config for archey3
     bash                -> bash config with custom powerline-styled prompt
     compton             -> compton compositor with minmal transparency
@@ -28,7 +29,7 @@ Install
 -------
 
 * checkout to ~/.dotfiles/:
-    
+
         $ git clone https://github.com/tryone144/dotfiles.git ~/.dotfiles
 
 * cd to ~/.dotfiles/:
@@ -90,4 +91,3 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
-
