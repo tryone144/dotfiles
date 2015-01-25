@@ -3,11 +3,10 @@
 # .bashrc with archey greeting and powerline-styled prompt
 # declares custom functions
 #   needs: [archey3]
-#          [gtk3-nocsd]
 #          [powerline-fonts]
 # 
 # file: ~/.bashrc
-# v1.3 / 2015.01.07
+# v1.3.1 / 2015.01.25
 #
 # (c) 2015 Bernd Busse
 #
@@ -20,7 +19,7 @@ export EDITOR="vim"
 
 # Disable GTK3 Window borders
 export GTK_CSD=0
-export LD_PRELOAD=/usr/lib/gtk3-nocsd.so
+#export LD_PRELOAD=/usr/lib/gtk3-nocsd.so
 
 unset SSH_ASKPASS
 
