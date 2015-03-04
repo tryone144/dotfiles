@@ -186,7 +186,7 @@ for_window [class="^Minecraft" instance="^Minecraft"] floating enable
 
 # Start i3bar to display a workspace bar plus conky statusline
 bar {
-    status_command              ${I3_CONFIG}/i3bar-pystatus
+    status_command              j4status
     
     mode                        dock
     position                    top

@@ -1,0 +1,32 @@
+#
+# I3WM
+# config for j4status as status provider for i3bar
+#   needs: [!brain]
+#          [NetworkManager]
+#
+# file: ~/.config/i3/j4status.conf
+# v0.1 / 2015.02.25
+#
+# (c) 2015 Bernd Busse
+#
+
+# PLUGIN config
+[Plugins]
+Output=i3bar
+Input=pulseaudio;nm;upower;time;
+
+# NETWORKMANAGER config
+[NetworkManager]
+Interfaces=eth0;wlan0;
+
+[NetworkManager Formats]
+Addresses=IPv4
+
+# PULSEAUDIO config
+[PulseAudio]
+
+# TIME config
+[Time]
+Interval=5
+Format=%a, %d. %b %H:%M
+
