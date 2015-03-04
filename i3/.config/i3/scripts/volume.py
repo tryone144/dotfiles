@@ -7,7 +7,7 @@
 #          [alsa]
 #
 # file: ~/.config/i3/scripts/volume.py
-# v0.2 / 2015.01.03
+# v0.3 / 2015.03.04
 #
 # (c) 2015 Bernd Busse
 #
@@ -20,39 +20,48 @@ import subprocess
 amixer_cmd = ['amixer', '-D', 'default', '--']
 pactl_cmd = ['pactl', '--']
 
+
 # toggle mute
 def mute_toggle():
     pa_sink = get_sink()
     if pa_sink is not None:
-        cmd = pactl_cmd + ['set-sink-mute', str(pa_sink), 'toggle']
+        cmd = pactl_cmd + ['set-sink-mute',
+                           str(pa_sink), 'toggle']
     else:
-        cmd = amixer_cmd + ['sset', 'Master', 'playback', 'toggle']
+        cmd = amixer_cmd + ['sset', 'Master',
+                            'playback', 'toggle']
     if subprocess.call(cmd, stdout=subprocess.DEVNULL) != 0:
         sys.stderr.write("Fehler aufgetreten\n")
+
 
 # lower volume by given percent
 def lower_volume(step=10):
     pa_sink = get_sink()
     if pa_sink is not None:
-        cmd = pactl_cmd + ['set-sink-volume', str(pa_sink), '-{0}%'.format(step)]
+        cmd = pactl_cmd + ['set-sink-volume',
+                           str(pa_sink), '-{0}%'.format(step)]
     else:
-        cmd = amixer_cmd + ['sset', 'Master', 'playback', '{0}%-'.format(step)]
+        cmd = amixer_cmd + ['sset', 'Master',
+                            'playback', '{0}%-'.format(step)]
     if subprocess.call(cmd, stdout=subprocess.DEVNULL) != 0:
         sys.stderr.write("Fehler aufgetreten\n")
+
 
 # raise volume by given percent
 def raise_volume(step=10):
     pa_sink = get_sink()
     if pa_sink is not None:
         if (int(re.search('^([0-9]+)%.*$', get_volume()).group(1)) + step) > 100:
-            cmd = pactl_cmd + ['set-sink-volume', str(pa_sink), '100%']
+            cmd = pactl_cmd + ['set-sink-volume',
+                               str(pa_sink), '100%']
         else:
-            cmd = pactl_cmd + ['set-sink-volume', str(pa_sink), '+{0}%'.format(step)]
+            cmd = pactl_cmd + ['set-sink-volume',
+                               str(pa_sink), '+{0}%'.format(step)]
     else:
-        cmd = amixer_cmd + ['sset', 'Master', 'playback', '{0}%+'.format(step)]
+        cmd = amixer_cmd + ['sset', 'Master',
+                            'playback', '{0}%+'.format(step)]
     if subprocess.call(cmd, stdout=subprocess.DEVNULL) != 0:
         sys.stderr.write("Fehler aufgetreten\n")
-
 
 
 # get volume level in percent
@@ -70,10 +79,11 @@ def get_volume():
         out = str(subprocess.check_output(cmd), "utf-8")
         level = re.search('(?!\n).*\[([0-9]+%)\].*\n', out).group(1)
         mute = re.search('\[off\]\n', out)
-    
+
     if mute is not None:
         level += " (muted)"
     return level
+
 
 # test for 'pactl'
 def get_sink():
@@ -91,13 +101,14 @@ def get_sink():
                 if not re.match('null', s.group(2), re.I):
                     return int(s.group(1))
             return None
-        
-commands = [ 'mute',  'm',
-             'lower', 'l',
-             'raise', 'r',
-             'get',   'g' ]
+
+commands = ['mute',  'm',
+            'lower', 'l',
+            'raise', 'r',
+            'get',   'g']
 
 usage = "    usage: {0} {{mute|get}} | {{lower|raise}} [STEP]"
+
 
 def main():
     verbose = False
@@ -105,7 +116,7 @@ def main():
     if len(args) < 2:
         print(usage.format(args[0]))
         sys.exit(1)
-    
+
     if '-v' in args[1:]:
         verbose = True
         args.remove('-v')
@@ -114,7 +125,7 @@ def main():
         print("Unkown command: {0}".format(args[0]))
         print(usage.format(args[0]))
         sys.exit(1)
-    
+
     action = args[1]
     if action == 'mute' or action == 'm':
         mute_toggle()
@@ -131,7 +142,7 @@ def main():
     elif action == 'raise' or action == 'r':
         try:
             step = int(args[2])
-        except (IndexError, ValueError) as e:
+        except (IndexError, ValueError):
             step = 10
         raise_volume(step)
         if verbose:
