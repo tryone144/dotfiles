@@ -3,7 +3,7 @@
 # main config for i3
 #
 # file: ~/.config/i3/config
-# v0.3 / 2015.01.03
+# v0.4 / 2015.03.04
 #
 # (c) 2015 Bernd Busse
 #
@@ -51,9 +51,13 @@ bindsym $mod+Shift+l    exec --no-startup-id ${I3_CONFIG}/scripts/locker.sh
 bindsym --release $mod+Print    exec ${I3_CONFIG}/scripts/screenshot.sh
 
 # change volume
-bindsym XF86AudioLowerVolume    exec --no-startup-id ${I3_CONFIG}/scripts/volume.py lower 5 && killall -SIGUSR1 i3bar-pystatus
-bindsym XF86AudioRaiseVolume    exec --no-startup-id ${I3_CONFIG}/scripts/volume.py raise 5 && killall -SIGUSR1 i3bar-pystatus
-bindsym XF86AudioMute           exec --no-startup-id ${I3_CONFIG}/scripts/volume.py mute && killall -SIGUSR1 i3bar-pystatus
+bindsym XF86AudioRaiseVolume    exec --no-startup-id ${I3_CONFIG}/scripts/volume.py raise 5
+bindsym XF86AudioLowerVolume    exec --no-startup-id ${I3_CONFIG}/scripts/volume.py lower 5
+bindsym XF86AudioMute           exec --no-startup-id ${I3_CONFIG}/scripts/volume.py mute
+
+# change brightness
+bindsym XF86MonBrightnessUp     exec --no-startup-id ${I3_CONFIG}/scripts/brightness.py inc
+bindsym XF86MonBrightnessDown   exec --no-startup-id ${I3_CONFIG}/scripts/brightness.py dec
 
 
 #####################
