@@ -3,9 +3,9 @@
 " Personal Vim configuration
 " 
 " file: ~/.vimrc
-" v0.1 / 2014.12.10
+" v0.2 / 2015.03.04
 "
-" (c) 2014 Bernd Busse
+" (c) 2015 Bernd Busse
 "
 
 set nocompatible
@@ -26,34 +26,39 @@ set whichwrap=""
 set number
 set ruler
 set wildmenu
-set omnifunc=syntaxcomplete#Complete
 "if has("mouse")
 "    set mouse=a
 "endif
 
 set grepprg=grep\ -nH\ $*
+
+" LaTeX - Suite
 let g:tex_flavor = "latex"
-let g:Tex_DefaultTargetFormat='pdf'
-let g:Tex_MultipleCompileFormats='dvi,pdf'
+let g:Tex_DefaultTargetFormat = 'pdf'
+let g:Tex_MultipleCompileFormats = 'dvi,pdf'
 
 if has("gui_running")
+    " GUI - Theme
     set guioptions-=T
     set t_Co=256
     colorscheme desert256
     set lines=45
     set columns=132
+    
+    " SuperTab - Completion
+    let g:SuperTabMappingForward='<c-space>'
+    let g:SuperTabMappingBackward='<s-c-space>'
 else
+    " Console - Theme
     set t_Co=256
     colorscheme tir_black
+    
+    " SuperTab - Completion
+    let g:SuperTabMappingForward='<nul>'
+    let g:SuperTabMappingBackward='<s-nul>'
 endif
-
-map <leader>ss :setlocal spell!<cr>
-map <leader>sen :set spelllang=en spell
-map <leader>sde :set spelllang=de spell
-map <leader>ses :set spelllang=es spell
 
 filetype plugin indent on
 syntax on
-autocmd FileType python set omnifunc=pythoncomplete#Complete
 let g:pydiction_location='/usr/share/pydiction/complete-dict'
 
