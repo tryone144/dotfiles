@@ -5,12 +5,12 @@
 #   needs: [dmenu2]
 #
 # file: ~/.config/i3/scripts/poweroff.sh
-# v1.1 / 2015.01.19
+# v1.2 / 2015.03.04
 #
 # (c) 2015 Bernd Busse
 #
 
-screen_geometry="$(xrandr -d "${DISPLAY}" --query | grep ' connected ' | sed -n '1p' | grep -o -e '[0-9]\+x[0-9]\+')"
+screen_geometry="$(xrandr -d "${DISPLAY}" --query | grep ' primary ' | sed -n '1p' | grep -o -e '[0-9]\+x[0-9]\+')"
 screen_width="$(echo "${screen_geometry}" | cut -d'x' -f1)"
 screen_height="$(echo "${screen_geometry}" | cut -d'x' -f2)"
 
