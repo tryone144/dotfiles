@@ -59,6 +59,9 @@ bindsym XF86AudioMute           exec --no-startup-id ${I3_CONFIG}/scripts/volume
 bindsym XF86MonBrightnessUp     exec --no-startup-id ${I3_CONFIG}/scripts/brightness.py inc
 bindsym XF86MonBrightnessDown   exec --no-startup-id ${I3_CONFIG}/scripts/brightness.py dec
 
+# xrandr tools
+bindsym XF86Display     exec --no-startup-id ${I3_CONFIG}/scripts/xrotate.sh
+
 
 #####################
 ## CLIENT CONTROLS ##
