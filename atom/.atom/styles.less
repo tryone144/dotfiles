@@ -1,0 +1,30 @@
+/*
+ * ATOM
+ * custom stylesheet for Atom-Editor
+ *
+ * file: ~/.atom/styles.less
+ * v0.1 / 2015.03.05
+ *
+ * (c) 2015 Bernd Busse
+ */
+
+/* Temporary Fix for issue #3622 Cursor invisible on focus-loss */
+atom-text-editor:not(.mini)::shadow .cursor {
+  opacity: 1;
+}
+
+atom-text-editor:not(.mini)::shadow .blink-off .cursor {
+  opacity: 0;
+}
+
+atom-text-editor.vim-mode.command-mode,
+atom-text-editor.vim-mode.operator-pending-mode,
+atom-text-editor.vim-mode.visual-mode,
+{
+    &::shadow, &
+    {
+        .cursor, .cursor.blink-off {
+            visibility: visible;
+        }
+    }
+}
