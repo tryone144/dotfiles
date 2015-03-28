@@ -7,6 +7,9 @@
     audioBeep: false
     autoHideMenuBar: true
     projectHome: "/home/bernd/proj"
+    disabledPackages: [
+      "vim-mode"
+    ]
   editor:
     fontFamily: "Source Code Pro"
     fontSize: 14
