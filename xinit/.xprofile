@@ -15,9 +15,11 @@
 if [[ "${DESKTOP_SESSION}" == *herbstluftwm ]]; then
     export HLWM_CONFIG="$HOME/.config/herbstluftwm/"
     dex -ae MATE
+    gnome-keyring-daemon -r -d
 elif [[ "${DESKTOP_SESSION}" == *i3 ]]; then
     export I3_CONFIG="$HOME/.config/i3/"
     dex -ae MATE
+    gnome-keyring-daemon -r -d
 fi
 
 # set primary display, if not allready set
