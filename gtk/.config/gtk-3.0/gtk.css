@@ -1,0 +1,6 @@
+/* Disable Window Borders */
+.window-frame {
+    box-shadow: none;
+    margin: 0;
+}
+

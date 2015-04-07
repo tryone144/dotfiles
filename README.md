@@ -8,6 +8,7 @@ Just my 0.02$ to all the dotfile collections.
     bash                -> bash config with custom powerline-styled prompt
     compton             -> compton compositor with minmal transparency
     dunst               -> dunst config (default)
+    gtk                 -> special GTK Settings
     i3                  -> i3 configuration
     htop                -> automaticaly generated htoprc
     lightdm[etc]        -> gtk-greeter with custom theme and wallpaper
