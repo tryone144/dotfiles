@@ -49,8 +49,10 @@ function countdown() {
     echo -e "BOOOOOOOMMMM!!!!!!"
 }
 
-# set powerline console font
-setfont ter-powerline-v16b
+if [[ -z "$DISPLAY" ]]; then
+    # set powerline console font
+    setfont ter-powerline-v16b
+fi
 
 # Le Prompts
 #PS1='[\u@\h \W]\$ ' # Default Bash Prompt
