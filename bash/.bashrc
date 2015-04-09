@@ -6,7 +6,7 @@
 #          [powerline-fonts]
 # 
 # file: ~/.bashrc
-# v1.3.3 / 2015.04.09
+# v1.4 / 2015.04.09
 #
 # (c) 2015 Bernd Busse
 #
@@ -26,7 +26,6 @@ unset SSH_ASKPASS
 alias ls='ls --color=auto'
 alias grep='grep --color=auto'
 alias clr='clear; archey3 --config=~/.config/archey3.cfg'
-alias bat='upower -i /org/freedesktop/UPower/devices/battery_BAT1'
 
 # Simple Stopwatch
 function stopwatch() {
@@ -47,6 +46,17 @@ function countdown() {
         echo -ne "$(date -u --date @$((${date1} - $(date +%s) )) +%H:%M:%S)\r"; 
     done
     echo -e "BOOOOOOOMMMM!!!!!!"
+}
+
+# Show Batter percentage
+function battery() {
+    for bat in $(upower -e | grep 'battery'); do
+        output="$(upower -i $bat)"
+        _name="$(echo "$output" | grep 'native-path' | sed -re 's/^\s*native-path:\s*(.*)$/\1/g')"
+        _percentage="$(echo "$output" | grep 'percentage' | sed -re 's/^\s*percentage:\s*([0-9][0-9]%)$/\1/g')"
+        _state="$(echo "$output" | grep 'state' | sed -re 's/^\s*state:\s*(.*)$/\1/g')"
+        echo "${_name}: ${_percentage} (${_state})"
+    done
 }
 
 if [[ -z "$DISPLAY" ]]; then
