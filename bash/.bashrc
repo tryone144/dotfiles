@@ -6,7 +6,7 @@
 #          [powerline-fonts]
 # 
 # file: ~/.bashrc
-# v1.3.2 / 2015.04.07
+# v1.3.3 / 2015.04.09
 #
 # (c) 2015 Bernd Busse
 #
@@ -48,6 +48,9 @@ function countdown() {
     done
     echo -e "BOOOOOOOMMMM!!!!!!"
 }
+
+# set powerline console font
+setfont ter-powerline-v16b
 
 # Le Prompts
 #PS1='[\u@\h \W]\$ ' # Default Bash Prompt

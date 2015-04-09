@@ -7,7 +7,7 @@
 #          [powerline-fonts]
 #
 # file: ~/.xprofile
-# v1.1 / 2015.04.07
+# v1.2 / 2015.04.09
 #
 # (c) 2015 Bernd Busse
 #
@@ -29,7 +29,4 @@ if [[ ${?} == 1 ]]; then
     monitor="$(xrandr -d ${DISPLAY} --query | grep -e ' connected '| cut -d' ' -f1)"
     xrandr --output ${monitor} --primary
 fi
-
-# set powerline console font
-setfont ter-powerline-v16b
 
