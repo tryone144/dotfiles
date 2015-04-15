@@ -1,18 +1,21 @@
 #
 # BASH
 # .bashrc with archey greeting and powerline-styled prompt
-# declares custom functions
+# imports custom functions
 #   needs: [archey3]
 #          [powerline-fonts]
 # 
 # file: ~/.bashrc
-# v1.4 / 2015.04.09
+# v1.5 / 2015.04.15
 #
 # (c) 2015 Bernd Busse
 #
 
 # If not running interactively, don't do anything
 [[ $- != *i* ]] && return
+
+# import custom functions
+[[ -f ~/.shrc ]] && . ~/.shrc
 
 export PATH="$(ruby -e 'puts Gem.user_dir')/bin:$PATH"
 export EDITOR="vim"
@@ -27,45 +30,14 @@ alias ls='ls --color=auto'
 alias grep='grep --color=auto'
 alias clr='clear; archey3 --config=~/.config/archey3.cfg'
 
-# Simple Stopwatch
-function stopwatch() {
-    date1=$(date +%s); 
-    while true; do 
-        echo -ne "$(date -u --date @$(($(date +%s) - ${date1})) +%H:%M:%S)\r"; sleep 0.1
-    done
-}
-
-# Simple countdown timer
-function countdown() {
-    seconds=${1};
-    if [ -z ${seconds} ]; then
-        return
-    fi
-    date1=$(($(date +%s) + ${seconds})); 
-    while [ "${date1}" -ne $(date +%s) ]; do 
-        echo -ne "$(date -u --date @$((${date1} - $(date +%s) )) +%H:%M:%S)\r"; 
-    done
-    echo -e "BOOOOOOOMMMM!!!!!!"
-}
-
-# Show Batter percentage
-function battery() {
-    for bat in $(upower -e | grep 'battery'); do
-        output="$(upower -i $bat)"
-        _name="$(echo "$output" | grep 'native-path' | sed -re 's/^\s*native-path:\s*(.*)$/\1/g')"
-        _percentage="$(echo "$output" | grep 'percentage' | sed -re 's/^\s*percentage:\s*([0-9][0-9]%)$/\1/g')"
-        _state="$(echo "$output" | grep 'state' | sed -re 's/^\s*state:\s*(.*)$/\1/g')"
-        echo "${_name}: ${_percentage} (${_state})"
-    done
-}
+# Le Prompts
+#PS1='[\u@\h \W]\$ ' # Default Bash Prompt
 
 if [[ -z "$DISPLAY" ]]; then
     # set powerline console font
     setfont ter-powerline-v16b
 fi
 
-# Le Prompts
-#PS1='[\u@\h \W]\$ ' # Default Bash Prompt
 prompt_escape() {
     echo "\[${1}\]"
 }

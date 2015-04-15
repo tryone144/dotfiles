@@ -1,13 +1,16 @@
 #
 # BASH
-# .bash_profile to source .bashrc
+# .bash_profile to source .bashrc and .shrc
 # 
 # file: ~/.bashrc
-# v0.2 / 2015.01.03
+# v0.3 / 2015.04.15
 #
 # (c) 2015 Bernd Busse
 #
 
-# run .bashrc
+# source .bashrc
 [[ -f ~/.bashrc ]] && . ~/.bashrc
+
+# source .shrc
+[[ -f ~/.shrc ]] && . ~/.shrc
 
