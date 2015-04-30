@@ -7,11 +7,11 @@
 #          [alsa]
 #
 # file: ~/.config/i3/scripts/volume.py
-# v0.3 / 2015.03.04
+# v0.4 / 2015.04.30
 #
 # (c) 2015 Bernd Busse
 #
-# usage: ./volume.py {mute|get} | {lower|raise} [STEP]
+# usage: ./volume.py {mute|unmute|toggle|get} | {lower|raise} [STEP]
 #
 import re
 import sys
@@ -19,6 +19,19 @@ import subprocess
 
 amixer_cmd = ['amixer', '-D', 'default', '--']
 pactl_cmd = ['pactl', '--']
+
+
+# mute
+def mute_onoff(mute=True):
+    pa_sink = get_sink()
+    if pa_sink is not None:
+        cmd = pactl_cmd + ['set-sink-mute',
+                           str(pa_sink), str(mute).lower()]
+    else:
+        cmd = amixer_cmd + ['sset', 'Master',
+                            'playback', 'mute' if mute else 'unmute']
+    if subprocess.call(cmd, stdout=subprocess.DEVNULL) != 0:
+        sys.stderr.write("Fehler aufgetreten\n")
 
 
 # toggle mute
@@ -64,6 +77,25 @@ def raise_volume(step=10):
         sys.stderr.write("Fehler aufgetreten\n")
 
 
+# is muted
+def is_muted():
+    pa_sink = get_sink()
+    if pa_sink is not None:
+        cmd = pactl_cmd + ['list', 'sinks']
+        out = str(subprocess.check_output(cmd), "utf-8")
+        sinks = re.findall('^\tMute:\s(\w+)$', out, re.M)
+        mute = re.match('yes', sinks[pa_sink])
+    else:
+        cmd = amixer_cmd + ['sget', 'Master', 'playback']
+        out = str(subprocess.check_output(cmd), "utf-8")
+        mute = re.search('\[off\]\n', out)
+
+    if mute is not None:
+        return True
+    else:
+        return False
+
+
 # get volume level in percent
 def get_volume():
     pa_sink = get_sink()
@@ -72,15 +104,12 @@ def get_volume():
         out = str(subprocess.check_output(cmd), "utf-8")
         levels = re.findall('^\tVolume:.*\w+:\s*[0-9]+\s*/\s*([0-9]+%)\s*/.*$', out, re.M)
         level = levels[pa_sink]
-        sinks = re.findall('^\tMute:\s(\w+)$', out, re.M)
-        mute = re.match('yes', sinks[pa_sink])
     else:
         cmd = amixer_cmd + ['sget', 'Master', 'playback']
         out = str(subprocess.check_output(cmd), "utf-8")
         level = re.search('(?!\n).*\[([0-9]+%)\].*\n', out).group(1)
-        mute = re.search('\[off\]\n', out)
 
-    if mute is not None:
+    if is_muted():
         level += " (muted)"
     return level
 
@@ -102,12 +131,14 @@ def get_sink():
                     return int(s.group(1))
             return None
 
-commands = ['mute',  'm',
-            'lower', 'l',
-            'raise', 'r',
-            'get',   'g']
+commands = ['mute',   'm',
+            'unmute', 'u',
+            'toggle', 't',
+            'lower',  'l',
+            'raise',  'r',
+            'get',    'g']
 
-usage = "    usage: {0} {{mute|get}} | {{lower|raise}} [STEP]"
+usage = "    usage: {0} {{mute|unmute|toggle|get}} | {{lower|raise}} [STEP]"
 
 
 def main():
@@ -127,10 +158,18 @@ def main():
         sys.exit(1)
 
     action = args[1]
-    if action == 'mute' or action == 'm':
+    if action == 'toggle' or action == 't':
         mute_toggle()
         if verbose:
             print("toggle mute ==> {0}".format(get_volume()))
+    elif action == 'mute' or action == 'm':
+        mute_onoff(mute=True)
+        if verbose:
+            print("mute on ==> {0}".format(get_volume()))
+    elif action == 'unmute' or action == 'u':
+        mute_onoff(mute=False)
+        if verbose:
+            print("mute off ==> {0}".format(get_volume()))
     elif action == 'lower' or action == 'l':
         try:
             step = int(args[2])
