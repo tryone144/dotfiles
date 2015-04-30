@@ -168,10 +168,10 @@ bindsym $mod+r mode "resize"
 # Font for window titles
 font pango:Ubuntu Mono 10
 
-#PANEL_BACKGROUND='#0C0C0C'
-#PANEL_FOREGROUND='#FFFFFF'
-#PANEL_HIGHLIGHT='#1793D1'
-#PANEL_INACTIVE='#3F3F3F'
+# class                 border  backgr. text    indicator
+client.focused          #666666 #222222 #1793D1 #D2D2D2
+client.focused_inactive #555555 #666666 #FFFFFF #888888
+client.unfocused        #222222 #333333 #888888 #888888
 
 # default container mode
 workspace_layout stacking
@@ -211,6 +211,8 @@ bar {
         statusline              #FFFFFF
         separator               #1793D1
 
+        # class            border  backgr. text
+        focused_workspace  #148CCC #1793D1 #FFFFFF
     }
 }
 
