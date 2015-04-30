@@ -3,7 +3,7 @@
 # main config for i3
 #
 # file: ~/.config/i3/config
-# v0.4 / 2015.03.04
+# v0.4.1 / 2015.04.30
 #
 # (c) 2015 Bernd Busse
 #
@@ -37,8 +37,10 @@ bindsym $mod+Shift+q    exec --no-startup-id ${I3_CONFIG}/scripts/poweroff.sh
 ## HOTKEYS ##
 #############
 
-# start urxvt terminal
-bindsym $mod+Return     exec ~/.config/i3/scripts/terminal.sh
+# start favorite applications
+bindsym $mod+Return     exec ~/.config/i3/scripts/defaults.sh terminal
+bindsym $mod+c          exec ~/.config/i3/scripts/defaults.sh web
+bindsym $mod+n          exec ~/.config/i3/scripts/defaults.sh files
 
 # start dmenu launcher
 bindsym $mod+d          exec --no-startup-id ${I3_CONFIG}/scripts/launcher.sh desktop
