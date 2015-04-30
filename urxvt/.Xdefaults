@@ -3,12 +3,12 @@
 # .Xdefaults for urxvt
 #   needs: [urxvt]
 #          [xcursor-oxygen-neon]
-#          [ttf-powerline-fonts-git]
+#          [powerline-fonts-git]
 #
 # file: ~/.Xdefaults
-# v1.0 / 2014.12.15
+# v1.1 / 2015.04.30
 #
-# (c) 2014 Bernd Busse
+# (c) 2015 Bernd Busse
 #
 
 Xcursor.theme: Oxygen Neon
@@ -27,12 +27,8 @@ URxvt*.scrollWithBuffer: true
 URxvt*.scrollTtyKeypress: true
 URxvt*.print-pipe: "cat > ~/.urxvt/$(date).dump"
 URxvt*.cursorBlink: true
-URxvt*.per-ext-common: default,tabbedex,matcher,vtwheel
+URxvt*.per-ext-common: default,matcher,vtwheel
 URxvt*.urlLoader: chromium
-URxvt*.tabbed.tabbar-fb: 2
-URxvt*.tabbed.tabbar-bg: 0
-URxvt*.tabbed.tab-fg: 3
-URxvt*.tabbed.tab-bg: 0
 
 # colors
 URxvt*.foreground: #00FF00
