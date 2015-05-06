@@ -1,19 +1,19 @@
-#
-# URXVT
-# .Xdefaults for urxvt
-#   needs: [urxvt]
-#          [xcursor-oxygen-neon]
-#          [powerline-fonts-git]
-#
-# file: ~/.Xdefaults
-# v1.1 / 2015.04.30
-#
-# (c) 2015 Bernd Busse
-#
+/*
+ * URXVT
+ * .Xdefaults for urxvt
+ *   needs: [urxvt]
+ *          [xcursor-oxygen-neon]
+ *          [powerline-fonts-git]
+ *
+ * file: ~/.Xdefaults
+ * v1.1 / 2015.04.30
+ *
+ * (c) 2015 Bernd Busse
+ */
 
 Xcursor.theme: Oxygen Neon
 
-# interface
+/* interface */
 URxvt*.iconFile: terminal
 URxvt*.depth: 32
 URxvt*.font: xft:Ubuntu Mono derivative Powerline:size=12
@@ -30,7 +30,7 @@ URxvt*.cursorBlink: true
 URxvt*.per-ext-common: default,matcher,vtwheel
 URxvt*.urlLoader: chromium
 
-# colors
+/* colors */
 URxvt*.foreground: #00FF00
 URxvt*.background: [90]#000000
 URxvt*.color0: #000000
