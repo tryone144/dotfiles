@@ -13,6 +13,10 @@
 # pause dunst notifications
 killall -SIGUSR1 dunst
 
+# dim screen
+back_val="$(( $(xbacklight -get | cut -d '.' -f 1) + 1))"
+xbacklight -time 500 -steps 50 -set 1
+
 # mute audio
 #is_muted=$(${I3_CONFIG}/scripts/volume.py get | grep -v "muted" &> /dev/null; echo ${?})
 #${I3_CONFIG}/scripts/volume.py mute
@@ -24,6 +28,9 @@ sxlock -p 'password1234' -u "${USER}@${HOSTNAME}" -f '-*-ubuntu mono-medium-r-no
 
 # resume dunst notifications
 killall -SIGUSR2 dunst
+
+# undim screen
+xbacklight -time 500 -steps 50 -set ${back_val} &
 
 # unmute audio
 #if (( $is_muted == 0 )); then
