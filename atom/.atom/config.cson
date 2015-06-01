@@ -11,13 +11,12 @@
       "vim-mode"
     ]
   editor:
-    fontFamily: "Source Code Pro"
-    fontSize: 14
     showInvisibles: true
     showIndentGuide: true
     tabLength: 4
     softWrap: true
     invisibles: {}
+    fontFamily: "Source Code Pro"
   linter:
     lintOnChangeInterval: 2000
     showErrorInline: true
