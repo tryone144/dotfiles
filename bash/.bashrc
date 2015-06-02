@@ -34,6 +34,9 @@ alias update='yaourt -Syua'
 alias rainbow='for i in {0..255}; do echo -e "\e[0;38;5;${i};49;22m${i}: COLOR RAINBOW\e[0m"; done'
 alias win7='_PWD_SAVE=${PWD}; cd /opt/kvm/; ./start_win7.sh -spice-client spicy; cd ${_PWD_SAVE}'
 
+# The Fuck (command regeneration)
+alias fuck='eval $(thefuck $(fc -ln -1)); history -r'
+
 # Le Prompts
 #PS1='[\u@\h \W]\$ ' # Default Bash Prompt
 function _update_ps1() {
