@@ -1,9 +1,10 @@
 "
 " VIM
 " Personal Vim configuration
+" uses plugins from 'vim-plugins' package
 " 
 " file: ~/.vimrc
-" v0.2 / 2015.03.04
+" v0.3 / 2015.03.04
 "
 " (c) 2015 Bernd Busse
 "
@@ -26,9 +27,7 @@ set whichwrap=""
 set number
 set ruler
 set wildmenu
-"if has("mouse")
-"    set mouse=a
-"endif
+set laststatus=2
 
 set grepprg=grep\ -nH\ $*
 
@@ -36,6 +35,11 @@ set grepprg=grep\ -nH\ $*
 let g:tex_flavor = "latex"
 let g:Tex_DefaultTargetFormat = 'pdf'
 let g:Tex_MultipleCompileFormats = 'dvi,pdf'
+
+" Airline
+let g:airline_powerline_fonts=1
+
+:map <c-n> :NERDTreeToggle .<CR>
 
 if has("gui_running")
     " GUI - Theme
@@ -60,5 +64,6 @@ endif
 
 filetype plugin indent on
 syntax on
+
 let g:pydiction_location='/usr/share/pydiction/complete-dict'
 
