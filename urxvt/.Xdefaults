@@ -21,14 +21,17 @@ URxvt*.boldFont: xft:Ubuntu Mono derivative Powerline:bold:size=12
 URxvt*.geometry: 132x43
 URxvt*.scrollstyle: plain
 URxvt*.scrollBar_right: true
-URxvt*.secondaryScroll: true
+URxvt*.secondaryScreem: 1
+URxvt*.secondaryScroll: 0
 URxvt*.scrollTtyOutput: false
 URxvt*.scrollWithBuffer: true
 URxvt*.scrollTtyKeypress: true
 URxvt*.print-pipe: "cat > ~/.urxvt/$(date).dump"
 URxvt*.cursorBlink: true
-URxvt*.per-ext-common: default,matcher,vtwheel
+URxvt*.perl-ext-common: default,matcher,vtwheel,font-size
 URxvt*.urlLoader: chromium
+URxvt*.keysym.Control-0x2b: perl:font-size:increase
+URxvt*.keysym.Control-0x2d: perl:font-size:decrease
 
 /* colors */
 URxvt*.foreground: #00FF00
