@@ -32,6 +32,8 @@ URxvt*.perl-ext-common: default,matcher,vtwheel,font-size
 URxvt*.urlLoader: chromium
 URxvt*.keysym.Control-0x2b: perl:font-size:increase
 URxvt*.keysym.Control-0x2d: perl:font-size:decrease
+URxvt*.keysym.Control-0: perl:font-size:reset
+URxvt*.font-size.step: 4
 
 /* colors */
 URxvt*.foreground: #00FF00
