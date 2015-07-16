@@ -15,14 +15,21 @@
     showIndentGuide: true
     tabLength: 4
     softWrap: true
-    invisibles: {}
+    invisibles:
+      {}
     fontFamily: "Source Code Pro"
   linter:
     lintOnChangeInterval: 2000
     showErrorInline: true
-  "vim-surround": {}
-  "linter-cpplint": {}
-  minimap: {}
-  "linter-flake8": {}
-  "linter-clang": {}
-  "autocomplete-plus": {}
+  "vim-surround":
+    {}
+  "linter-cpplint":
+    {}
+  minimap:
+    {}
+  "linter-flake8":
+    {}
+  "linter-clang":
+    {}
+  "autocomplete-plus":
+    {}
