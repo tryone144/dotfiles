@@ -6,7 +6,7 @@
 #          [powerline-fonts]
 # 
 # file: ~/.bashrc
-# v1.6.2 / 2015.06.01
+# v1.6.3 / 2015.07.31
 #
 # (c) 2015 Bernd Busse
 #
@@ -35,6 +35,15 @@ alias update='yaourt -Syua'
 alias webcam='mplayer tv:// -tv driver=v4l2 -vo gl'
 alias rainbow='for i in {0..255}; do echo -e "\e[0;38;5;${i};49;22m${i}: COLOR RAINBOW \e[7m INVERT :D \e[0m"; done'
 alias win7='_PWD_SAVE=${PWD}; cd /opt/kvm/; ./start_win7.sh -spice-client spicy; cd ${_PWD_SAVE}'
+
+# Colorized manpages
+export LESS_TERMCAP_mb=$'\E[01;31m'         # begin blink
+export LESS_TERMCAP_md=$'\E[01;38;5;196m'   # begin bold
+export LESS_TERMCAP_me=$'\E[0m'             # end mode
+export LESS_TERMCAP_so=$'\E[38;5;226m'      # begin standout
+export LESS_TERMCAP_se=$'\E[0m'             # end standout
+export LESS_TERMCAP_us=$'\E[04;38;5;63m'    # begin underline
+export LESS_TERMCAP_ue=$'\E[0m'             # end underline
 
 # The Fuck (command regeneration)
 alias fuck='eval $(thefuck $(fc -ln -1)); history -r'
