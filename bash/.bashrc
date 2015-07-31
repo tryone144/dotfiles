@@ -30,6 +30,7 @@ export $(gnome-keyring-daemon -s)
 alias ls='ls --color=auto -h'
 alias grep='grep --color=auto'
 alias clr='clear; archey3 --config=~/.config/archey3.cfg'
+alias clrmem="sudo bash -c 'echo 3 > /proc/sys/vm/drop_caches'"
 alias update='yaourt -Syua'
 alias webcam='mplayer tv:// -tv driver=v4l2 -vo gl'
 alias rainbow='for i in {0..255}; do echo -e "\e[0;38;5;${i};49;22m${i}: COLOR RAINBOW \e[7m INVERT :D \e[0m"; done'
