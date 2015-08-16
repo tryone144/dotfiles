@@ -178,6 +178,9 @@ client.unfocused        #222222 #333333 #888888 #888888
 # default container mode
 workspace_layout stacking
 
+# delete window titlebar
+for_window [class="^.*"] border pixel 1
+
 
 ###########
 ## RULES ##
