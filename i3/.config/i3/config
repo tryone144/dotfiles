@@ -20,6 +20,7 @@ exec_always --no-startup-id ${I3_CONFIG}/autostart
 # variable deklaration
 set $left-mon       DVI-I-1
 set $right-mon      DVI-D-0
+set $notebook       eDP1
 
 #################
 ## WM CONTROLS ##
@@ -221,6 +222,8 @@ bar {
 bar {
     id tray
     position bottom
+    output $left-mon
+    output $notebook
     
     mode hide
     hidden_state hide
