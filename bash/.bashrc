@@ -51,7 +51,7 @@ alias fuck='eval $(thefuck $(fc -ln -1)); history -r'
 # Le Prompts
 #PS1='[\u@\h \W]\$ ' # Default Bash Prompt
 function _update_ps1() {
-    export PS1="$(arrowline ${?} 2> /dev/null)"
+    export PS1="$( arrowline ${?} 2> /dev/null || echo 'arrowline failed! [\u@\h \W]\$ ' )"
 }
 export PROMPT_COMMAND=_update_ps1
 
