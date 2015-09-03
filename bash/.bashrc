@@ -55,11 +55,6 @@ function _update_ps1() {
 }
 export PROMPT_COMMAND=_update_ps1
 
-if [[ -z "$DISPLAY" ]]; then
-    # set powerline console font
-    setfont ter-powerline-v16b
-fi
-
 #Archey3 greeting
 archey3 --config=~/.config/archey3.cfg
 
