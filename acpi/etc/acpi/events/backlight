@@ -1,0 +1,4 @@
+# handle hardware brightness keys
+event=video/brightness(up|down).*
+action=/etc/acpi/backlight.sh %e
+
