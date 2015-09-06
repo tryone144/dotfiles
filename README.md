@@ -4,7 +4,6 @@ Dotfiles
 Just my 0.02$ to all the dotfile collections.
 
     acpi[etc]           -> acpi handler (volume / backlight)
-    atom                -> config for atom editor
     archey3             -> config for archey3
     bash                -> bash config with custom powerline-styled prompt
     compton             -> compton compositor with minmal transparency
