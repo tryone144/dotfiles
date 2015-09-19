@@ -129,6 +129,10 @@ class pulseaudio_sink(sink):
         self.call(cmd)
 
     def raise_volume(self, step=10):
+        if self.get_volume() + step > 100:
+            self.set_volume(100)
+            return
+
         cmd = self.cmd + ['set-sink-volume', str(self.index),
                           '+{0}%'.format(step)]
         self.call(cmd)
