@@ -173,7 +173,7 @@ def get_sinks():
         out = str(subprocess.check_output(cmd), "utf-8").splitlines()
 
         for i in range(len(out)):
-            sink = re.search('^([0-9])\t.*\t(.+)\t.*\tRUNNING$', out[i], re.M)
+            sink = re.search('^([0-9])\t.*\t(.+)\t.*\t\w+$', out[i], re.M)
             if sink is not None:
                 if not re.search('null', sink.group(2), re.I) \
                         and not re.search('equalizer', sink.group(2), re.I):
