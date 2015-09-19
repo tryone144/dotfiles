@@ -5,10 +5,9 @@
 #   needs: [nitrogen]
 #          [dunst]
 #          [compton]
-#          [pasystray]
 #
 # file: ~/.config/i3/autostart
-# v0.3.1 / 2015.01.25
+# v0.4 / 2015.09.19
 #
 # (c) 2015 Bernd Busse
 #
@@ -26,14 +25,5 @@ if [[ -z $(pgrep compton) ]]; then
     compton &
 fi
 
-# start audio 'jack-rack' and 'qjackctl' only on desktop computer
-if [ ${HOSTNAME} == "sachnix" ]; then
-    if [[ -z $(pgrep jack-rack) ]]; then
-        sleep 5 && jack-rack -n -c 6 ${HOME}/.config/jack/equalizer &
-    fi
-    if [[ -z $(pgrep qjackctl) ]]; then
-        qjackctl &
-    fi
-    sleep 5 && pactl -- set-sink-volume @DEFAULT_SINK@ 20% &
-fi
+sleep 5 && pactl -- set-sink-volume @DEFAULT_SINK@ 20% &
 
