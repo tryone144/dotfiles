@@ -56,9 +56,9 @@ bindsym $mod+Shift+l    exec --no-startup-id ${I3_CONFIG}/scripts/locker.sh
 bindsym --release $mod+Print    exec --no-startup-id ${I3_CONFIG}/scripts/screenshot.sh
 
 # change volume
-#bindsym XF86AudioRaiseVolume    exec --no-startup-id ${I3_CONFIG}/scripts/volume.py raise 5
-#bindsym XF86AudioLowerVolume    exec --no-startup-id ${I3_CONFIG}/scripts/volume.py lower 5
-#bindsym XF86AudioMute           exec --no-startup-id ${I3_CONFIG}/scripts/volume.py toggle
+bindsym XF86AudioRaiseVolume    exec --no-startup-id ${I3_CONFIG}/scripts/volume.py raise 5
+bindsym XF86AudioLowerVolume    exec --no-startup-id ${I3_CONFIG}/scripts/volume.py lower 5
+bindsym XF86AudioMute           exec --no-startup-id ${I3_CONFIG}/scripts/volume.py toggle
 
 # change brightness
 #bindsym XF86MonBrightnessUp     exec --no-startup-id ${I3_CONFIG}/scripts/brightness.py inc

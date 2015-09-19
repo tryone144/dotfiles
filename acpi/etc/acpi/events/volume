@@ -1,4 +1,0 @@
-# handle hardware volume keys
-event=button/(mute|volume(up|down)|f20).*
-action=/etc/acpi/volume.sh %e
-
