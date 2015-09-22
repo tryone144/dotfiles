@@ -5,7 +5,7 @@
 #   needs: [dmenu2]
 #
 # file: ~/.config/i3/scripts/poweroff.sh
-# v1.2 / 2015.03.04
+# v1.2.1 / 2015.09.22
 #
 # (c) 2015 Bernd Busse
 #
@@ -41,10 +41,11 @@ case "${value:2}" in
         systemctl reboot
         ;;
     "suspend") # suspend computer
-        systemctl suspend
+        ${I3_CONFIG}/scripts/locker.sh &
+        sleep 2 && systemctl suspend
         ;;
     "lock screen") # lock screen
-        ${I3_CONFIG}/scripts/locker.sh
+        ${I3_CONFIG}/scripts/locker.sh &
         ;;
     "reload i3") # reload i3
         i3-msg reload
