@@ -25,5 +25,3 @@ if [[ -z $(pgrep compton) ]]; then
     compton &
 fi
 
-sleep 5 && pactl -- set-sink-volume @DEFAULT_SINK@ 20% &
-
