@@ -2,7 +2,9 @@
 #
 # I3WM
 # Helper to open favorite applications (for keyboard shortcuts)
-#   needs: [urxvt]
+#   selected:   [urxvt]
+#               [chromium]
+#               [nautilus]
 #
 # file: scripts/defaults.sh
 # v0.2 / 2015.04.30
