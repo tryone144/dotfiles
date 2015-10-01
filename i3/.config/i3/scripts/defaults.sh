@@ -12,13 +12,13 @@
 
 case "${1}" in
     "terminal") # Terminal Emulator ==> urxvt
-        /usr/bin/urxvt
+        exec /usr/bin/urxvt
         ;;
     "web") # Webbrowser ==> chromium
-        /usr/bin/chromium
+        exec /usr/bin/chromium
         ;;
     "files") # Dateimanager ==> nautilus
-        /usr/bin/nautilus --new-window
+        exec /usr/bin/nautilus --new-window
         ;;
     *) # unknown
         echo "Unkown favorite: ${1}" 1>&2
