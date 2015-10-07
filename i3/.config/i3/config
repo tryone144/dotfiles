@@ -41,9 +41,9 @@ bindsym $mod+t          bar mode toggle tray
 #############
 
 # start favorite applications
-bindsym $mod+Return     exec --no-startup-id ~/.config/i3/scripts/defaults.sh terminal
-bindsym $mod+c          exec --no-startup-id ~/.config/i3/scripts/defaults.sh web
-bindsym $mod+n          exec --no-startup-id ~/.config/i3/scripts/defaults.sh files
+bindsym $mod+Return     exec --no-startup-id ${I3_CONFIG}/scripts/defaults.sh terminal
+bindsym $mod+c          exec --no-startup-id ${I3_CONFIG}/scripts/defaults.sh web
+bindsym $mod+n          exec --no-startup-id ${I3_CONFIG}/scripts/defaults.sh files
 
 # start dmenu launcher
 bindsym $mod+d          exec --no-startup-id ${I3_CONFIG}/scripts/launcher.sh desktop
@@ -195,6 +195,7 @@ for_window [class="^Minecraft" instance="^Minecraft"] floating enable
 # Start i3bar to display a workspace bar plus conky statusline
 bar {
     status_command              j4status
+    #status_command ${I3_CONFIG}/scripts/i3ws.py
     
     mode                        dock
     position                    top
