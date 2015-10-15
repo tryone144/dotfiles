@@ -34,6 +34,7 @@ bindsym $mod+Control+r  restart
 bindsym $mod+Shift+q    exec --no-startup-id ${I3_CONFIG}/scripts/poweroff.sh
 # show i3bar with systray
 bindsym $mod+t          bar mode toggle tray
+bindsym $mod+b          bar mode toggle backup
 
 
 #############
@@ -192,13 +193,15 @@ for_window [class="^Minecraft" instance="^Minecraft"] floating enable
 ## BAR ##
 #########
 
-# Start i3bar to display a workspace bar plus conky statusline
+# Start i3bar to display a workspace- and status-bar backup
 bar {
+    id                          backup
     status_command              j4status
-    #status_command ${I3_CONFIG}/scripts/i3ws.py
     
-    mode                        dock
+    mode                        hide
+    hidden_state                hide
     position                    top
+    modifier                    Mod3
     
     workspace_buttons           yes
     strip_workspace_numbers     no
@@ -215,21 +218,29 @@ bar {
     }
 }
 
+# Start lemonbar to display a workspace- and status-bar
+bar {
+    id                  status
+    position            top
+
+    i3bar_command       exec ${I3_CONFIG}/lemonbar.sh
+}
+
 # Start i3bar to display the systray icons when needed
 bar {
-    id tray
-    position bottom
-    output $left-mon
-    output $notebook
+    id                  tray
+    position            bottom
+    output              $left-mon
+    output              $notebook
     
-    mode hide
-    hidden_state hide
+    mode                hide
+    hidden_state        hide
     
-    modifier Mod3
+    modifier            Mod3
     
-    workspace_buttons no
-    tray_output primary
+    workspace_buttons   no
+    tray_output         primary
 
-    font pango:Ubuntu Mono 10
+    font                pango:Ubuntu Mono 10
 }
 

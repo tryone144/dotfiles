@@ -18,6 +18,7 @@ font_normal="Ubuntu Mono derivative Powerline-11"
 font_icon="Ionicons-12"
 
 if [ $(pgrep -cx $(basename $0)) -gt 1 ] ; then
+    echo "$(basename $0)"
     echo "The status bar is already running." >&2
     exit 1
 fi

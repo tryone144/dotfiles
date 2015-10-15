@@ -14,6 +14,7 @@ import json
 import re
 import sys
 import threading
+import time
 
 POSITION_LEFT = 0
 POSITION_RIGHT = 1
@@ -476,6 +477,23 @@ def on_change_ws(i3, event):
         renderer.render()
 
 
+def ws_thread():
+    global renderer
+    while True:
+        i3 = i3ipc.Connection()
+        renderer.update_workspace(i3.get_workspaces())
+        renderer.render()
+
+        i3.on("workspace", on_change_ws)
+        i3.main()
+        time.sleep(2)
+
+
+def die(msg, code=1):
+    fprint_nb(sys.stderr, msg)
+    sys.exit(code)
+
+
 def run(workspace=False):
     global renderer
     renderer = Renderer(daemon=True)
@@ -483,12 +501,7 @@ def run(workspace=False):
 
     # open i3 IPC socket
     if workspace:
-        i3 = i3ipc.Connection()
-        renderer.update_workspace(i3.get_workspaces())
-        renderer.render()
-
-        i3.on("workspace", on_change_ws)
-        i3_thread = threading.Thread(target=i3.main, daemon=True)
+        i3_thread = threading.Thread(target=ws_thread, daemon=True)
         i3_thread.start()
 
     try:
@@ -500,9 +513,7 @@ def run(workspace=False):
             try:
                 json.loads(_head)
             except json.decoder.JSONDecodeError as e:
-                fprint_nb(sys.stderr,
-                          "Error parsing JSON Header: " + e.msg + "\n")
-                sys.exit(1)
+                die("Error parsing JSON Header: " + e.msg + "\n")
             finally:
                 break
 
@@ -510,8 +521,7 @@ def run(workspace=False):
         while True:
             _start = sys.stdin.readline()
             if _start == "":
-                fprint_nb(sys.stderr, "Error: Cannot read opening tag\n")
-                sys.exit(1)
+                die("Error: Cannot read opening tag\n")
             if _start[0] == "[":
                 break
 
