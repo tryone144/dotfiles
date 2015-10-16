@@ -14,7 +14,6 @@ import json
 import re
 import sys
 import threading
-import time
 
 POSITION_LEFT = 0
 POSITION_RIGHT = 1
@@ -371,6 +370,10 @@ class Renderer(threading.Thread):
                                      .replace("Full ", "") \
                                      .replace("Chr ", "") \
                                      .replace("Empty ", "")
+
+            if "color" in tag.keys() and tag["color"] == "#FF0000":
+                new["text"] = new["text"].replace(ICON_BATTERY_HALF,
+                                                  ICON_BATTERY_LOW)
         elif new["name"] == "time":
             new["actions"][0] = "date|toggle"
 
@@ -471,49 +474,42 @@ class Renderer(threading.Thread):
 
 
 def on_change_ws(i3, event):
-    if event.change in ('focus', 'init', 'empty', 'urgent'):
-        global renderer
-        renderer.update_workspace(i3.get_workspaces())
-        renderer.render()
-
-
-def ws_thread():
     global renderer
-    while True:
+
+    if event.change in ('focus', 'init', 'empty', 'urgent'):
+        if renderer is not None:
+            renderer.update_workspace(i3.get_workspaces())
+            renderer.render()
+
+
+def ws_thread(quit_event=None):
+    global renderer
+
+    try:
         i3 = i3ipc.Connection()
-        renderer.update_workspace(i3.get_workspaces())
-        renderer.render()
+        if renderer is not None:
+            renderer.update_workspace(i3.get_workspaces())
+            renderer.render()
 
         i3.on("workspace", on_change_ws)
         i3.main()
-        time.sleep(2)
+
+        die_thread(quit_event, "connection to i3 lost.")
+    except:
+        die_thread(quit_event)
 
 
-def die(msg, code=1):
-    fprint_nb(sys.stderr, msg)
-    sys.exit(code)
-
-
-def run(workspace=False):
+def stdin_thread(quit_event=None):
     global renderer
-    renderer = Renderer(daemon=True)
-    renderer.start()
-
-    # open i3 IPC socket
-    if workspace:
-        i3_thread = threading.Thread(target=ws_thread, daemon=True)
-        i3_thread.start()
 
     try:
         # read header tags
         while True:
             _head = sys.stdin.readline()
             if _head == "":
-                continue
+                die_thread(quit_event, "stdin closed.")
             try:
                 json.loads(_head)
-            except json.decoder.JSONDecodeError as e:
-                die("Error parsing JSON Header: " + e.msg + "\n")
             finally:
                 break
 
@@ -521,7 +517,7 @@ def run(workspace=False):
         while True:
             _start = sys.stdin.readline()
             if _start == "":
-                die("Error: Cannot read opening tag\n")
+                die_thread(quit_event, "stdin closed.")
             if _start[0] == "[":
                 break
 
@@ -529,20 +525,53 @@ def run(workspace=False):
         while True:
             _line = sys.stdin.readline()
             if _line == "":
-                continue
+                die_thread(quit_event, "stdin closed.")
             if _line.startswith(","):
                 _line = _line[1:]
 
             try:
-                obj = json.loads(_line)
-                renderer.update_status(obj)
-                renderer.render()
+                if renderer is not None:
+                    renderer.update_status(json.loads(_line))
+                    renderer.render()
             except json.decoder.JSONDecodeError as e:
                 fprint_nb(sys.stderr,
                           "Error decoding JSON: " + e.msg + "\n")
+    except:
+        die_thread(quit_event)
 
+
+def die_thread(event, msg="stopped unexpectedly"):
+    if event is not None:
+        fprint_nb(sys.stderr, "Error: " + msg + "\n")
+        event.set()
+    else:
+        raise RuntimeError(msg)
+
+
+def run(workspace=False):
+    global renderer
+    renderer = Renderer(daemon=True)
+    renderer.start()
+
+    stop_event = threading.Event()
+
+    # open i3 IPC socket
+    if workspace:
+        i3_thread = threading.Thread(target=ws_thread,
+                                     kwargs={"quit_event": stop_event},
+                                     daemon=True)
+        i3_thread.start()
+
+    # start json parser
+    status_thread = threading.Thread(target=stdin_thread,
+                                     kwargs={"quit_event": stop_event},
+                                     daemon=True)
+    status_thread.start()
+
+    try:
+        stop_event.wait()
     except KeyboardInterrupt:
-        print()
+        fprint_nb(sys.stderr, "Got KeyboardInterrupt. exiting...\n")
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(
