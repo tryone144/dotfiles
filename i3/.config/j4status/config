@@ -5,7 +5,7 @@
 #          [NetworkManager]
 #
 # file: ~/.config/i3/j4status.conf
-# v0.1 / 2015.02.25
+# v0.2 / 2015.10.15
 #
 # (c) 2015 Bernd Busse
 #
@@ -13,20 +13,80 @@
 # PLUGIN config
 [Plugins]
 Output=i3bar
-Input=pulseaudio;nm;upower;time;
+# TO REMOVE: fsinfo, mem, sensors
+Input=pulseaudio;backlight;nm;cpu;mem;sensors;upower;time;
+Order=pulseaudio;backlight;nm;cpu;mem;sensors;upower;time;
 
 # NETWORKMANAGER config
 [NetworkManager]
-Interfaces=eth0;wlan0;
+Interfaces=eth0;usb0;wlan0;
+HideUnavailable=true
 
 [NetworkManager Formats]
 Addresses=IPv4
 
+[Override nm-ethernet:eth0]
+Label=:NET_ETHER_IC
+
+[Override nm-ethernet:usb0]
+Label=:NET_USB_IC
+
+[Override nm-wifi:wlan0]
+Label=:NET_WIFI_IC
+
 # PULSEAUDIO config
-[PulseAudio]
+[Override pulseaudio:combined]
+Label=:VOL_IC
+
+[Override pulseaudio:alsa_output.pci-0000_00_1b.0.analog-stereo]
+Disable=true
+
+[Override pulseaudio:alsa_output.pci-0000_00_03.0.hdmi-stereo]
+Disable=true
+
+# BACKLIGHT config
+[Override backlight]
+Label=:LIGHT_IC
+
+# UPOWER config
+[Override upower-battery:BAT0]
+Label=:BAT_IC
+
+[Override upower-battery:BAT1]
+Label=:BAT_IC
+
+# SENSORS config
+[Sensors]
+Sensors=coretemp-*
+Interval=10
+
+[Override sensors:coretemp-isa-0000/temp1]
+Label=:TEMP_IC
+
+[Override sensors:coretemp-isa-0000/temp2]
+Disable=true
+
+[Override sensors:coretemp-isa-0000/temp3]
+Disable=true
+
+# CPU config
+[CPULoad]
+Frequency=5
+
+[Override cpu]
+Label=:CPU_IC
+
+# RAM config
+[Memory]
+Frequency=30
+
+[Override mem]
+Label=:RAM_IC
 
 # TIME config
 [Time]
 Interval=5
 Format=%a, %d. %b %H:%M
 
+[Override time:local]
+Label=:TIME_IC

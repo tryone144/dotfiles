@@ -9,12 +9,12 @@
 #          [ionicons-font]
 #
 # file: ~/.config/i3/lemonbar.sh
-# v0.3 / 2015.10.15
+# v0.4 / 2015.10.16
 #
 
 panel_fifo="/tmp/i3_lemonbar_${USER}"
 
-font_normal="Ubuntu Mono derivative Powerline-11"
+font_normal="Ubuntu Mono derivative Powerline-12"
 font_icon="Ionicons-12"
 
 if [ $(pgrep -cx $(basename $0)) -gt 1 ] ; then
@@ -29,7 +29,7 @@ trap 'trap - TERM; kill 0' INT TERM QUIT EXIT
 mkfifo "${panel_fifo}"
 
 # start status provider
-export PATH="${PATH}:${I3_CONFIG}/scripts"
+export PATH="${PATH}:${I3_CONFIG}/scripts:${I3_CONFIG}/panel"
 j4status > "${panel_fifo}" &
 
 # start lemonbar
@@ -50,11 +50,11 @@ arrowbar.py --workspace < "${panel_fifo}" \
                 "volume")
                     case ${action} in
                         "toggle")
-                            ${I3_CONFIG}/scripts/volume.py toggle ;;
+                            volume.py toggle ;;
                         "raise")
-                            ${I3_CONFIG}/scripts/volume.py raise 5 ;;
+                            volume.py raise 5 ;;
                         "lower")
-                            ${I3_CONFIG}/scripts/volume.py lower 5 ;;
+                            volume.py lower 5 ;;
                     esac ;;
                 "date")
                     ;;

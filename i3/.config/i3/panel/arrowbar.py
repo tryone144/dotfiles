@@ -3,9 +3,12 @@
 #
 # I3WM
 # powerline-styled wrapper for i3status/j4status
+#   needs: [i3]
+#          [powerline-fonts]
+#          [ionicon-fonts]
 #
-# file: ~/.config/i3/scripts/arrowbar.py
-# v0.3 / 2015.10.15
+# file: ~/.config/i3/panel/arrowbar.py
+# v0.4 / 2015.10.16
 #
 
 import argparse
@@ -25,13 +28,20 @@ SEPARATOR_SEGMENT_LEFT = ""    # \uE0B2
 SEPARATOR_PATH_RIGHT = ""      # \uE0B1
 SEPARATOR_PATH_LEFT = ""       # \uE0B3
 
+ICON_TIME = ""                 # \uF3B3
+ICON_BACKLIGHT = ""            # \uF29B
+ICON_CPU = ""                  # \uF2B3
+ICON_MEM = ""                  # \uF313
+ICON_TEMP = ""                 # \uF2B6
+
+ICON_STORAGE_DISK = ""         # \uF44E
+ICON_STORAGE_HOME = ""         # \uF144
+
 ICON_BATTERY_EMPTY = ""        # \uF112
 ICON_BATTERY_LOW = ""          # \uF115
 ICON_BATTERY_HALF = ""         # \uF114
 ICON_BATTERY_FULL = ""         # \uF113
 ICON_BATTERY_CHARGE = ""       # \uF111
-
-ICON_TIME = ""                 # \uF3B3
 
 ICON_VOLUME_MUTE = ""          # \uF3B9
 ICON_VOLUME_LOW = ""           # \uF3B8
@@ -43,7 +53,7 @@ ICON_NETWORK_ETHER = ""        # \uF341
 ICON_NETWORK_USB = ""          # \uF2B8
 
 # RegEx and format-strings
-ICON_EXP = re.compile(":(.*)_ICON:")
+ICON_EXP = re.compile(":(.*)_IC:")
 BAT_EXP = re.compile("(Bat|Chr|Full|Empty)\s")
 VOL_EXP = re.compile("([\d]+)%")
 
@@ -64,7 +74,7 @@ COLOR_WORKSPACE_URGENT_FG = COLOR_URGENT_FG
 COLOR_WORKSPACE_URGENT_BG = COLOR_URGENT_BG
 
 COLOR_STATUS_TIME_FG = "#EEE"
-COLOR_STATUS_TIME_BG = "#333"
+COLOR_STATUS_TIME_BG = "#1793d1"
 COLOR_STATUS_URGENT_FG = COLOR_URGENT_FG
 COLOR_STATUS_URGENT_BG = COLOR_URGENT_BG
 
@@ -110,7 +120,9 @@ class Renderer(threading.Thread):
     SEGMENTS_LEFT = [re.compile(pat) for pat in ("workspace", )]
     SEGMENTS_CENTER = [re.compile(pat) for pat in ()]
     SEGMENTS_RIGHT = [re.compile(pat) for pat in ("pulseaudio",
+                                                  "backlight",
                                                   "nm-*",
+                                                  "cpu", "sensors", "mem",
                                                   "upower-battery",
                                                   "time", )]
 
@@ -166,6 +178,7 @@ class Renderer(threading.Thread):
             return ""
 
         output = ""
+        action_end = ""
         color_bg = tag[0]["color_bg"]
 
         if position == POSITION_LEFT:
@@ -194,10 +207,8 @@ class Renderer(threading.Thread):
                 for b, a in enumerate(t["actions"]):
                     if a is not None:
                         output += ACTION_START_FMT.format(button=b+1, action=a)
-                output += t["text"]
-                for b, a in enumerate(t["actions"]):
-                    if a is not None:
-                        output += ACTION_END_FMT.format(button=b+1)
+                        action_end += ACTION_END_FMT.format(button=b+1)
+                output += t["text"] + action_end
 
             # draw end (separator)
             output += self.__escape_color(fg=color_bg)
@@ -249,10 +260,8 @@ class Renderer(threading.Thread):
                 for b, a in enumerate(t["actions"]):
                     if a is not None:
                         output += ACTION_START_FMT.format(button=b+1, action=a)
-                output += t["text"]
-                for b, a in enumerate(t["actions"]):
-                    if a is not None:
-                        output += ACTION_END_FMT.format(button=b+1)
+                        action_end += ACTION_END_FMT.format(button=b+1)
+                output += t["text"] + action_end
 
             # draw end (separator)
             output += self.__escape_color(fg=color_bg)
@@ -289,10 +298,8 @@ class Renderer(threading.Thread):
                 for b, a in enumerate(t["actions"]):
                     if a is not None:
                         output += ACTION_START_FMT.format(button=b+1, action=a)
-                output += t["text"]
-                for b, a in enumerate(t["actions"]):
-                    if a is not None:
-                        output += ACTION_END_FMT.format(button=b+1)
+                        action_end += ACTION_END_FMT.format(button=b+1)
+                output += t["text"] + action_end
 
             # draw end
             if last:
@@ -370,18 +377,19 @@ class Renderer(threading.Thread):
                                      .replace("Full ", "") \
                                      .replace("Chr ", "") \
                                      .replace("Empty ", "")
-
-            if "color" in tag.keys() and tag["color"] == "#FF0000":
-                new["text"] = new["text"].replace(ICON_BATTERY_HALF,
-                                                  ICON_BATTERY_LOW)
+            new["color_bg"] = "#444"
+            if "color" in tag.keys():
+                new["color_fg"] = tag["color"]
+                if tag["color"] == "#FF0000":
+                    new["text"] = new["text"].replace(ICON_BATTERY_HALF,
+                                                      ICON_BATTERY_LOW)
         elif new["name"] == "time":
             new["actions"][0] = "date|toggle"
-
             new["color_fg"] = COLOR_STATUS_TIME_FG
             new["color_bg"] = COLOR_STATUS_TIME_BG
         elif new["name"] == "pulseaudio":
             new["actions"][0] = "volume|toggle"
-
+            new["color_bg"] = "#555"
             if "color" in tag.keys() and tag["color"] == "#FF0000":
                 new["text"] = new["text"].replace(ICON_VOLUME_HIGH,
                                                   ICON_VOLUME_MUTE) \
@@ -389,9 +397,10 @@ class Renderer(threading.Thread):
                                                   ICON_VOLUME_MUTE) \
                                          .replace(ICON_VOLUME_LOW,
                                                   ICON_VOLUME_MUTE)
+                new["color_bg"] = "#846"
+        elif new["name"] == "backlight":
+            pass
 
-        if "color" in tag.keys():
-            new["color_fg"] = tag["color"]
         if "urgent" in tag.keys() and tag["urgent"]:
             new["color_fg"] = COLOR_STATUS_URGENT_FG
             new["color_bg"] = COLOR_STATUS_URGENT_BG
@@ -446,6 +455,8 @@ class Renderer(threading.Thread):
                 return ICON_VOLUME_MEDIUM
             else:
                 return ICON_VOLUME_HIGH
+        elif mode == "LIGHT":
+            return ICON_BACKLIGHT
         elif mode[:3] == "NET":
             iface = mode[4:]
             if iface == "WIFI":
@@ -456,6 +467,12 @@ class Renderer(threading.Thread):
                 return ICON_NETWORK_ETHER
         elif mode == "TIME":
             return ICON_TIME
+        elif mode == "CPU":
+            return ICON_CPU
+        elif mode == "RAM":
+            return ICON_MEM
+        elif mode == "TEMP":
+            return ICON_TEMP
         else:
             return ""
 
