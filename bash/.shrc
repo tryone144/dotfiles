@@ -3,7 +3,7 @@
 # .little function tools for my bash
 # 
 # file: ~/.bashrc
-# v1.0 / 2015.04.15
+# v1.1 / 2015.10.20
 #
 # (c) 2015 Bernd Busse
 #
@@ -41,5 +41,43 @@ function battery() {
         _state="$(echo "$output" | grep 'state' | sed -re 's/^\s*state:\s*(.*)$/\1/g')"
         echo "${_name}: ${_percentage} (${_state})"
     done
+}
+
+# Manage local and remote proxy settings
+function manage_proxy() {
+    case ${1} in
+        set)
+            source /etc/profile.d/proxy.sh
+            echo "Setting proxy to ${PROXY_IP}:${PROXY_PORT}..."
+            gsettings set org.gnome.system.proxy mode 'manual' 
+            gsettings set org.gnome.system.proxy.http host "${PROXY_IP}"
+            gsettings set org.gnome.system.proxy.http port ${PROXY_PORT}
+            gsettings set org.gnome.system.proxy.ftp host "${PROXY_IP}"
+            gsettings set org.gnome.system.proxy.ftp port ${PROXY_PORT}
+            gsettings set org.gnome.system.proxy.https host "${PROXY_IP}"
+            gsettings set org.gnome.system.proxy.https port ${PROXY_PORT}
+            gsettings set org.gnome.system.proxy ignore-hosts "['localhost', '127.0.0.0/8', '10.0.0.0/8', '192.168.0.0/16', '172.16.0.0/12' , '*.rs.bussenet.de', '192.168.110.15' ]"
+            ;;
+        unset)
+            unset http_proxy; unset HTTP_PROXY
+            unset https_proxy; unset HTTPS_PROXY
+            unset ftp_proxy; unset FTP_PROXY
+            unset no_proxy; unset NO_PROXY
+            echo "Unsetting proxy..."
+            gsettings set org.gnome.system.proxy mode 'none' 
+            ;;
+        kill)
+            echo "Killing local proxy..."
+            sudo bash -c '/etc/NetworkManager/dispatcher.d/15-proxy eth0 kill'
+            ;;
+        restart)
+            echo "Restarting local proxy..."
+            sudo bash -c '/etc/NetworkManager/dispatcher.d/15-proxy eth0 kill && /etc/NetworkManager/dispatcher.d/15-proxy eth0 up'
+            ;;
+        *)
+            echo "unkown command: ${1}" >&2
+            exit 1
+            ;;
+    esac
 }
 

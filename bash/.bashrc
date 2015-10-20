@@ -6,7 +6,7 @@
 #          [powerline-fonts]
 # 
 # file: ~/.bashrc
-# v1.6.3 / 2015.07.31
+# v1.6.4 / 2015.10.20
 #
 # (c) 2015 Bernd Busse
 #
@@ -31,8 +31,8 @@ alias ls='ls --color=auto -h'
 alias grep='grep --color=auto'
 alias clr='clear; archey3 --config=~/.config/archey3.cfg'
 alias clrmem="sudo bash -c 'echo 3 > /proc/sys/vm/drop_caches'"
-alias unset_proxy="unset http_proxy; unset https_proxy; unset ftp_proxy; unset HTTP_PROXY; unset HTTPS_PROXY; unset FTP_PROXY"
 alias update='yaourt -Syua'
+alias rublogin="sudo bash -c '/etc/NetworkManager/dispatcher.d/20-rublogin eth0 up'"
 alias webcam='mplayer tv:// -tv driver=v4l2 -vo gl'
 alias rainbow='for i in {0..255}; do echo -e "\e[0;38;5;${i};49;22m${i}: COLOR RAINBOW \e[7m INVERT :D \e[0m"; done'
 alias win7='_PWD_SAVE=${PWD}; cd /opt/kvm/; ./start_win7.sh -spice-client spicy; cd ${_PWD_SAVE}'
