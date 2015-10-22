@@ -47,8 +47,13 @@ function battery() {
 function manage_proxy() {
     case ${1} in
         set)
-            source /etc/profile.d/proxy.sh
+            PROXY_IP="192.168.110.15"
+            PROXY_PORT=3128
             echo "Setting proxy to ${PROXY_IP}:${PROXY_PORT}..."
+            export http_proxy="http://${PROXY_IP}:${PROXY_PORT}"; export HTTP_PROXY="${http_proxy}"
+            export https_proxy="https://${PROXY_IP}:${PROXY_PORT}"; export HTTPS_PROXY="${https_proxy}"
+            export ftp_proxy="ftp://${PROXY_IP}:${PROXY_PORT}"; export FTP_PROXY="${https_proxy}"
+            export no_proxy="127.0.0.1, localhost, 192.168.110.1, 192.168.110.15"; export NO_PROXY="${no_proxy}"
             gsettings set org.gnome.system.proxy mode 'manual' 
             gsettings set org.gnome.system.proxy.http host "${PROXY_IP}"
             gsettings set org.gnome.system.proxy.http port ${PROXY_PORT}
@@ -59,20 +64,12 @@ function manage_proxy() {
             gsettings set org.gnome.system.proxy ignore-hosts "['localhost', '127.0.0.0/8', '10.0.0.0/8', '192.168.0.0/16', '172.16.0.0/12' , '*.rs.bussenet.de', '192.168.110.15' ]"
             ;;
         unset)
+            echo "Unsetting proxy..."
             unset http_proxy; unset HTTP_PROXY
             unset https_proxy; unset HTTPS_PROXY
             unset ftp_proxy; unset FTP_PROXY
             unset no_proxy; unset NO_PROXY
-            echo "Unsetting proxy..."
             gsettings set org.gnome.system.proxy mode 'none' 
-            ;;
-        kill)
-            echo "Killing local proxy..."
-            sudo bash -c '/etc/NetworkManager/dispatcher.d/15-proxy eth0 kill'
-            ;;
-        restart)
-            echo "Restarting local proxy..."
-            sudo bash -c '/etc/NetworkManager/dispatcher.d/15-proxy eth0 kill && /etc/NetworkManager/dispatcher.d/15-proxy eth0 up'
             ;;
         *)
             echo "unkown command: ${1}" >&2
