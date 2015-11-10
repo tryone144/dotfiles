@@ -165,25 +165,19 @@ class pulseaudio_sink(sink):
 
 
 # test for 'pactl'
-def get_sinks():
+def get_default_sink():
     if subprocess.call(["pactl"], stdout=subprocess.DEVNULL,
                        stderr=subprocess.DEVNULL) == 127:
         # no PulseAudio support, fallback to ALSA
-        return [alsa_sink(name="default")]
+        return alsa_sink(name="default")
     else:
-        sink_list = []
-
         cmd = ['pactl', '--', 'list', 'sinks', 'short']
         out = str(subprocess.check_output(cmd), "utf-8").splitlines()
 
-        for i in range(len(out)):
-            sink = re.search('^([0-9])\t.*\t(.+)\t.*\t\w+$', out[i], re.M)
+        for i, o in enumerate(out):
+            sink = re.search('^([0-9])\t(\w*combined\w*)\t.*$', o, re.M)
             if sink is not None:
-                if not re.search('null', sink.group(2), re.I) \
-                        and not re.search('equalizer', sink.group(2), re.I):
-                    sink_list.append(pulseaudio_sink(int(sink.group(1)), i))
-
-        return sink_list
+                return pulseaudio_sink(int(sink.group(1)), i)
 
 
 commands = ['mute',   'm',
@@ -213,37 +207,37 @@ def main():
         sys.exit(1)
 
     action = args[1]
-    for s in get_sinks():
-        if action == 'toggle' or action == 't':
-            s.toggle_mute()
-            if verbose:
-                print("toggle mute ==> {0}".format(s))
-        elif action == 'mute' or action == 'm':
-            s.set_mute(mute=True)
-            if verbose:
-                print("mute on ==> {0}".format(s))
-        elif action == 'unmute' or action == 'u':
-            s.set_mute(mute=False)
-            if verbose:
-                print("mute off ==> {0}".format(s))
-        elif action == 'lower' or action == 'l':
-            try:
-                step = int(args[2])
-            except (IndexError, ValueError):
-                step = 10
-            s.lower_volume(step)
-            if verbose:
-                print("lower volume by {1}% ==> {0}".format(s, step))
-        elif action == 'raise' or action == 'r':
-            try:
-                step = int(args[2])
-            except (IndexError, ValueError):
-                step = 10
-            s.raise_volume(step)
-            if verbose:
-                print("raise volume by {1}% ==> {0}".format(s, step))
-        elif action == 'get' or action == 'g':
-            print(s)
+    s = get_default_sink()
+    if action == 'toggle' or action == 't':
+        s.toggle_mute()
+        if verbose:
+            print("toggle mute ==> {0}".format(s))
+    elif action == 'mute' or action == 'm':
+        s.set_mute(mute=True)
+        if verbose:
+            print("mute on ==> {0}".format(s))
+    elif action == 'unmute' or action == 'u':
+        s.set_mute(mute=False)
+        if verbose:
+            print("mute off ==> {0}".format(s))
+    elif action == 'lower' or action == 'l':
+        try:
+            step = int(args[2])
+        except (IndexError, ValueError):
+            step = 10
+        s.lower_volume(step)
+        if verbose:
+            print("lower volume by {1}% ==> {0}".format(s, step))
+    elif action == 'raise' or action == 'r':
+        try:
+            step = int(args[2])
+        except (IndexError, ValueError):
+            step = 10
+        s.raise_volume(step)
+        if verbose:
+            print("raise volume by {1}% ==> {0}".format(s, step))
+    elif action == 'get' or action == 'g':
+        print(s)
 
 if __name__ == '__main__':
     main()
