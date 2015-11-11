@@ -1,9 +1,10 @@
 #
 # I3WM
 # main config for i3
+#   needs: i3-gapps
 #
 # file: ~/.config/i3/config
-# v0.4.4 / 2015.09.24
+# v0.5 / 2015.10.29
 #
 # (c) 2015 Bernd Busse
 #
@@ -178,6 +179,10 @@ workspace_layout stacking
 
 # delete window titlebar
 for_window [class="^.*"] border pixel 1
+
+# default gaps [i3-gapps-next]
+gaps inner 10
+gaps outer 0
 
 
 ###########

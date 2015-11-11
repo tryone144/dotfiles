@@ -9,10 +9,10 @@
 #          [ionicons-font]
 #
 # file: ~/.config/i3/lemonbar.sh
-# v0.4 / 2015.10.16
+# v0.4.1 / 2015.11.04
 #
 
-panel_fifo="/tmp/i3_lemonbar_${USER}"
+panel_fifo="/dev/shm/i3_lemonbar_${USER}"
 
 font_normal="Ubuntu Mono derivative Powerline-12"
 font_icon="Ionicons-12"
