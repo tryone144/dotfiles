@@ -45,7 +45,7 @@ URxvt*.font-size.step: 4
 
 /* colors */
 URxvt*.foreground: #00FF00
-URxvt*.background: [90]#000000
+URxvt*.background: [70]#000000
 URxvt*.color0: #000000
 URxvt*.color1: #CD0000
 URxvt*.color2: #00CD00
