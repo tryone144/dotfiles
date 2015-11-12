@@ -28,6 +28,7 @@ ICON_BACKLIGHT = ""            # \uF29B
 ICON_CPU = ""                  # \uF2B3
 ICON_MEM = ""                  # \uF313
 ICON_TEMP = ""                 # \uF2B6
+ICON_WINTITLE = ""             # \uF119
 
 ICON_STORAGE_DISK = ""         # \uF44E
 ICON_STORAGE_HOME = ""         # \uF144
@@ -51,6 +52,7 @@ ICON_NETWORK_USB = ""          # \uF2B8
 ICON_EXP = re.compile(":(.*)_IC:")
 BAT_EXP = re.compile("(Bat|Chr|Full|Empty)\s")
 VOL_EXP = re.compile("([\d]+)%")
+STRIP_EXP = re.compile("^\d+:")
 
 ACTION_START_FMT = "%{{A{button}:{action}:}}"
 ACTION_END_FMT = "%{{A{button}}}"
@@ -103,6 +105,11 @@ COLOR_WORKSPACE_INACTIVE_BG = COLOR("#333")
 COLOR_WORKSPACE_URGENT_FG = COLOR_URGENT_FG
 COLOR_WORKSPACE_URGENT_BG = COLOR_URGENT_BG
 
+COLOR_TITLE_ICON_FG = COLOR("#CCC")
+COLOR_TITLE_ICON_BG = COLOR("#22D")
+COLOR_TITLE_URGENT_FG = COLOR_URGENT_FG
+COLOR_TITLE_URGENT_BG = COLOR_URGENT_BG
+
 COLOR_STATUS_TIME_FG = COLOR("#EEE")
 COLOR_STATUS_TIME_BG = COLOR("#1793d1")
 COLOR_STATUS_VOL_BG = COLOR("#555")
@@ -123,7 +130,7 @@ def print_nb(msg):
 
 
 class Renderer(object):
-    SEGMENTS_LEFT = [re.compile(pat) for pat in ("workspace", )]
+    SEGMENTS_LEFT = [re.compile(pat) for pat in ("workspace", "title", )]
     SEGMENTS_RIGHT = [re.compile(pat) for pat in ("pulseaudio",
                                                   "backlight",
                                                   "nm-*",
@@ -140,25 +147,46 @@ class Renderer(object):
         self.right = [[] for _ in Renderer.SEGMENTS_RIGHT]
 
         self.workspace_objs = []
+        self.title_objs = []
         self.status_objs = []
 
         for exp in Renderer.SEGMENTS_LEFT + Renderer.SEGMENTS_RIGHT:
             if exp.pattern == "workspace":
                 self.workspace_objs.append(exp.pattern)
+            elif exp.pattern == "title":
+                self.title_objs.append(exp.pattern)
             else:
                 self.status_objs.append(exp.pattern)
 
+        self.__separator_reset = self.__escape_color(bg="-") + \
+            SEPARATOR_SEGMENT_RIGHT + \
+            self.__escape_color(fg="-", bg="-")
+        self.__line_reset = self.__escape_color(fg="-", bg="-")
+        self.__title_icon_tag = self.__tag("title", " " + ICON_WINTITLE + " ",
+                                           color_fg=COLOR_TITLE_ICON_FG,
+                                           color_bg=COLOR_TITLE_ICON_BG)
+
     def set_outputs(self, out):
         self.show_on = out
+
+    def clear_title(self):
+        # clear old title
+        for i, exp in enumerate(Renderer.SEGMENTS_LEFT):
+            if exp.pattern in self.title_objs:
+                self.left[i].clear()
+                self.left[i].append(self.__title_icon_tag)
+
+        for i, exp in enumerate(Renderer.SEGMENTS_RIGHT):
+            if exp.pattern in self.title_objs:
+                self.right[i].clear()
+                self.right[i].append(self.__title_icon_tag)
 
     def render(self):
         for o, output in enumerate(self.outputs):
             output_left = "%{l}"
             output_right = "%{r}"
-            end_sep = self.__escape_color(bg="-") + \
-                SEPARATOR_SEGMENT_RIGHT + \
-                self.__escape_color(fg="-", bg="-")
-            end_line = self.__escape_color(fg="-", bg="-")
+            end_sep = self.__separator_reset
+            end_line = self.__line_reset
 
             left = self._filter(self.left, output)
             right = self._filter(self.right, output)
@@ -263,7 +291,7 @@ class Renderer(object):
             n_segs.append(n_tags)
         return n_segs
 
-    def update_workspace(self, objects):
+    def update_workspace(self, workspaces):
         # clear old workspace
         for i, exp in enumerate(Renderer.SEGMENTS_LEFT):
             if exp.pattern in self.workspace_objs:
@@ -274,7 +302,7 @@ class Renderer(object):
                 self.right[i].clear()
 
         # populate segment list
-        for ws in objects:
+        for ws in workspaces:
             for i, exp in enumerate(Renderer.SEGMENTS_LEFT):
                 if exp.match("workspace"):
                     self.left[i].append(self.__workspace_filter(ws))
@@ -283,8 +311,17 @@ class Renderer(object):
                 if exp.match("workspace"):
                     self.right[i].append(self.__workspace_filter(ws))
 
-    def update_title(self, objects):
-        fprint_nb(sys.stderr, objects)
+    def update_title(self, win):
+        self.clear_title()
+
+        # populate segment list
+        for i, exp in enumerate(Renderer.SEGMENTS_LEFT):
+            if exp.match("title"):
+                self.left[i].append(self.__title_filter(vars(win)))
+
+        for i, exp in enumerate(Renderer.SEGMENTS_RIGHT):
+            if exp.match("title"):
+                self.right[i].append(self.__title_filter(vars(win)))
 
     def update_outputs(self, objects):
         self.outputs.clear()
@@ -357,8 +394,8 @@ class Renderer(object):
 
     def __workspace_filter(self, ws):
         new = self.__tag("workspace",
-                         " " + ws.name + " ",
-                         actions=["i3|change-ws|" + ws.name,
+                         " " + STRIP_EXP.sub("", ws.name) + " ",
+                         actions=["i3|change-ws|" + ws.name.replace(":", "_"),
                                   None, None],
                          color_fg=COLOR_WORKSPACE_INACTIVE_FG,
                          color_bg=COLOR_WORKSPACE_INACTIVE_BG)
@@ -372,6 +409,20 @@ class Renderer(object):
         elif "urgent" in ws.keys() and ws.urgent:
             new["color_fg"] = COLOR_WORKSPACE_URGENT_FG
             new["color_bg"] = COLOR_WORKSPACE_URGENT_BG
+
+        return new
+
+    def __title_filter(self, win):
+        new = self.__tag("title", " ")
+
+        if "name" in win.keys():
+            l = len(win["name"])
+            new["text"] += win["name"][:48] + \
+                ("… " if l > 48 else " ")
+
+        if "urgent" in win.keys() and win["urgent"]:
+            new["color_fg"] = COLOR_TITLE_URGENT_FG
+            new["color_bg"] = COLOR_TITLE_URGENT_BG
 
         return new
 

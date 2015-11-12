@@ -29,14 +29,21 @@ stop_event = threading.Event()
 
 def on_change_ws(i3, event):
     if renderer is not None:
+        if event.change in ('focus'):
+            renderer.clear_title()
         renderer.update_workspace(i3.get_workspaces())
         thread_render()
 
 
 def on_change_title(i3, event):
     if renderer is not None:
-        renderer.update_title(vars(event.container))
-        thread_render()
+        if event.change in ('focus', 'title', 'urgent') \
+                and event.container.focused:
+            renderer.update_title(event.container)
+            thread_render()
+        elif event.change in ('close') and event.container.focused:
+            renderer.clear_title()
+            thread_render()
 
 
 def on_change_output(i3, event):
@@ -55,6 +62,8 @@ def i3ipc_thread(use_ws=False, use_title=False):
                 renderer.set_outputs(conf["outputs"])
             if use_ws:
                 renderer.update_workspace(i3.get_workspaces())
+            if use_title:
+                renderer.clear_title()
             renderer.update_outputs(i3.get_outputs())
             thread_render()
 
@@ -176,6 +185,7 @@ if __name__ == '__main__':
     debug = args.debug
     if debug:
         import cProfile
-        cProfile.run("main(use_ws=True, use_title=True)")
+        cProfile.run("main(use_ws=" + str(args.workspace) + ", " +
+                     "use_title=" + str(args.title) + ")")
         sys.exit(0)
     main(use_ws=args.workspace, use_title=args.title)

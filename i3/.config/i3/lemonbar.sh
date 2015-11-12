@@ -39,7 +39,7 @@ export PATH="${PATH}:${I3_CONFIG}/scripts:${I3_CONFIG}/panel"
 j4status -c "${config}" > "${panel_fifo}" &
 
 # start lemonbar
-arrowbar.py --workspace < "${panel_fifo}" \
+arrowbar.py --workspace --title < "${panel_fifo}" \
     | lemonbar -f "${font_normal}" -f "${font_icon}" -B "#00000000" -F "#FFFFFFFF" -g "x14" -a 40 | \
     {
         # handle mouse actions
@@ -50,7 +50,7 @@ arrowbar.py --workspace < "${panel_fifo}" \
                 "i3")
                     case ${action} in
                         "change-ws")
-                            ws="$( echo "${line}" | cut -d '|' -f 3 )"
+                            ws="$( echo "${line}" | cut -d '|' -f 3 | sed -re 's/_/:/g' )"
                             i3-msg workspace $ws > /dev/null ;;
                     esac ;;
                 "volume")
