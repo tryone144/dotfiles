@@ -125,12 +125,13 @@ def print_nb(msg):
 
 class Renderer(object):
     SEGMENTS_LEFT = [re.compile(pat) for pat in ("workspace", )]
-    SEGMENTS_CENTER = [re.compile(pat) for pat in ("time", )]
+    SEGMENTS_CENTER = [re.compile(pat) for pat in ()]
     SEGMENTS_RIGHT = [re.compile(pat) for pat in ("pulseaudio",
                                                   "backlight",
                                                   "nm-*",
                                                   "cpu", "sensors", "mem",
-                                                  "upower-battery", )]
+                                                  "upower-battery",
+                                                  "time", )]
 
     def __init__(self):
         super().__init__()
