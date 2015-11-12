@@ -8,7 +8,7 @@
 #          [ionicon-fonts]
 #
 # file: ~/.config/i3/panel/arrowbar_renderer.py
-# v0.5 / 2015.11.11
+# v0.5.1 / 2015.11.12
 #
 
 import re
@@ -16,7 +16,6 @@ import sys
 
 POSITION_LEFT = 0
 POSITION_RIGHT = 1
-POSITION_CENTER = 2
 
 # Special characters and icons
 SEPARATOR_SEGMENT_RIGHT = ""   # \uE0B0
@@ -125,7 +124,6 @@ def print_nb(msg):
 
 class Renderer(object):
     SEGMENTS_LEFT = [re.compile(pat) for pat in ("workspace", )]
-    SEGMENTS_CENTER = [re.compile(pat) for pat in ()]
     SEGMENTS_RIGHT = [re.compile(pat) for pat in ("pulseaudio",
                                                   "backlight",
                                                   "nm-*",
@@ -139,14 +137,12 @@ class Renderer(object):
         self.outputs = []
 
         self.left = [[] for _ in Renderer.SEGMENTS_LEFT]
-        self.center = [[] for _ in Renderer.SEGMENTS_CENTER]
         self.right = [[] for _ in Renderer.SEGMENTS_RIGHT]
 
         self.workspace_objs = []
         self.status_objs = []
 
-        for exp in Renderer.SEGMENTS_LEFT + Renderer.SEGMENTS_CENTER + \
-                Renderer.SEGMENTS_RIGHT:
+        for exp in Renderer.SEGMENTS_LEFT + Renderer.SEGMENTS_RIGHT:
             if exp.pattern == "workspace":
                 self.workspace_objs.append(exp.pattern)
             else:
@@ -158,7 +154,6 @@ class Renderer(object):
     def render(self):
         for o, output in enumerate(self.outputs):
             output_left = "%{l}"
-            output_center = "%{c}"
             output_right = "%{r}"
             end_sep = self.__escape_color(bg="-") + \
                 SEPARATOR_SEGMENT_RIGHT + \
@@ -166,24 +161,18 @@ class Renderer(object):
             end_line = self.__escape_color(fg="-", bg="-")
 
             left = self._filter(self.left, output)
-            center = self._filter(self.center, output)
             right = self._filter(self.right, output)
 
             # render segments
             for i, seg in enumerate(left):
                 output_left += self._render_segment(
                         seg, POSITION_LEFT, first=(i == 0))
-            for i, seg in enumerate(center):
-                output_center += self._render_segment(
-                        seg, POSITION_CENTER, first=(i == 0),
-                        index=i, count=len(center))
             for i, seg in enumerate(right):
                 output_right += self._render_segment(
                         seg, POSITION_RIGHT, first=(i == 0))
 
-            print_nb(OUTPUT_FMT.format(output=o) +
-                     output_left + end_sep +
-                     output_center + end_sep +
+            print_nb(OUTPUT_FMT.format(output=o) + output_left +
+                     (end_sep if len(left) != 0 else "") +
                      output_right + end_line)
         print_nb("\n")
 
@@ -217,56 +206,6 @@ class Renderer(object):
                         output += self.__escape_color(fg=COLOR_SEP) + \
                                   SEPARATOR_PATH_RIGHT + \
                                   self.__escape_color(fg=t["color_fg"])
-
-                action_end = ""
-                for b, a in enumerate(t["actions"]):
-                    if a is not None:
-                        output += ACTION_START_FMT.format(button=b+1, action=a)
-                        action_end += ACTION_END_FMT.format(button=b+1)
-                output += t["text"] + action_end
-
-            # draw end (separator)
-            output += self.__escape_color(fg=color_bg)
-
-        elif position == POSITION_CENTER:
-            center = count // 2
-
-            # draw separator
-            if first:
-                output += self.__escape_color(fg=color_bg, bg="-") + \
-                          SEPARATOR_SEGMENT_LEFT
-            elif index <= center:
-                output += self.__escape_color(fg=color_bg) + \
-                          SEPARATOR_SEGMENT_LEFT
-            elif index > center:
-                output += self.__escape_color(bg=color_bg) + \
-                          SEPARATOR_SEGMENT_RIGHT
-
-            # draw text
-            output += self.__escape_color(fg=tag[0]["color_fg"],
-                                          bg=color_bg)
-            for i, t in enumerate(tag):
-                if i > 0:
-                    # draw sub-separator
-                    if t["color_bg"] != color_bg:
-                        if index < center:
-                            output += self.__escape_color(fg=t["color_bg"],
-                                                          bg=color_bg) + \
-                                      SEPARATOR_SEGMENT_LEFT
-                        else:
-                            output += self.__escape_color(fg=color_bg,
-                                                          bg=t["color_bg"]) + \
-                                      SEPARATOR_SEGMENT_RIGHT
-                        output += self.__escape_color(fg=t["color_fg"],
-                                                      bg=t["color_bg"])
-                        color_bg = t["color_bg"]
-                    else:
-                        output += self.__escape_color(fg=COLOR_SEP)
-                        if index < center:
-                            output += SEPARATOR_PATH_LEFT
-                        else:
-                            output += SEPARATOR_PATH_RIGHT
-                        output += self.__escape_color(fg=t["color_fg"])
 
                 action_end = ""
                 for b, a in enumerate(t["actions"]):
@@ -334,10 +273,6 @@ class Renderer(object):
             if exp.pattern in self.workspace_objs:
                 self.right[i].clear()
 
-        for i, exp in enumerate(Renderer.SEGMENTS_CENTER):
-            if exp.pattern in self.workspace_objs:
-                self.center[i].clear()
-
         # populate segment list
         for ws in objects:
             for i, exp in enumerate(Renderer.SEGMENTS_LEFT):
@@ -347,10 +282,6 @@ class Renderer(object):
             for i, exp in enumerate(Renderer.SEGMENTS_RIGHT):
                 if exp.match("workspace"):
                     self.right[i].append(self.__workspace_filter(ws))
-
-            for i, exp in enumerate(Renderer.SEGMENTS_CENTER):
-                if exp.match("workspace"):
-                    self.center[i].append(self.__workspace_filter(ws))
 
     def update_title(self, objects):
         fprint_nb(sys.stderr, objects)
@@ -373,10 +304,6 @@ class Renderer(object):
             if exp.pattern in self.status_objs:
                 self.right[i].clear()
 
-        for i, exp in enumerate(Renderer.SEGMENTS_CENTER):
-            if exp.pattern in self.status_objs:
-                self.center[i].clear()
-
         # populate segment list
         for tag in objects:
             if "name" in tag.keys() and "full_text" in tag.keys():
@@ -387,10 +314,6 @@ class Renderer(object):
                 for i, exp in enumerate(Renderer.SEGMENTS_RIGHT):
                     if exp.match(tag["name"]):
                         self.right[i].append(self.__status_filter(tag))
-
-                for i, exp in enumerate(Renderer.SEGMENTS_CENTER):
-                    if exp.match(tag["name"]):
-                        self.center[i].append(self.__status_filter(tag))
 
     def __status_filter(self, tag):
         new = self.__tag(tag["name"],
