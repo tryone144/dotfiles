@@ -9,13 +9,13 @@
 #          [ionicons-font]
 #
 # file: ~/.config/i3/lemonbar.sh
-# v0.4.1 / 2015.11.04
+# v0.4.2 / 2015.11.12
 #
 
 panel_fifo="/dev/shm/i3_lemonbar_${USER}"
 config="${I3_CONFIG}/panel/j4status-${HOSTNAME}.conf"
 
-font_normal="Ubuntu Mono derivative Powerline-12"
+font_normal="Source Code Pro for Powerline-9"
 font_icon="Ionicons-12"
 
 if [[ $(pgrep -cx $(basename $0)) -gt 1 ]] ; then
