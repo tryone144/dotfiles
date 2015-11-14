@@ -18,7 +18,7 @@ config="${I3_CONFIG}/panel/j4status-${HOSTNAME}.conf"
 font_normal="Ubuntu Mono derivative Powerline-12"
 font_icon="Ionicons-12"
 
-if (( $(pgrep -cx $(basename $0)) -gt 1 )) ; then
+if [[ $(pgrep -cx $(basename $0)) -gt 1 ]] ; then
     echo "The status bar is already running." >&2
     exit 1
 fi
@@ -39,7 +39,7 @@ export PATH="${PATH}:${I3_CONFIG}/scripts:${I3_CONFIG}/panel"
 j4status -c "${config}" > "${panel_fifo}" &
 
 # start lemonbar
-arrowbar.py --workspace --title < "${panel_fifo}" \
+arrowbar.py --workspace --title $@ < "${panel_fifo}" \
     | lemonbar -f "${font_normal}" -f "${font_icon}" -B "#00000000" -F "#FFFFFFFF" -g "x14" -a 40 | \
     {
         # handle mouse actions

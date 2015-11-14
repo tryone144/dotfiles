@@ -415,7 +415,7 @@ class Renderer(object):
     def __title_filter(self, win):
         new = self.__tag("title", " ")
 
-        if "name" in win.keys():
+        if "name" in win.keys() and win["name"] is not None:
             l = len(win["name"])
             new["text"] += win["name"][:48] + \
                 ("… " if l > 48 else " ")

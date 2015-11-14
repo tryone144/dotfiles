@@ -29,7 +29,7 @@ stop_event = threading.Event()
 
 def on_change_ws(i3, event):
     if renderer is not None:
-        if event.change in ('focus'):
+        if event.change == 'focus':
             renderer.clear_title()
         renderer.update_workspace(i3.get_workspaces())
         thread_render()
@@ -41,7 +41,7 @@ def on_change_title(i3, event):
                 and event.container.focused:
             renderer.update_title(event.container)
             thread_render()
-        elif event.change in ('close') and event.container.focused:
+        elif event.change == 'close' and event.container.focused:
             renderer.clear_title()
             thread_render()
 
