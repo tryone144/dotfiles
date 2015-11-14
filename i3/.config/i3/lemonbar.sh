@@ -9,7 +9,7 @@
 #          [ionicons-font]
 #
 # file: ~/.config/i3/lemonbar.sh
-# v0.4.2 / 2015.11.12
+# v0.4.2 / 2015.11.13
 #
 
 panel_fifo="/dev/shm/i3_lemonbar_${USER}"
@@ -39,7 +39,7 @@ export PATH="${PATH}:${I3_CONFIG}/scripts:${I3_CONFIG}/panel"
 j4status -c "${config}" > "${panel_fifo}" &
 
 # start lemonbar
-arrowbar.py --workspace --title $@ < "${panel_fifo}" \
+arrowbar.py --workspace --title < "${panel_fifo}" 2>> /tmp/arrowbar.log \
     | lemonbar -f "${font_normal}" -f "${font_icon}" -B "#00000000" -F "#FFFFFFFF" -g "x14" -a 40 | \
     {
         # handle mouse actions
