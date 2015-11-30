@@ -2,8 +2,8 @@
 # BASH
 # .little function tools for my bash
 # 
-# file: ~/.bashrc
-# v1.1 / 2015.10.20
+# file: ~/.shrc
+# v1.2 / 2015.11.30
 #
 # (c) 2015 Bernd Busse
 #
@@ -42,6 +42,32 @@ function battery() {
         echo "${_name}: ${_percentage} (${_state})"
     done
 }
+
+# test files with different hash functions
+function _hashtest() {
+    # $1 = hash-algorithm
+    # $2 = hash-length
+    # $3 = file
+    # $4 = hash
+    if (( ${#} != 4 )); then
+        echo "usage: ${1:-_hash}test [FILE] [HASH]" >&2
+        return 1
+    fi
+    if [[ ! -e "${3}" ]]; then
+        echo "cannot find file ${3}" >&2
+        return 1
+    fi
+    if (( ${#4} != ${2} )); then
+        echo "invalid ${1}-hash ${4}" >&2
+        return 1
+    fi
+
+    [[ $( ${1}sum "${3}" | head -c ${2}) == "${4}" ]] && echo "File valid!" >&2 || echo "File invalid!" >&2
+}
+
+alias md5test='_hashtest "md5" 32'
+alias sha256test='_hashtest "sha256" 64'
+alias sha512test='_hashtest "sha512" 128'
 
 # Manage local and remote proxy settings
 function manage_proxy() {
