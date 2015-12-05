@@ -31,6 +31,9 @@ alias ls='ls --color=auto -h'
 alias grep='grep --color=auto'
 alias clr='clear; archey3 --config=~/.config/archey3.cfg'
 alias clrmem="sudo bash -c 'echo 3 > /proc/sys/vm/drop_caches'"
+alias cpu-perf='sudo cpupower frequency-set -g performance'
+alias cpu-save='sudo cpupower frequency-set -g ondemand'
+
 alias update='yaourt -Syua'
 alias clip='xclip -selection clipboard'
 alias webcam='mplayer tv:// -tv driver=v4l2 -vo gl'
