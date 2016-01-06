@@ -79,7 +79,7 @@ bindsym $mod+d          exec --no-startup-id ${I3_CONFIG}/scripts/launcher.sh de
 bindsym $mod+Shift+d    exec --no-startup-id ${I3_CONFIG}/scripts/launcher.sh cmd
 
 # lock screen
-bindsym $mod+Shift+l    exec --no-startup-id ${I3_CONFIG}/scripts/locker.sh
+bindsym $mod+Shift+Delete    exec --no-startup-id ${I3_CONFIG}/scripts/locker.sh
 
 # make screenshot
 bindsym --release $mod+Print    exec --no-startup-id ${I3_CONFIG}/scripts/screenshot.sh
