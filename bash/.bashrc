@@ -6,7 +6,7 @@
 #          [powerline-fonts]
 # 
 # file: ~/.bashrc
-# v1.6.4 / 2015.10.20
+# v1.7 / 2016.01.08
 #
 # (c) 2015 Bernd Busse
 #
@@ -15,7 +15,7 @@
 [[ $- != *i* ]] && return
 
 # import custom functions
-[[ -f ~/.shrc ]] && . ~/.shrc
+[[ -f ~/.bash_aliases ]] && . ~/.bash_aliases
 
 export PATH="$(ruby -e 'puts Gem.user_dir')/bin:$PATH"
 export EDITOR="vim"
@@ -25,24 +25,6 @@ export GTK_CSD=0
 
 unset SSH_ASKPASS
 export $(gnome-keyring-daemon -s)
-
-# Aliase
-alias ls='ls --color=auto -h'
-alias grep='grep --color=auto'
-alias clr='clear; archey3 --config=~/.config/archey3.cfg'
-alias clrmem="sudo bash -c 'echo 3 > /proc/sys/vm/drop_caches'"
-alias cpu-perf='sudo cpupower frequency-set -g performance'
-alias cpu-save='sudo cpupower frequency-set -g ondemand'
-
-alias update='yaourt -Syua'
-alias clip='xclip -selection clipboard'
-alias webcam='mplayer tv:// -tv driver=v4l2 -vo gl'
-alias rainbow='for i in {0..255}; do echo -e "\e[0;38;5;${i};49;22m${i}: COLOR RAINBOW \e[7m INVERT :D \e[0m"; done'
-alias win7='_PWD_SAVE=${PWD}; cd /opt/kvm/; ./start_win7.sh -spice-client spicy; cd ${_PWD_SAVE}'
-
-alias rublogin='sudo /etc/NetworkManager/dispatcher.d/20-rublogin eth0 up'
-alias vpn-bussenet='PWD_SAVE=${PWD}; cd ~/.openvpn/busse-rs/; sudo openvpn --config ./OpenVPN_busse-rs.ovpn; cd ${_PWD_SAVE}'
-alias vpn-rub='PWD_SAVE=${PWD}; cd ~/.openvpn/rub/; sudo openvpn --config ./OpenVPN_RUB.ovpn; cd ${_PWD_SAVE}'
 
 # Colorized manpages
 export LESS_TERMCAP_mb=$'\E[01;31m'         # begin blink
