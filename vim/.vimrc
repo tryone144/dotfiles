@@ -38,6 +38,8 @@ let g:Tex_MultipleCompileFormats = 'dvi,pdf'
 
 " Airline
 let g:airline_powerline_fonts=1
+let g:airline#extensions#tabline#enabled = 1
+let g:airline#extensions#tagbar#enabled = 0
 
 :map <c-n> :NERDTreeToggle .<CR>
 
@@ -46,6 +48,7 @@ if has("gui_running")
     set guioptions-=T
     set t_Co=256
     colorscheme desert256
+    set guifont=Source\ Code\ Pro\ for\ Powerline\ 10
     set lines=45
     set columns=132
     
@@ -66,4 +69,6 @@ filetype plugin indent on
 syntax on
 
 let g:pydiction_location='/usr/share/pydiction/complete-dict'
+let g:clang_c_options = '-std=gnu11'
+let g:clang_cpp_options = '-std=c++11 -stdlib=libc++'
 
