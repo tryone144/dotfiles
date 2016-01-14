@@ -30,6 +30,8 @@ alias rublogin='sudo /etc/NetworkManager/dispatcher.d/20-rublogin eth0 up'
 alias vpn-bussenet='PWD_SAVE=${PWD}; cd ~/.openvpn/busse-rs/; sudo openvpn --config ./OpenVPN_busse-rs.ovpn; cd ${_PWD_SAVE}'
 alias vpn-rub='PWD_SAVE=${PWD}; cd ~/.openvpn/rub/; sudo openvpn --config ./OpenVPN_RUB.ovpn; cd ${_PWD_SAVE}'
 
+alias screencast="ffmpeg -f x11grab -s $( xwininfo -display :0 -root | grep -e 'geometry' | sed -re 's/.*\s([0-9]+x[0-9]+)\+.*/\1/g' ) -i :0.0 -r 15 -vcodec mjpeg -q:v 5 -f mjpeg"
+# show with $ ffplay -f mjpeg udp://:1337
 
 # Simple Stopwatch
 function stopwatch() {
