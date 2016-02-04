@@ -19,11 +19,11 @@ if (( ${is_connected} == 0 )); then
     internal_active=$(xrandr | grep -E '^eDP1\s+' | grep -E '\s+connected\s+.*[0-9]+.*\(' &> /dev/null; echo ${?})
     external_active=$(xrandr | grep -E '^DP2-2\s+' | grep -E '\s+connected\s+.*[0-9]+.*\(' &> /dev/null; echo ${?})
     if (( ${internal_active} == 0 && ${external_active} == 0 )); then
-        xrandr --output eDP1 --off --output DP2-2 --preferred --right-of eDP1
+        xrandr --output eDP1 --off --output DP2-2 --preferred --right-of eDP1 --primary
     else if (( ${internal_active} != 0 && ${external_active} == 0 )); then
-        xrandr --output eDP1 --preferred --output DP2-2 --off
+        xrandr --output eDP1 --preferred --primary --output DP2-2 --off
     else
-        xrandr --output eDP1 --preferred --output DP2-2 --preferred --right-of eDP1
+        xrandr --output eDP1 --preferred --primary --output DP2-2 --preferred --right-of eDP1
     fi
     fi
     i3-msg -q -t command restart
