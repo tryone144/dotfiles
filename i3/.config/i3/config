@@ -4,9 +4,9 @@
 #   needs: i3-gapps
 #
 # file: ~/.config/i3/config
-# v0.6 / 2015.11.12
+# v0.7 / 2016.02.04
 #
-# (c) 2015 Bernd Busse
+# (c) 2016 Bernd Busse
 #
 
 # run autostart programs
@@ -26,6 +26,7 @@ floating_modifier $mod
 set $left-mon       DVI-I-1
 set $right-mon      DVI-D-0
 set $notebook       eDP1
+set $dock           DP2-2
 
 # workspaces
 # workspace 1: Terminal     # \uF2BA
@@ -91,6 +92,7 @@ bindsym XF86AudioMute           exec --no-startup-id ${I3_CONFIG}/scripts/volume
 
 # xrandr tools
 bindsym XF86Display     exec --no-startup-id ${I3_CONFIG}/scripts/xrotate.sh
+bindsym XF86Explorer    exec --no-startup-id ${I3_CONFIG}/scripts/beamer.sh
 
 
 #####################
@@ -137,12 +139,12 @@ bindsym $mod+a          focus parent
 bindsym $mod+Shift+a    focus child
 
 # switch to outputs
-bindsym $mod+F1         focus output $left-mon
-bindsym $mod+F2         focus output $right-mon
+bindsym $mod+F1         focus output $left-mon; focus output $notebook
+bindsym $mod+F2         focus output $right-mon; focus output $dock
 
 # move workspaces
-bindsym $mod+Shift+F1   move workspace to output $left-mon
-bindsym $mod+Shift+F2   move workspace to output $right-mon
+bindsym $mod+Shift+F1   move workspace to output $left-mon; move workspace to output $notebook
+bindsym $mod+Shift+F2   move workspace to output $right-mon; move workspace to output $dock
 
 # switch to workspace
 bindsym $mod+1          workspace $ws_1

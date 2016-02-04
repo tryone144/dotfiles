@@ -6,9 +6,9 @@
 #          [xinput]
 #
 # file: ~/.config/i3/scripts/xrotate.sh
-# v0.9 / 2015.04.30
+# v0.9.1 / 2016.02.04
 #
-# (c) 2015 Bernd Busse
+# (c) 2016 Bernd Busse
 #
 
 # RULES
@@ -70,7 +70,7 @@ function remap_keys() {
 }
 
 # test for inversion
-is_normal=$(xrandr | grep -E '\s+primary\s+' | grep -E '\s+inverted\s+\(' &> /dev/null; echo ${?})
+is_normal=$(xrandr | grep -E '^eDP1\s+' | grep -E '\s+inverted\s+\(' &> /dev/null; echo ${?})
 
 if (( ${is_normal} != 0 )); then
     # is normal ==> inverted
