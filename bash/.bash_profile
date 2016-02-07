@@ -11,3 +11,6 @@
 # source .bashrc
 [[ -f ~/.bashrc ]] && . ~/.bashrc
 
+# X autostart on vt1
+[[ -z ${DISPLAY} ]] && (( ${XDG_VTNR} == 1 )) && exec startx || return 0
+

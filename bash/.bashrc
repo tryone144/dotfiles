@@ -46,5 +46,5 @@ function _update_ps1() {
 export PROMPT_COMMAND=_update_ps1
 
 #Archey3 greeting
-archey3 --config=~/.config/archey3.cfg
+[[ -n ${DISPLAY} ]] && archey3 --config=~/.config/archey3.cfg
 
