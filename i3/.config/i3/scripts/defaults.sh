@@ -14,7 +14,7 @@
 
 case "${1}" in
     "terminal") # Terminal Emulator ==> urxvt
-        exec /usr/bin/urxvt
+        exec /usr/bin/urxvtc
         ;;
     "web") # Webbrowser ==> chromium
         exec /usr/bin/chromium

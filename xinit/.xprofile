@@ -26,6 +26,9 @@ elif [[ "${DESKTOP_SESSION}" == *i3 ]]; then
     export $(gnome-keyring-daemon -s)
 fi
 
+# start urxvt daemon
+urxvtd -q -f -o
+
 # set primary display, if not allready set
 xrandr -d ${DISPLAY} --query | grep -e 'primary' &> /dev/null
 if [[ ${?} == 1 ]]; then
