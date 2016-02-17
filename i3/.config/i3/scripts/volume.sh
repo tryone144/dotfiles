@@ -3,6 +3,7 @@
 # I3WM
 # Helper to change volume of default alsa device (pulseaudio)
 #   needs: [alsa] / [amixer]
+#          [pactl]
 #
 # file: ~/.config/i3/scripts/volume.sh
 # v0.1 / 2016.02.16
@@ -15,9 +16,10 @@ usage() {
     exit 1
 }
 
-#MIXER='default'
+#MIXER='alsa'
+#CONTROL='Master'
 MIXER='pulse'
-CONTROL='Master'
+CONTROL='combined'
 
 STEP="5"
 
@@ -33,17 +35,24 @@ case ${1} in
         fi
         ;;
     "t"|"toggle")
-        amixer -D ${MIXER} -- sset ${CONTROL} toggle &>/dev/null ;;
+        [[ "$MIXER" == "pulse" ]] && pactl set-sink-mute ${CONTROL} toggle &> /dev/null \
+            || amixer -D 'default' -- sset ${CONTROL} toggle &> /dev/null ;;
     "m"|"mute")
-        amixer -D ${MIXER} -- sset ${CONTROL} off &>/dev/null ;;
+        [[ "$MIXER" == "pulse" ]] && pactl set-sink-mute ${CONTROL} 1 &> /dev/null \
+            || amixer -D 'default' -- sset ${CONTROL} off &>/dev/null ;;
     "u"|"unmute")
-        amixer -D ${MIXER} -- sset ${CONTROL} on &>/dev/null ;;
+        [[ "$MIXER" == "pulse" ]] && pactl set-sink-mute ${CONTROL} 0 &> /dev/null \
+            || amixer -D 'default' -- sset ${CONTROL} on &>/dev/null ;;
     "l"|"lower")
-        amixer -D ${MIXER} -- sset ${CONTROL} ${2:-${STEP}}%- &>/dev/null;;
+        [[ "$MIXER" == "pulse" ]] && pactl set-sink-volume ${CONTROL} -${2:-${STEP}}% &> /dev/null \
+            || amixer -D 'default' -- sset ${CONTROL} ${2:-${STEP}}%- &>/dev/null;;
     "r"|"raise")
-        amixer -D ${MIXER} -- sset ${CONTROL} ${2:-${STEP}}%+ &>/dev/null;;
+        [[ "$MIXER" == "pulse" ]] && pactl set-sink-volume ${CONTROL} +${2:-${STEP}}% &> /dev/null \
+            || amixer -D 'default' -- sset ${CONTROL} ${2:-${STEP}}%+ &>/dev/null;;
     "s"|"set")
-        [[ -n "${2}" ]] && amixer -D ${MIXER} -- sset ${CONTROL} ${2} &>/dev/null ;;
+        [[ -n "${2}" ]] \
+            && ( [[ "$MIXER" == "pulse" ]] && pactl set-sink-volume ${CONTROL} ${2}% &> /dev/null \
+            || amixer -D 'default' -- sset ${CONTROL} ${2} &>/dev/null ) ;;
     *)
         $(usage)
         ;;
