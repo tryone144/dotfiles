@@ -52,7 +52,7 @@ ICON_NETWORK_USB = ""          # \uF2B8
 ICON_EXP = re.compile(":(.*)_IC:")
 BAT_EXP = re.compile("(Bat|Chr|Full|Empty)\s")
 VOL_EXP = re.compile("([\d]+)%")
-STRIP_EXP = re.compile("^\d+:")
+STRIP_EXP = re.compile("^\d+(\D.*)")
 
 ACTION_START_FMT = "%{{A{button}:{action}:}}"
 ACTION_END_FMT = "%{{A{button}}}"
@@ -394,7 +394,7 @@ class Renderer(object):
 
     def __workspace_filter(self, ws):
         new = self.__tag("workspace",
-                         " " + STRIP_EXP.sub("", ws.name) + " ",
+                         " " + STRIP_EXP.sub("\g<1>", ws.name) + " ",
                          actions=["i3|change-ws|" + ws.name.replace(":", "_"),
                                   None, None],
                          color_fg=COLOR_WORKSPACE_INACTIVE_FG,

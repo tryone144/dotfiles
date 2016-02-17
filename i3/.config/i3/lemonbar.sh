@@ -50,7 +50,7 @@ arrowbar.py --workspace --title < "${panel_fifo}" 2>> /tmp/arrowbar.log \
                 "i3")
                     case ${action} in
                         "change-ws")
-                            ws="$( echo "${line}" | cut -d '|' -f 3 | sed -re 's/_/:/g' )"
+                            ws="$( echo "${line}" | cut -d '|' -f 3 )"
                             i3-msg workspace $ws > /dev/null ;;
                     esac ;;
                 "volume")

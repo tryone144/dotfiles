@@ -30,15 +30,15 @@ set $dock           DP2-2
 
 # workspaces
 # workspace 1: Terminal     # \uF2BA
-set $ws_1           1:
+set $ws_1           1
 # workspace 2: Chromium     # \uF4DB
-set $ws_2           2:
+set $ws_2           2
 # workspace 3: Hash         # \uF219
-set $ws_3           3:
+set $ws_3           3
 # workspace 4: Tag          # \uF2AA
-set $ws_4           4:
+set $ws_4           4
 # workspace 5: Screen       # \uF1FC
-set $ws_5           5:
+set $ws_5           5
 # workspace 6
 set $ws_6           6
 # workspace 7
@@ -46,9 +46,9 @@ set $ws_7           7
 # workspace 8
 set $ws_8           8
 # workspace 9: Telegram     # \uF2C3
-set $ws_9           9:
+set $ws_9           9
 # workspace 10: Music       # \uF20C
-set $ws_0           10:
+set $ws_0           10
 
 
 #################
