@@ -42,6 +42,8 @@ let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tagbar#enabled = 0
 
 :map <c-n> :NERDTreeToggle .<CR>
+:map <c-h> :bprevious <CR>
+:map <c-l> :bnext <CR>
 
 if has("gui_running")
     " GUI - Theme
