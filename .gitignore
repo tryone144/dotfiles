@@ -5,3 +5,6 @@ __pycache__/
 # VIM cache files
 .*.swp
 
+# GTK3 server file
+gtk/.config/gtk*/servers
+
