@@ -30,6 +30,7 @@ alias win7='_PWD=${PWD}; cd /opt/kvm/; ./start_win7.sh -spice-client spicy; cd $
 alias rublogin='sudo /etc/NetworkManager/dispatcher.d/20-rublogin eth0 up'
 alias vpn-bussenet='_PWD=${PWD}; cd ~/.openvpn/busse-rs/; sudo openvpn --config ./denknix-TO-IPFire.ovpn; cd ${_PWD}'
 alias vpn-rub='_PWD=${PWD}; cd ~/.openvpn/rub/; sudo openvpn --config ./OpenVPN_RUB.ovpn; cd ${_PWD}'
+alias vpn-badbank='_PWD=${PWD}; cd ~/.openvpn/badbank/; sudo openvpn --config ./badbank.ovpn; cd ${_PWD}'
 
 alias screencast='ffmpeg -f x11grab -s $( xwininfo -display :0 -root | grep -e "geometry" | sed -re "s/.*\s([0-9]+x[0-9]+)\+.*/\1/g" ) -i :0.0 -r 15 -vcodec mjpeg -q:v 5 -f mjpeg'
 alias toggle="~/.config/i3/scripts/beamer.sh"
