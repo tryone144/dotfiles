@@ -24,8 +24,8 @@ Xft.rgba: rgb*/
 /* interface */
 URxvt*.iconFile: terminal
 URxvt*.depth: 32
-URxvt*.font: xft:Ubuntu Mono derivative Powerline:size=12
-URxvt*.boldFont: xft:Ubuntu Mono derivative Powerline:bold:size=12
+URxvt*.font: xft:Roboto Mono for Powerline:size=10
+URxvt*.boldFont: xft:Roboto Mono for Powerline:bold:size=10
 URxvt*.geometry: 132x43
 URxvt*.scrollstyle: plain
 URxvt*.scrollBar_right: true
