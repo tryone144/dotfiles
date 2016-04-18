@@ -6,9 +6,9 @@
  *          [powerline-fonts-git]
  *
  * file: ~/.Xdefaults
- * v1.1 / 2015.04.30
+ * v1.2 / 2016.04.18
  *
- * (c) 2015 Bernd Busse
+ * (c) 2016 Bernd Busse
  */
 
 Xcursor.theme: Oxygen Neon
@@ -24,8 +24,8 @@ Xft.rgba: rgb*/
 /* interface */
 URxvt*.iconFile: terminal
 URxvt*.depth: 32
-URxvt*.font: xft:Roboto Mono for Powerline:size=10
-URxvt*.boldFont: xft:Roboto Mono for Powerline:bold:size=10
+URxvt*.font: xft:Terminess Powerline:size=10
+URxvt*.boldFont: xft:Terminess Powerline:bold:size=10
 URxvt*.geometry: 132x43
 URxvt*.scrollstyle: plain
 URxvt*.scrollBar_right: true
