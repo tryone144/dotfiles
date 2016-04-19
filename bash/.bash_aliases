@@ -3,9 +3,9 @@
 # .aliases little function tools for my bash
 # 
 # file: ~/.bash_aliases
-# v1.3 / 2016.01.08
+# v1.3 / 2016.04.20
 #
-# (c) 2015 Bernd Busse
+# (c) 2016 Bernd Busse
 #
 
 # If not running interactively, don't do anything
@@ -36,6 +36,9 @@ alias screencast='ffmpeg -f x11grab -s $( xwininfo -display :0 -root | grep -e "
 alias toggle="~/.config/i3/scripts/beamer.sh"
 alias beamer-on="~/.config/i3/scripts/beamer.sh external"
 alias beamer-off="~/.config/i3/scripts/beamer.sh internal"
+
+alias dpms_off='xset -dpms; xset s off'
+alias dpms_on='xset +dpms; xset s 600'
 
 # Simple Stopwatch
 function stopwatch() {
