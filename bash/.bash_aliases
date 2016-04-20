@@ -3,7 +3,7 @@
 # .aliases little function tools for my bash
 # 
 # file: ~/.bash_aliases
-# v1.3 / 2016.04.20
+# v1.4 / 2016.04.20
 #
 # (c) 2016 Bernd Busse
 #
@@ -95,6 +95,7 @@ function _hashtest() {
 }
 
 alias md5test='_hashtest "md5" 32'
+alias sha1test='_hashtest "sha1" 40'
 alias sha256test='_hashtest "sha256" 64'
 alias sha512test='_hashtest "sha512" 128'
 
