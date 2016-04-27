@@ -28,6 +28,7 @@ set number
 set ruler
 set wildmenu
 set laststatus=2
+set mouse-=a
 
 set grepprg=grep\ -nH\ $*
 
