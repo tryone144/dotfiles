@@ -42,6 +42,8 @@ alias dpms_on='xset +dpms; xset s 600'
 alias snd_speaker="amixer -c DGX sset 'Analog Output' 'Multichannel' 2>/dev/null || true"
 alias snd_headphones="amixer -c DGX sset 'Analog Output' 'Stereo Headphones FP' 2>/dev/null || true"
 
+alias clock='while true; do echo -en "\r$( date )"; done'
+
 # Simple Stopwatch
 function stopwatch() {
     date1=$(date +%s); 
