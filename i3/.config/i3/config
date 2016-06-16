@@ -4,7 +4,7 @@
 #   needs: i3-gapps
 #
 # file: ~/.config/i3/config
-# v0.7 / 2016.02.04
+# v0.7.2 / 2016.06.16
 #
 # (c) 2016 Bernd Busse
 #
@@ -158,6 +158,8 @@ bindsym $mod+8          workspace $ws_8
 bindsym $mod+9          workspace $ws_9
 bindsym $mod+0          workspace $ws_0
 
+bindsym $mod+Tab        workspace next_on_output
+
 # move focused container to workspace
 bindsym $mod+Shift+1    move container to workspace $ws_1
 bindsym $mod+Shift+2    move container to workspace $ws_2
@@ -221,6 +223,10 @@ gaps outer 0
 # make minecraft floating
 for_window [class="net-minecraft-bootstrap-Bootstrap"] floating enable
 for_window [class="^Minecraft" instance="^Minecraft"] floating enable
+
+# make steam friends and messages floating
+for_window [class="Steam" title="Freunde"] floating enable, move window to workspace current
+for_window [class="Steam" title=".* - Chat"] floating enable
 
 
 #########
