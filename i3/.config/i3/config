@@ -1,7 +1,7 @@
 #
 # I3WM
 # main config for i3
-#   needs: i3-gapps
+#   needs: i3-gaps
 #
 # file: ~/.config/i3/config
 # v0.7.2 / 2016.06.16
@@ -27,6 +27,7 @@ set $left-mon       DVI-I-1
 set $right-mon      DVI-D-0
 set $notebook       eDP1
 set $dock           DP2-2
+set $beamer         HDMI1
 
 # workspaces
 # workspace 1: Terminal     # \uF2BA
@@ -140,11 +141,11 @@ bindsym $mod+Shift+a    focus child
 
 # switch to outputs
 bindsym $mod+F1         focus output $left-mon; focus output $notebook
-bindsym $mod+F2         focus output $right-mon; focus output $dock
+bindsym $mod+F2         focus output $right-mon; focus output $dock; focus output $beamer
 
 # move workspaces
 bindsym $mod+Shift+F1   move workspace to output $left-mon; move workspace to output $notebook
-bindsym $mod+Shift+F2   move workspace to output $right-mon; move workspace to output $dock
+bindsym $mod+Shift+F2   move workspace to output $right-mon; move workspace to output $dock; move workspace to output $beamer
 
 # switch to workspace
 bindsym $mod+1          workspace $ws_1
