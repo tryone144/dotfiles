@@ -16,3 +16,7 @@ if [[ -z ${DISPLAY} ]] && [[ "${XDG_VTNR}" == 1 ]]; then
     exec startx
 fi
 
+# autostart tmux on tty2 to tty6
+if [[ -z ${TMUX} ]] && [[ -z ${DISPLAY} ]] && [[ -n ${XDG_VTNR} ]] && [[ "${XDG_VTNR}" != 1 ]]; then
+    exec tmux
+fi
