@@ -119,6 +119,7 @@ let mapleader = "\<Space>"
 " buffer navigation
 nmap <silent> <C-p> :bprevious <CR>
 nmap <silent> <C-n> :bnext <CR>
+nmap <silent> <leader>br :e <CR>
 nmap <silent> <leader>ba :enew <CR><C-o>
 nmap <silent> <leader>bq :bdelete <CR>
 nmap <silent> <leader><Tab> :bnext <CR>
