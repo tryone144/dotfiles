@@ -13,10 +13,10 @@ Just my 0.02$ to all the dotfile collections.
     htop                -> automaticaly generated htoprc
     lightdm[etc]        -> gtk-greeter with custom theme and wallpaper
     reflector[etc]      -> updates pacman's mirrorlist once a week with German mirrors
-    tmux                -> tmux config (empty)
+    tmux                -> tmux config
     urxvt               -> urxvt config
-    vim                 -> .vimrc with basic settings, few plugins
-    xinit               -> .xinitrc and .xprofile for use with lightdm and hlwm/i3
+    vim                 -> .vimrc with sane defaults, few plugins
+    xinit               -> .xinitrc and .xprofile for use with startx and hlwm/i3
 
 All files created on ArchLinux 64Bit machine.
 Filemanagement is done with GNU stow.
@@ -73,7 +73,7 @@ License
 
 The MIT License (MIT)
 
-Copyright (c) 2015 Bernd Busse
+Copyright (c) 2016 Bernd Busse
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
