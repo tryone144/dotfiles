@@ -12,7 +12,7 @@ Just my 0.02$ to all the dotfile collections.
     i3                  -> i3 configuration
     issue[etc]          -> /etc/issue with archlinux logo
     htop                -> automaticaly generated htoprc
-    lightdm[etc]        -> gtk-greeter with custom theme and wallpaper
+    lightdm[etc]        -> gtk-greeter with custom theme and wallpaper (UNMAINTANED)
     reflector[etc]      -> updates pacman's mirrorlist once a week with German mirrors
     tmux                -> tmux config
     urxvt               -> urxvt config
