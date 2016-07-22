@@ -20,5 +20,4 @@ Type=oneshot
 ExecStart=/usr/bin/reflector --country DE --protocol http --protocol https --latest 20 --fastest 10 --threads 6 --sort rate --save /etc/pacman.d/mirrorlist
 
 [Install]
-RequiredBy=network.target
-
+WantedBy=reflector.timer
