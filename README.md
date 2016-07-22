@@ -10,6 +10,7 @@ Just my 0.02$ to all the dotfile collections.
     dunst               -> dunst config (default)
     gtk                 -> special GTK Settings
     i3                  -> i3 configuration
+    issue[etc]          -> /etc/issue with archlinux logo
     htop                -> automaticaly generated htoprc
     lightdm[etc]        -> gtk-greeter with custom theme and wallpaper
     reflector[etc]      -> updates pacman's mirrorlist once a week with German mirrors
@@ -64,6 +65,7 @@ systemctl from enabling symlinked .service files.
 
 The following directories need to be copied by hand:
 * `acpi`
+* `issue`
 * `lightdm`
 * `reflector`
 
