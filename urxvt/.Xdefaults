@@ -14,12 +14,13 @@
 Xcursor.theme: Oxygen Neon
 
 /* font settings */
-/*Xft.autohint: 0
+Xft.antialias: true
+Xft.rgba: rgb
+
+Xft.autohint: false
+Xft.hinting: true
+Xft.hintstyle: hintlight
 Xft.lcdfilter: lcddefault
-Xft.hintstyle: hintfull
-Xft.hinting: 1
-Xft.antialias: 1
-Xft.rgba: rgb*/
 
 /* interface */
 URxvt*.iconFile: terminal
