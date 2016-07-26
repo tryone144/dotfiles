@@ -34,8 +34,9 @@ alias vpn-badbank='_PWD=${PWD}; cd ~/.openvpn/badbank/; sudo openvpn --config ./
 
 alias screencast='ffmpeg -f x11grab -s $( xwininfo -display :0 -root | grep -e "geometry" | sed -re "s/.*\s([0-9]+x[0-9]+)\+.*/\1/g" ) -i :0.0 -r 15 -vcodec mjpeg -q:v 5 -f mjpeg'
 alias toggle="~/.config/i3/scripts/beamer.sh"
-alias beamer-on="~/.config/i3/scripts/beamer.sh external"
-alias beamer-off="~/.config/i3/scripts/beamer.sh internal"
+alias beamer-on="~/.config/i3/scripts/beamer.sh both && dpms_off"
+alias beamer-only="~/.config/i3/scripts/beamer.sh external && dpms_off"
+alias beamer-off="~/.config/i3/scripts/beamer.sh internal && dpms_on"
 
 alias dpms_off='xset -dpms; xset s off'
 alias dpms_on='xset +dpms; xset s 600'
