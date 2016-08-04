@@ -1,0 +1,70 @@
+#
+# TERMITE
+# config for termite terminal emulator
+#   needs: [Hack Font]
+#
+# file: ~/.config/termite/config
+# v0.1 / 2016.08.03
+#
+# (c) 2016 Bernd Busse
+#
+
+[options]
+font = Ionicons 10
+font = Hack 10
+allow_bold = true
+cursor_blink = on
+cursor_shape = block
+
+dynamic_title = true
+scrollback_lines = 10000
+scroll_on_keystroke = true
+scroll_on_output = false
+
+urgent_on_bell = true
+audible_bell = false
+
+browser = chromium
+clickable_url = false
+
+geometry = 132x43
+size_hints = true
+
+[colors]
+# modified material
+foreground      = #eceff1
+foreground_bold = #eceff1
+cursor          = #eceff1
+background      = rgba(18, 23, 26, 0.7)
+
+# black
+color0  = #263238
+color8  = #37474f
+
+# red
+color1  = #ff9800
+color9  = #ffa74d
+
+# green
+color2  = #8bc34a
+color10 = #9ccc65
+
+# yellow
+color3  = #ffc107
+color11 = #ffa000
+
+# blue
+color4  = #03a9f4
+color12 = #81d4fa
+
+# magenta
+color5  = #e91e63
+color13 = #ad1457
+
+# cyan
+color6  = #009688
+color14 = #26a69a
+
+# white
+color7  = #cfd8dc
+color15 = #eceff1
