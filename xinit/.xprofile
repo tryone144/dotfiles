@@ -27,7 +27,7 @@ elif [[ "${DESKTOP_SESSION}" == *i3 ]]; then
 fi
 
 # start urxvt daemon
-urxvtd -q -f -o
+#urxvtd -q -f -o
 
 # set primary display, if not allready set
 xrandr -d ${DISPLAY} --query | grep -e 'primary' &> /dev/null
