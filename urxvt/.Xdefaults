@@ -11,7 +11,7 @@
  * (c) 2016 Bernd Busse
  */
 
-Xcursor.theme: Oxygen Neon
+Xcursor.theme: Breeze
 
 /* font settings */
 Xft.antialias: true
