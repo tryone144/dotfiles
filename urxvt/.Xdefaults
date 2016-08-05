@@ -2,16 +2,16 @@
  * URXVT
  * .Xdefaults for urxvt
  *   needs: [urxvt]
- *          [xcursor-oxygen-neon]
+ *          [breeze-default-cursor-theme]
  *          [powerline-fonts-git]
  *
  * file: ~/.Xdefaults
- * v1.2 / 2016.04.18
+ * v1.3 / 2016.08.04
  *
  * (c) 2016 Bernd Busse
  */
 
-Xcursor.theme: Breeze
+Xcursor.theme: Breeze_Default
 
 /* font settings */
 Xft.antialias: true
