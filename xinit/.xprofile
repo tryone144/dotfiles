@@ -29,6 +29,9 @@ fi
 # start urxvt daemon
 #urxvtd -q -f -o
 
+# load Xresources
+xrdb -merge ~/.Xdefaults
+
 # set primary display, if not allready set
 xrandr -d ${DISPLAY} --query | grep -e 'primary' &> /dev/null
 if [[ ${?} == 1 ]]; then
