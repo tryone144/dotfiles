@@ -13,7 +13,7 @@ Install
 
 * cd to ~/.wallpapers/.
 
-        $ cd ~/.dotfiles/
+        $ cd ~/.wallpapers/
 
 * checkout __wallpaper__ branch:
 
@@ -26,5 +26,5 @@ License
 This work is licensed under a Creative Commons Attribution-NonCommercial-ShareAlike 4.0
 International License.
 
-Copyright (c) 2015 Bernd Busse CC-BY-NC-SA
+Copyright (c) 2016 Bernd Busse CC-BY-NC-SA
 
