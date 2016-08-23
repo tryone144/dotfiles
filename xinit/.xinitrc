@@ -6,9 +6,9 @@
 # (not sourced by lightdm)
 #
 # file: ~/.xinitrc
-# v1.0 / 2015.01.03
+# v1.1 / 2016.08.23
 #
-# (c) 2015 Bernd Busse
+# (c) 2016 Bernd Busse
 #
 
 # Executed by startx (run your window manager from here)
@@ -19,13 +19,31 @@ if [ -d /etc/X11/xinit/xinitrc.d ]; then
   unset f
 fi
 
-export DESKTOP_SESSION="i3"
-export WM_EXEC="/usr/bin/i3"
+# check windowmanager
+session=${1;-i3}
+case ${session} in
+    "i3")
+        export DESKTOP_SESSION="i3"
+        export WM_EXEC="/usr/bin/i3"
+        ;;
+    "herbstluft")
+        export DESKTOP_SESSION="herbstluftwm"
+        export WM_EXEC="/usr/bin/herbstluftwm"
+        ;;
+    "frankenwm")
+        export DESKTOP_SESSION="frankenwm"
+        export WM_EXEC="/usr/bin/frankenwm"
+        ;;
+    *)
+        unset DESKTOP_SESSION
+        export WM_EXEC="${1}"
+esac
 
 # Make sure this is before the 'exec' command or it won't be sourced.
 [ -f /etc/xprofile ] && source /etc/xprofile
 [ -f ~/.xprofile ] && source ~/.xprofile
 
 # run command
+echo "Starting ${DESKTOP_SESSION}"
 exec "${WM_EXEC}"
 

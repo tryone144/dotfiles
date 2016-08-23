@@ -1,11 +1,11 @@
 #
 # BASH
 # .bash_profile to source .bashrc
-# 
+#
 # file: ~/.bashrc
 # v0.4 / 2016.02.11
 #
-# (c) 2015 Bernd Busse
+# (c) 2016 Bernd Busse
 #
 
 # source .bashrc
@@ -17,6 +17,6 @@ if [[ -z ${DISPLAY} ]] && [[ "${XDG_VTNR}" == 1 ]]; then
 fi
 
 # autostart tmux on tty2 to tty6
-if [[ -z ${TMUX} ]] && [[ -z ${DISPLAY} ]] && [[ -n ${XDG_VTNR} ]] && [[ "${XDG_VTNR}" != 1 ]]; then
+if [[ -z ${TMUX} ]] && [[ -z ${DISPLAY} ]] && [[ -n ${XDG_VTNR} ]] && (( ${XDG_VTNR} <= 4 )); then
     exec tmux
 fi
