@@ -1,14 +1,14 @@
 #!/bin/sh
 #
-# I3WM
+# WMScripts
 # Helper to open specific dmenu instances
 #   needs: [dmenu2]
 #          [j4-dmenu-desktop]
 #
-# file: ~/.config/i3/scripts/launcher.sh
+# file: ~/.config/wmscripts/launcher.sh
 # v0.3.2 / 2015.04.07
 #
-# (c) 2015 Bernd Busse
+# (c) 2016 Bernd Busse
 #
 # usage: ./launcher.sh [desktop|cmd]
 #

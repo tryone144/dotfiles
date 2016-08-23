@@ -1,11 +1,11 @@
 #!/bin/bash
 #
-# I3WM
+# WMScripts
 # Helper to change volume of default alsa device (pulseaudio)
 #   needs: [alsa] / [amixer]
 #          [pactl]
 #
-# file: ~/.config/i3/scripts/volume.sh
+# file: ~/.config/wmscripts/volume.sh
 # v0.1 / 2016.02.16
 #
 # (c) 2016 Bernd Busse

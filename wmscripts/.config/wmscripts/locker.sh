@@ -1,13 +1,13 @@
 #!/bin/bash
 #
-# I3WM
+# WMScripts
 # Helper to lock screen (and do the related stuff)
 #   needs: [sxlock]
 #
-# file: ~/.config/i3/scripts/locker.sh
+# file: ~/.config/wmscripts/locker.sh
 # v1.1 / 2015.04.30
 #
-# (c) 2015 Bernd Busse
+# (c) 2016 Bernd Busse
 #
 
 # pause dunst notifications

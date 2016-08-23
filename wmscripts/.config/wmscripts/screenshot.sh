@@ -1,14 +1,14 @@
 #!/bin/sh
 #
-# I3WM
+# WMScripts
 # Helper to take a screenshot
 #   needs: [imagemagick]
 #          [xdg-user-dir]
 #
-# file: ~/.config/i3/scripts/screenshot.sh
+# file: ~/.config/wmscripts/screenshot.sh
 # v1.0 / 2015.09.24
 #
-# (c) 2014 Bernd Busse
+# (c) 2016 Bernd Busse
 #
 
 if (( $( which xdg-user-dir 2>&1 /dev/null; echo $? ) != 0 )); then

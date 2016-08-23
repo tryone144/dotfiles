@@ -18,6 +18,7 @@ Just my 0.02$ to all the dotfile collections.
     tmux                -> tmux config
     urxvt               -> urxvt config
     vim                 -> .vimrc with sane defaults, few plugins
+    wmscripts           -> various shell-scripts for dmenu/poweroff/volume/etc.
     xinit               -> .xinitrc and .xprofile for use with startx and hlwm/i3
 
 All files created on ArchLinux 64Bit machine.

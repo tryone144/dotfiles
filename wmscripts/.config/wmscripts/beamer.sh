@@ -1,11 +1,11 @@
 #!/bin/bash
 #
-# I3WM
+# WMScripts
 # Cycle through screen modes when docked
 #   needs: [xrandr]
 #
-# file: ~/.config/i3/scripts/beamer.sh
-# v1.0 / 2016.07.25
+# file: ~/.config/wmscripts/beamer.sh
+# v1.1 / 2016.08.23
 #
 # (c) 2016 Bernd Busse
 #
@@ -52,15 +52,17 @@ function both() {
     enable_external "${1}"
 }
 
-function i3_reload() {
+function wm_reload() {
     killall compton
-    sleep 0.5; i3-msg -q -t command restart
+    if [[ "${DESKTOP_SESSION}" == "i3" ]]; then
+        sleep 0.5; i3-msg -q -t command restart
+    fi
 }
 
 # check for 'internal' argument
 if [[ "${1}" == 'internal' ]]; then
     internal_only
-    i3_reload
+    wm_reload
     exit
 fi
 
@@ -82,11 +84,11 @@ if (( ${is_connected} )); then
     # check for 'external' and 'both' argument
     if [[ "${1}" == 'external' ]]; then
         external_only "${connected_screen}"
-        i3_reload
+        wm_reload
         exit
     elif [[ "${1}" == 'both' ]]; then
         both "${connected_screen}"
-        i3_reload
+        wm_reload
         exit
     fi
 
@@ -106,6 +108,6 @@ if (( ${is_connected} )); then
         both "${connected_screen}"
     fi
 
-    i3_reload
+    wm_reload
     exit
 fi

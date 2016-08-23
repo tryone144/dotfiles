@@ -4,25 +4,30 @@
 # set relevant settings for specific wms including autostart
 # (sourced by lightdm and .xinitrc)
 #   needs: [dex]
-#          [powerline-fonts]
 #          [argyllcms]
+#          [nitrogen]
+#          [dunst]
+#          [compton]
 #
 # file: ~/.xprofile
-# v1.3 / 2015.05.12
+# v1.4 / 2016.08.23
 #
-# (c) 2015 Bernd Busse
+# (c) 2016 Bernd Busse
 #
 
 # set config dir and run autostart files with dapper
-if [[ "${DESKTOP_SESSION}" == *herbstluftwm ]]; then
-    export HLWM_CONFIG="$HOME/.config/herbstluftwm/"
-    dex -ae MATE
-    #gnome-keyring-daemon -r -d
-    export $(gnome-keyring-daemon -s)
-elif [[ "${DESKTOP_SESSION}" == *i3 ]]; then
+export WM_SCRIPTS="$HOME/.config/wmscripts/"
+
+if [[ "${DESKTOP_SESSION}" == *i3 ]]; then
     export I3_CONFIG="$HOME/.config/i3/"
     dex -ae MATE
-    #gnome-keyring-daemon -r -d
+    export $(gnome-keyring-daemon -s)
+elif [[ "${DESKTOP_SESSION}" == *herbstluftwm ]]; then
+    export HLWM_CONFIG="$HOME/.config/herbstluftwm/"
+    dex -ae MATE
+    export $(gnome-keyring-daemon -s)
+elif [[ "${DESKTOP_SESSION}" == *frankenwm ]]; then
+    dex -ae MATE
     export $(gnome-keyring-daemon -s)
 fi
 
@@ -43,5 +48,18 @@ fi
 if [[ ${HOSTNAME} == "sachnix" ]]; then
     dispwin -d 1 -I ~/.local/share/colord/DELL\ U2410\ -\ 20150506.icc
     dispwin -d 2 -I ~/.local/share/colord/SAMSUNG\ SyncMaster245B\ -\ 20150506.icc
+fi
+
+# (re)set wallpaper with nitrogen
+nitrogen --restore &
+
+# start notification-daemon 'dunst'
+if [[ -z $(pgrep dunst) ]]; then
+    dunst &
+fi
+
+# start compositor 'compton'
+if [[ -z $(pgrep compton) ]]; then
+    compton &
 fi
 

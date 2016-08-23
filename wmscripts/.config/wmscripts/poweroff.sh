@@ -1,13 +1,13 @@
 #!/bin/bash
 #
-# I3WM
+# WMScripts
 # Helper to show a shutdown selection with dmenu
 #   needs: [dmenu2]
 #
-# file: ~/.config/i3/scripts/poweroff.sh
-# v1.2.1 / 2015.09.22
+# file: ~/.config/wmscripts/poweroff.sh
+# v1.3 / 2016.08.23
 #
-# (c) 2015 Bernd Busse
+# (c) 2016 Bernd Busse
 #
 
 screen_geometry="$(xrandr -d "${DISPLAY}" --query | grep ' primary ' | sed -n '1p' | grep -o -e '[0-9]\+x[0-9]\+')"
@@ -19,10 +19,36 @@ cmds="$(cat <<EOF
 > reboot
 > suspend
 > lock screen
+EOF
+)"
+
+i3_cmds="$(cat <<EOF
+
 > reload i3
 > quit i3
 EOF
 )"
+
+herbstluft_cmds="$(cat <<EOF
+
+> quit herbstluft
+EOF
+)"
+
+franken_cmds="$(cat <<EOF
+
+> quit frankenwm
+EOF
+)"
+
+case "${DESKTOP_SESSION}" in
+    "i3")
+        cmds="${cmds}${i3_cmds}" ;;
+    "herbstluftwm")
+        cmds="${cmds}${herbstluft_cmds}" ;;
+    "frankenwm")
+        cmds="${cmds}${franken_cmds}" ;;
+esac
 
 lines_num=$(echo "${cmds}" | wc -l)
 lines_height=26
@@ -41,17 +67,21 @@ case "${value:2}" in
         systemctl reboot
         ;;
     "suspend") # suspend computer
-        ${I3_CONFIG}/scripts/locker.sh &
+        ${WM_SCRIPTS}/locker.sh &
         sleep 2 && systemctl suspend
         ;;
     "lock screen") # lock screen
-        ${I3_CONFIG}/scripts/locker.sh &
+        ${WM_SCRIPTS}/locker.sh &
         ;;
     "reload i3") # reload i3
         i3-msg reload
         ;;
     "quit i3") # quit i3
         i3-msg exit
+        ;;
+    "quit herbstluft") # quit herbstluftwm
+        ;;
+    "quit frankenwm") # quit frankenwm
         ;;
     *) # aborted, do nothing
         ;;

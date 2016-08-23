@@ -1,11 +1,11 @@
 #!/bin/bash
 #
-# I3WM
+# WMScripts
 # Flip screen with xrandr and aling mouse movement
 #   needs: [xrandr]
 #          [xinput]
 #
-# file: ~/.config/i3/scripts/xrotate.sh
+# file: ~/.config/wmscripts/xrotate.sh
 # v0.9.1 / 2016.02.04
 #
 # (c) 2016 Bernd Busse

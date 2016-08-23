@@ -4,13 +4,10 @@
 #   needs: i3-gaps
 #
 # file: ~/.config/i3/config
-# v0.7.3 / 2016.07.25
+# v0.7.4 / 2016.08.23
 #
 # (c) 2016 Bernd Busse
 #
-
-# run autostart programs
-exec_always --no-startup-id ${I3_CONFIG}/autostart
 
 ###############
 ## VARIABLES ##
@@ -62,7 +59,7 @@ bindsym $mod+Shift+r    reload
 # restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
 bindsym $mod+Control+r  restart
 # exit i3 (logs you out of your X session)
-bindsym $mod+Shift+q    exec --no-startup-id ${I3_CONFIG}/scripts/poweroff.sh
+bindsym $mod+Shift+q    exec --no-startup-id ${WM_SCRIPTS}/poweroff.sh
 # show i3bar with systray
 bindsym $mod+t          bar mode toggle tray
 bindsym $mod+b          bar mode toggle backup
@@ -72,29 +69,27 @@ bindsym $mod+b          bar mode toggle backup
 ## HOTKEYS ##
 #############
 
-# start favorite applications
-bindsym $mod+Return     exec --no-startup-id ${I3_CONFIG}/scripts/defaults.sh terminal
-bindsym $mod+c          exec --no-startup-id ${I3_CONFIG}/scripts/defaults.sh web
-bindsym $mod+n          exec --no-startup-id ${I3_CONFIG}/scripts/defaults.sh files
+# start terminal emulator
+bindsym $mod+Return     exec --no-startup-id termite
 
 # start dmenu launcher
-bindsym $mod+d          exec --no-startup-id ${I3_CONFIG}/scripts/launcher.sh desktop
-bindsym $mod+Shift+d    exec --no-startup-id ${I3_CONFIG}/scripts/launcher.sh cmd
+bindsym $mod+d          exec --no-startup-id ${WM_SCRIPTS}/launcher.sh desktop
+bindsym $mod+Shift+d    exec --no-startup-id ${WM_SCRIPTS}/launcher.sh cmd
 
 # lock screen
-bindsym $mod+Shift+Delete    exec --no-startup-id ${I3_CONFIG}/scripts/locker.sh
+bindsym $mod+Shift+Delete    exec --no-startup-id ${WM_SCRIPTS}/locker.sh
 
 # make screenshot
-bindsym --release $mod+Print    exec --no-startup-id ${I3_CONFIG}/scripts/screenshot.sh
+bindsym --release $mod+Print    exec --no-startup-id ${WM_SCRIPTS}/screenshot.sh
 
 # change volume
-bindsym XF86AudioRaiseVolume    exec --no-startup-id ${I3_CONFIG}/scripts/volume.sh raise 5
-bindsym XF86AudioLowerVolume    exec --no-startup-id ${I3_CONFIG}/scripts/volume.sh lower 5
-bindsym XF86AudioMute           exec --no-startup-id ${I3_CONFIG}/scripts/volume.sh toggle
+bindsym XF86AudioRaiseVolume    exec --no-startup-id ${WM_SCRIPTS}/volume.sh raise 5
+bindsym XF86AudioLowerVolume    exec --no-startup-id ${WM_SCRIPTS}/volume.sh lower 5
+bindsym XF86AudioMute           exec --no-startup-id ${WM_SCRIPTS}/volume.sh toggle
 
 # xrandr tools
-bindsym XF86Display     exec --no-startup-id ${I3_CONFIG}/scripts/xrotate.sh
-bindsym XF86Explorer    exec --no-startup-id ${I3_CONFIG}/scripts/beamer.sh
+bindsym XF86Display     exec --no-startup-id ${WM_SCRIPTS}/xrotate.sh
+bindsym XF86Explorer    exec --no-startup-id ${WM_SCRIPTS}/beamer.sh
 
 
 #####################
