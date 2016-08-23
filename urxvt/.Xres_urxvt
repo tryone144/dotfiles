@@ -2,25 +2,13 @@
  * URXVT
  * .Xdefaults for urxvt
  *   needs: [urxvt]
- *          [breeze-default-cursor-theme]
  *          [powerline-fonts-git]
  *
- * file: ~/.Xdefaults
- * v1.3 / 2016.08.04
+ * file: ~/.Xres_urxvt
+ * v1.4 / 2016.08.23
  *
  * (c) 2016 Bernd Busse
  */
-
-Xcursor.theme: Breeze_Default
-
-/* font settings */
-Xft.antialias: true
-Xft.rgba: rgb
-
-Xft.autohint: false
-Xft.hinting: true
-Xft.hintstyle: hintlight
-Xft.lcdfilter: lcddefault
 
 /* interface */
 URxvt*.iconFile: terminal

@@ -17,6 +17,7 @@
 
 # set config dir and run autostart files with dapper
 export WM_SCRIPTS="$HOME/.config/wmscripts/"
+export PATH="${PATH}:~/.config/wmscripts"
 
 if [[ "${DESKTOP_SESSION}" == *i3 ]]; then
     export I3_CONFIG="$HOME/.config/i3/"
@@ -26,7 +27,8 @@ elif [[ "${DESKTOP_SESSION}" == *herbstluftwm ]]; then
     export HLWM_CONFIG="$HOME/.config/herbstluftwm/"
     dex -ae MATE
     export $(gnome-keyring-daemon -s)
-elif [[ "${DESKTOP_SESSION}" == *frankenwm ]]; then
+elif [[ "${DESKTOP_SESSION}" == *spectrwm ]]; then
+    export SPECTR_CONFIG="${HOME}/.config/spectrwm/"
     dex -ae MATE
     export $(gnome-keyring-daemon -s)
 fi
@@ -36,6 +38,7 @@ fi
 
 # load Xresources
 xrdb -merge ~/.Xdefaults
+xrdb -merge ~/.Xres_urxvt
 
 # set primary display, if not allready set
 xrandr -d ${DISPLAY} --query | grep -e 'primary' &> /dev/null
@@ -46,20 +49,15 @@ fi
 
 # set display calibration profiles
 if [[ ${HOSTNAME} == "sachnix" ]]; then
-    dispwin -d 1 -I ~/.local/share/colord/DELL\ U2410\ -\ 20150506.icc
-    dispwin -d 2 -I ~/.local/share/colord/SAMSUNG\ SyncMaster245B\ -\ 20150506.icc
+    dispwin -d 1 -I ~/.local/share/colord/DELL\ U2410\ -\ 20150506.icc &
+    dispwin -d 2 -I ~/.local/share/colord/SAMSUNG\ SyncMaster245B\ -\ 20150506.icc &
 fi
 
 # (re)set wallpaper with nitrogen
 nitrogen --restore &
 
 # start notification-daemon 'dunst'
-if [[ -z $(pgrep dunst) ]]; then
-    dunst &
-fi
+[[ -z $(pgrep dunst) ]] && dunst &
 
 # start compositor 'compton'
-if [[ -z $(pgrep compton) ]]; then
-    compton &
-fi
-
+[[ -z $(pgrep compton) ]] && compton &

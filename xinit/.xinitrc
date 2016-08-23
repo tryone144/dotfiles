@@ -20,7 +20,7 @@ if [ -d /etc/X11/xinit/xinitrc.d ]; then
 fi
 
 # check windowmanager
-session=${1;-i3}
+session=${1:-i3}
 case ${session} in
     "i3")
         export DESKTOP_SESSION="i3"
@@ -30,9 +30,9 @@ case ${session} in
         export DESKTOP_SESSION="herbstluftwm"
         export WM_EXEC="/usr/bin/herbstluftwm"
         ;;
-    "frankenwm")
-        export DESKTOP_SESSION="frankenwm"
-        export WM_EXEC="/usr/bin/frankenwm"
+    "spectrwm")
+        export DESKTOP_SESSION="spectrwm"
+        export WM_EXEC="/usr/bin/spectrwm"
         ;;
     *)
         unset DESKTOP_SESSION
