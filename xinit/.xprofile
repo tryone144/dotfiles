@@ -16,15 +16,15 @@
 #
 
 # set config dir and run autostart files with dapper
-export WM_SCRIPTS="$HOME/.config/wmscripts/"
-export PATH="${PATH}:~/.config/wmscripts"
+export WM_SCRIPTS="${HOME}/.config/wmscripts/"
+export PATH="${PATH}:${WM_SCRIPTS%/}"
 
 if [[ "${DESKTOP_SESSION}" == *i3 ]]; then
-    export I3_CONFIG="$HOME/.config/i3/"
+    export I3_CONFIG="${HOME}/.config/i3/"
     dex -ae MATE
     export $(gnome-keyring-daemon -s)
 elif [[ "${DESKTOP_SESSION}" == *herbstluftwm ]]; then
-    export HLWM_CONFIG="$HOME/.config/herbstluftwm/"
+    export HLWM_CONFIG="${HOME}/.config/herbstluftwm/"
     dex -ae MATE
     export $(gnome-keyring-daemon -s)
 elif [[ "${DESKTOP_SESSION}" == *spectrwm ]]; then
