@@ -103,6 +103,10 @@ let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tagbar#enabled = 0
 let g:airline#extensions#tmuxline#enabled = 0
 
+" auto-pairs
+let g:AutoPairsShortcutToggle='<C-e>'
+let g:AutoPairsShortcutFastWrap='<C-w>'
+
 " gitgutter
 let g:gitgutter_map_keys = 0
 
