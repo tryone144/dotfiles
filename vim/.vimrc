@@ -81,6 +81,9 @@ Plug 'jiangmiao/auto-pairs'
 " vimtex - latex tools
 Plug 'lervag/vimtex'
 
+" rust-lang - rust support
+Plug 'rust-lang/rust.vim'
+
 " gitgutter - git status
 Plug 'airblade/vim-gitgutter'
 
