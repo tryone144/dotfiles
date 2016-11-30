@@ -40,7 +40,31 @@ alias fuck='eval $(thefuck $(fc -ln -1)); history -r'
 
 # Le Prompts
 #PS1='[\u@\h \W]\$ ' # Default Bash Prompt
+__vte_urlencode() (
+  # This is important to make sure string manipulation is handled
+  # byte-by-byte.
+  LC_ALL=C
+  str="$1"
+  while [ -n "$str" ]; do
+    safe="${str%%[!a-zA-Z0-9/:_\.\-\!\'\(\)~]*}"
+    printf "%s" "$safe"
+    str="${str#"$safe"}"
+    if [ -n "$str" ]; then
+      printf "%%%02X" "'$str"
+      str="${str#?}"
+    fi
+  done
+)
+
+__vte_osc7 () {
+  printf "\033]7;file://%s%s\007" "${HOSTNAME:-}" "$(__vte_urlencode "${PWD}")"
+}
+
 function _update_ps1() {
+    local pwd='~'
+    [ "$PWD" != "$HOME" ] && pwd=${PWD/#$HOME\//\~\/}
+    printf "\033]0;%s@%s:%s\007%s" "${USER}" "${HOSTNAME%%.*}" "${pwd}" "$(__vte_osc7)"
+
     export PS1="$( arrowline ${?} 2> /dev/null || echo 'arrowline failed! [\u@\h \W]\$ ' )"
 }
 export PROMPT_COMMAND=_update_ps1
