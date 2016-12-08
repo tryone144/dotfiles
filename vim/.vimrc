@@ -93,6 +93,9 @@ Plug 'Shougo/deoplete.nvim', has('nvim') ? {} : { 'on': [] }
 " syntastic - syntax checking
 Plug 'scrooloose/syntastic'
 
+" rust - syntax and stuff for the rust language
+Plug 'rust-lang/rust.vim'
+
 " colorschemes
 Plug 'easysid/mod8.vim'
 Plug 'Lokaltog/vim-distinguished'
@@ -107,8 +110,8 @@ let g:airline#extensions#tagbar#enabled = 0
 let g:airline#extensions#tmuxline#enabled = 0
 
 " auto-pairs
-let g:AutoPairsShortcutToggle='<C-e>'
-let g:AutoPairsShortcutFastWrap='<C-w>'
+let g:AutoPairsShortcutToggle = '<C-e>'
+let g:AutoPairsShortcutFastWrap = '<C-w>'
 
 " gitgutter
 let g:gitgutter_map_keys = 0
