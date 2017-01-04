@@ -61,11 +61,11 @@ __vte_osc7 () {
 }
 
 function _update_ps1() {
+    export PS1="$( arrowline ${?} 2> /dev/null || echo 'arrowline failed! [\u@\h \W]\$ ' )"
+
     local pwd='~'
     [ "$PWD" != "$HOME" ] && pwd=${PWD/#$HOME\//\~\/}
     printf "\033]0;%s@%s:%s\007%s" "${USER}" "${HOSTNAME%%.*}" "${pwd}" "$(__vte_osc7)"
-
-    export PS1="$( arrowline ${?} 2> /dev/null || echo 'arrowline failed! [\u@\h \W]\$ ' )"
 }
 export PROMPT_COMMAND=_update_ps1
 
