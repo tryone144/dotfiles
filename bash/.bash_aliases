@@ -16,6 +16,7 @@
 alias ls='ls --color=auto -h'
 alias grep='grep --color=auto'
 alias archey="archey3 --config=~/.config/archey3.cfg"
+alias rcd='ranger --choosedir=${HOME}/.cache/rangertarget; cd "$( cat ~/.cache/rangertarget )"'
 alias clr='clear; archey3 --config=~/.config/archey3.cfg'
 alias clrmem="sudo bash -c 'echo 3 > /proc/sys/vm/drop_caches'"
 alias cpu-perf='sudo cpupower frequency-set -g performance'
