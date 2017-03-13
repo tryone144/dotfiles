@@ -8,3 +8,5 @@ __pycache__/
 # GTK3 server file
 gtk/.config/gtk*/servers
 
+# ncmpcpp error log
+ncmpcpp/.ncmpcpp/error.log
