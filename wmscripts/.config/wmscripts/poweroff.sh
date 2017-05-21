@@ -18,6 +18,7 @@ cmds="$(cat <<EOF
 > poweroff
 > reboot
 > suspend
+> hibernate
 > lock screen
 EOF
 )"
@@ -69,6 +70,10 @@ case "${value:2}" in
     "suspend") # suspend computer
         ${WM_SCRIPTS}/locker.sh &
         sleep 2 && systemctl suspend
+        ;;
+    "hibernate") # hibernate computer
+        ${WM_SCRIPTS}/locker.sh &
+        sleep 2 && systemctl hibernate
         ;;
     "lock screen") # lock screen
         ${WM_SCRIPTS}/locker.sh &
