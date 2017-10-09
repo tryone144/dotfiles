@@ -47,6 +47,9 @@ if [[ ${?} == 1 ]]; then
     xrandr --output ${monitor} --primary
 fi
 
+# start 'unclutter' to hide cursor
+unclutter --timeout 2 --jitter 20 --exclude-root --ignore-scrolling --fork
+
 # set display calibration profiles
 if [[ ${HOSTNAME} == "sachnix" ]]; then
     dispwin -d 1 -I ~/.local/share/colord/DELL\ U2410\ -\ 20150506.icc &
