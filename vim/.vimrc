@@ -4,7 +4,7 @@
 "   plugin-management with 'vim-plug'
 "
 " file: ~/.vimrc
-" v1.1 / 2016.07.07
+" v1.2 / 2017.10.09
 "
 " (c) 2016 Bernd Busse
 "
@@ -20,6 +20,7 @@ set shiftwidth=4
 set expandtab
 set smarttab
 set autoindent
+setlocal indentkeys+=0
 
 " appearance
 set showmode
@@ -39,6 +40,8 @@ set laststatus=2
 set timeoutlen=1000
 set ttimeoutlen=0
 
+set scrolloff=5
+
 set list
 set listchars=tab:>-,trail:~,extends:>,precedes:<,
 set whichwrap=""
@@ -57,6 +60,10 @@ filetype plugin indent on
 syntax on
 
 if has('autocmd')
+    " show NERDTree if no files where specified on startup
+    autocmd StdinReadPre * let s:std_in=1
+    autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
+    " close anyway if NERDTree is the last window
     autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
 endif
 
@@ -73,7 +80,7 @@ Plug 'vim-airline/vim-airline-themes'
 Plug 'edkolev/tmuxline.vim'
 
 " nerdtree - file browsser
-Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
+Plug 'scrooloose/nerdtree', { 'on':  ['NERDTreeToggle', 'NERDTreeFind'] }
 
 " auto-pairs - auto braces
 Plug 'jiangmiao/auto-pairs'
@@ -82,6 +89,12 @@ Plug 'jiangmiao/auto-pairs'
 Plug 'lervag/vimtex'
 
 " rust-lang - rust support
+Plug 'rust-lang/rust.vim'
+
+" typescript - typescript support
+Plug 'leafgarland/typescript-vim'
+
+" rust - syntax and stuff for the rust language
 Plug 'rust-lang/rust.vim'
 
 " gitgutter - git status
@@ -93,8 +106,8 @@ Plug 'Shougo/deoplete.nvim', has('nvim') ? {} : { 'on': [] }
 " syntastic - syntax checking
 Plug 'scrooloose/syntastic'
 
-" rust - syntax and stuff for the rust language
-Plug 'rust-lang/rust.vim'
+" FastFold - faster fold calculation
+Plug 'Konfekt/FastFold'
 
 " colorschemes
 Plug 'easysid/mod8.vim'
@@ -109,9 +122,22 @@ let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tagbar#enabled = 0
 let g:airline#extensions#tmuxline#enabled = 0
 
+" NERDTree - open tree, highlight current Buffer in open tree or close tree
+function! BBToggleNERDTree()
+    if &diff | return | endif
+    if (exists("b:NERDTree") && b:NERDTree.isTabTree()) | NERDTreeClose
+    elseif (exists("t:NERDTreeBufName") && (bufwinnr(t:NERDTreeBufName) != -1)) | NERDTreeFind
+    else | NERDTreeFind
+    endif
+endfunction
+
 " auto-pairs
-let g:AutoPairsShortcutToggle = '<C-e>'
+let g:AutoPairsShortcutToggle = 'w'
 let g:AutoPairsShortcutFastWrap = '<C-w>'
+
+" vimtex
+let g:tex_flavor = 'latex'
+let g:tex_fold_enabled = 1
 
 " gitgutter
 let g:gitgutter_map_keys = 0
@@ -120,6 +146,10 @@ let g:gitgutter_map_keys = 0
 let g:clang_c_options = '-std=gnu11'
 let g:clang_cpp_options = '-std=c++11 -stdlib=libc++'
 
+" FastFold
+let g:fastfold_savehook = 1
+let g:fastfold_fold_command_suffixes =  ['x','X','a','A','o','O','c','C']
+let g:fastfold_fold_movement_commands = [']z', '[z', 'zj', 'zk']
 
 " Key shortcuts
 "=======================================
@@ -148,7 +178,10 @@ nnoremap Ü <C-O>
 nnoremap <silent> <CR> :nohlsearch <CR><CR>
 
 " NERDTree
-nmap <silent> <C-o> :NERDTreeToggle .<CR>
+nmap <silent> <C-o> :call BBToggleNERDTree()<CR>
+
+" FastFold
+nmap zuz <Plug>(FastFoldUpdate)
 
 " NVIM specific options
 "=======================================
