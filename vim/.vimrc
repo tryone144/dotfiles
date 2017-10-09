@@ -174,14 +174,18 @@ nnoremap <C-l> <C-w><C-l>
 nnoremap ü <C-]>
 nnoremap Ü <C-O>
 
+" jumps
+nnoremap ä <C-o>
+nnoremap Ä <Tab>
+
 " search highlight
 nnoremap <silent> <CR> :nohlsearch <CR><CR>
 
 " NERDTree
-nmap <silent> <C-o> :call BBToggleNERDTree()<CR>
+nnoremap <silent> <C-o> :call BBToggleNERDTree()<CR>
 
 " FastFold
-nmap zuz <Plug>(FastFoldUpdate)
+nmap <leader>zu <Plug>(FastFoldUpdate)
 
 " NVIM specific options
 "=======================================
