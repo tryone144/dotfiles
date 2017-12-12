@@ -228,7 +228,7 @@ allow_for_physical_item_deletion = no
 ## Screens available for use: help, playlist, browser, search_engine,
 ## media_library, playlist_editor, tag_editor, outputs, visualizer, clock.
 ##
-screen_switcher_mode = playlist, browser, media_library, visualizer,
+screen_switcher_mode = playlist, browser, media_library, visualizer
 #startup_screen = browser
 #startup_slave_screen = ""
 #startup_slave_screen_focus = no
