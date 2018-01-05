@@ -61,8 +61,9 @@ syntax on
 
 if has('autocmd')
     " show NERDTree if no files where specified on startup
-    autocmd StdinReadPre * let s:std_in=1
-    autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
+    "autocmd StdinReadPre * let s:std_in=1
+    "autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
+    "autocmd VimEnter * if argc() == 1 && isdirectory(argv()[0]) && !exists("s:std_in") | exe 'NERDTree' argv()[0] | wincmd p | ene | endif
     " close anyway if NERDTree is the last window
     autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
 endif
@@ -80,7 +81,7 @@ Plug 'vim-airline/vim-airline-themes'
 Plug 'edkolev/tmuxline.vim'
 
 " nerdtree - file browsser
-Plug 'scrooloose/nerdtree', { 'on':  ['NERDTreeToggle', 'NERDTreeFind'] }
+Plug 'scrooloose/nerdtree', { 'on':  ['NERDTree', 'NERDTreeToggle', 'NERDTreeFind'] }
 
 " auto-pairs - auto braces
 Plug 'jiangmiao/auto-pairs'
