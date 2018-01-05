@@ -253,7 +253,7 @@ tag_editor_extended_numeration = yes
 #media_library_sort_by_mtime = no
 #enable_window_title = yes
 
-search_engine_default_search_mode = 3
+search_engine_default_search_mode = 2
 external_editor = vim
 use_console_editor = yes
 
