@@ -35,6 +35,9 @@ export LESS_TERMCAP_se=$'\E[0m'             # end standout
 export LESS_TERMCAP_us=$'\E[04;38;5;63m'    # begin underline
 export LESS_TERMCAP_ue=$'\E[0m'             # end underline
 
+# Load tmuxinator completion
+[[ -r ~/.local/share/bash-completion/tmuxinator.bash ]] && source ~/.local/share/bash-completion/tmuxinator.bash
+
 # The Fuck (command regeneration)
 alias fuck='eval $(thefuck $(fc -ln -1)); history -r'
 
@@ -70,7 +73,7 @@ function _update_ps1() {
 export PROMPT_COMMAND=_update_ps1
 
 #Archey3 greeting
-if [[ -n ${DISPLAY} || -n ${SSH_CONNECTION} || -n ${TMUX} ]]; then 
+if [[ ! -n ${NO_ARCHEY+found} ]] && [[ -n ${DISPLAY} || -n ${SSH_CONNECTION} || -n ${TMUX} ]]; then 
     archey3 --config=~/.config/archey3.cfg
 fi
 
