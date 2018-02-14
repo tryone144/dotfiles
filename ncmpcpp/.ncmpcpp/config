@@ -176,7 +176,8 @@ visualizer_in_stereo = yes
 ##   not available.
 ##
 #
-#song_columns_list_format = (20)[]{a} (6f)[green]{NE} (50)[white]{t|f:Title} (20)[cyan]{b} (7f)[magenta]{l}
+# Hack for "incompatible" web-streams: use 'filename' as 'Artist'
+song_columns_list_format = (20)[]{a|p|A|f:Artist} (6f)[green]{NE} (50)[white]{t|f:Title} (20)[cyan]{bE} (7f)[magenta]{l}
 
 ##### various settings #####
 #execute_on_song_change = ""
