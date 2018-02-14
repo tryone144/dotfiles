@@ -1,0 +1,25 @@
+/*
+ * XRDB
+ * .Xresources defaults and includes
+ *   needs: [breeze-default-cursor-theme]
+ *
+ * file: ~/.Xresources
+ * v1.5 / 2018.02.14
+ *
+ * (c) 2018 Bernd Busse
+ */
+
+/* includes */
+#include ".Xresources.d/rxvt-unicode"
+
+/* xcursor */
+Xcursor.theme: Breeze_Default
+
+/* font settings */
+Xft.antialias: true
+Xft.rgba: rgb
+
+Xft.autohint: false
+Xft.hinting: true
+Xft.hintstyle: hintlight
+Xft.lcdfilter: lcddefault

@@ -10,35 +10,45 @@
 #          [compton]
 #
 # file: ~/.xprofile
-# v1.4 / 2016.08.23
+# v1.4.1 / 2018.02.14
 #
-# (c) 2016 Bernd Busse
+# (c) 2018 Bernd Busse
 #
 
 # set config dir and run autostart files with dapper
 export WM_SCRIPTS="${HOME}/.config/wmscripts/"
 export PATH="${PATH}:${WM_SCRIPTS%/}"
 
-if [[ "${DESKTOP_SESSION}" == *i3 ]]; then
-    export I3_CONFIG="${HOME}/.config/i3/"
-    dex -ae MATE
-    export $(gnome-keyring-daemon -s)
-elif [[ "${DESKTOP_SESSION}" == *herbstluftwm ]]; then
-    export HLWM_CONFIG="${HOME}/.config/herbstluftwm/"
-    dex -ae MATE
-    export $(gnome-keyring-daemon -s)
-elif [[ "${DESKTOP_SESSION}" == *spectrwm ]]; then
-    export SPECTR_CONFIG="${HOME}/.config/spectrwm/"
-    dex -ae MATE
-    export $(gnome-keyring-daemon -s)
-fi
+case ${DESKTOP_SESSION} in
+    *"awesomewm")
+        export AWESOME_CONFIG="${HOME}/.config/awesome/"
+        dex -ae MATE
+        export $(gnome-keyring-daemon -s)
+        ;;
+    *"herbstluftwm")
+        export HLWM_CONFIG="${HOME}/.config/herbstluftwm/"
+        dex -ae MATE
+        export $(gnome-keyring-daemon -s)
+        ;;
+    *"i3")
+        export I3_CONFIG="${HOME}/.config/i3/"
+        dex -ae MATE
+        export $(gnome-keyring-daemon -s)
+        ;;
+    *"spectrwm")
+        export SPECTR_CONFIG="${HOME}/.config/spectrwm/"
+        dex -ae MATE
+        export $(gnome-keyring-daemon -s)
+        ;;
+    *)
+        ;;
+esac
 
 # start urxvt daemon
 #urxvtd -q -f -o
 
 # load Xresources
-xrdb -merge ~/.Xdefaults
-xrdb -merge ~/.Xres_urxvt
+xrdb -merge -I${HOME} ~/.Xresources
 
 # set primary display, if not allready set
 xrandr -d ${DISPLAY} --query | grep -e 'primary' &> /dev/null
