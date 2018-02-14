@@ -24,7 +24,7 @@ export EDITOR="vim"
 export GTK_CSD=0
 
 unset SSH_ASKPASS
-export $(gnome-keyring-daemon -s)
+#export $(gnome-keyring-daemon -s)
 
 # Colorized manpages
 export LESS_TERMCAP_mb=$'\E[01;31m'         # begin blink
