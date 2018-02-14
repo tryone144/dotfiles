@@ -1,12 +1,13 @@
 #
 # TERMITE
 # config for termite terminal emulator
-#   needs: [Hack Font]
+#   needs: [termite]
+#          [powerline-fonts-git]
 #
 # file: ~/.config/termite/config
-# v0.1 / 2016.08.03
+# v1.0 / 2018.02.14
 #
-# (c) 2016 Bernd Busse
+# (c) 2018 Bernd Busse
 #
 
 [options]
@@ -17,7 +18,7 @@ cursor_blink = on
 cursor_shape = block
 
 dynamic_title = true
-scrollback_lines = 10000
+scrollback_lines = 16384
 scroll_on_keystroke = true
 scroll_on_output = false
 
@@ -30,12 +31,13 @@ clickable_url = false
 geometry = 132x43
 size_hints = true
 
+# modified material <http://www.xcolors.net/dl/material>
 [colors]
-# modified material
 foreground      = #eceff1
-foreground_bold = #eceff1
+foreground_bold = #fafafa
 cursor          = #eceff1
-background      = rgba(18, 23, 26, 0.7)
+#background      = #263238b2
+background      = rgba(38, 50, 56, 0.7)
 
 # black
 color0  = #263238
@@ -50,8 +52,8 @@ color2  = #8bc34a
 color10 = #9ccc65
 
 # yellow
-color3  = #ffc107
-color11 = #ffa000
+color3  = #ffeb3b
+color11 = #fff176
 
 # blue
 color4  = #03a9f4
@@ -68,3 +70,5 @@ color14 = #26a69a
 # white
 color7  = #cfd8dc
 color15 = #eceff1
+
+# vim: ft=dosini
