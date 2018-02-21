@@ -133,7 +133,7 @@ function! BBToggleNERDTree()
 endfunction
 
 " auto-pairs
-let g:AutoPairsShortcutToggle = 'w'
+let g:AutoPairsShortcutToggle = '<C-c>'
 let g:AutoPairsShortcutFastWrap = '<C-w>'
 
 " vimtex
