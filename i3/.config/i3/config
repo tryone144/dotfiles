@@ -234,16 +234,16 @@ for_window [class="Steam" title=".* - Chat"] floating enable
 bar {
     id                          backup
     status_command              j4status
-    
+
     mode                        hide
     hidden_state                hide
     position                    top
     modifier                    Mod3
-    
+
     workspace_buttons           yes
     strip_workspace_numbers     yes
     tray_output                 none
-    
+
     font                        pango:Ubuntu Mono 10
     colors {
         background              #0C0C0C
@@ -266,17 +266,18 @@ bar {
 # Start i3bar to display the systray icons when needed
 bar {
     id                  tray
-    position            bottom
     output              $left-mon
     output              $notebook
-    
+
     mode                hide
     hidden_state        hide
-    
+    position            bottom
     modifier            Mod3
-    
+
     workspace_buttons   no
     tray_output         primary
+    # manually fix issues/2933 until pull/2992 is in master
+    status_command      while true; do echo ""; done
 
     font                pango:Ubuntu Mono 10
 }
