@@ -20,14 +20,14 @@ if [ -d /etc/X11/xinit/xinitrc.d ]; then
 fi
 
 # check windowmanager
-session=${1:-i3}
-exe="$( which ${session} )"
+session=${X_SESSION:-${1}}
+exe="$( which ${session:-xterm} )"
 case ${session} in
-    "awesomewm")
+    "awesome")
         export DESKTOP_SESSION="awesomewm"
-        export WM_EXEC="${exe:-/usr/bin/awesomewm}"
+        export WM_EXEC="${exe:-/usr/bin/awesome}"
         ;;
-    "herbstluft")
+    "herbstluftwm")
         export DESKTOP_SESSION="herbstluftwm"
         export WM_EXEC="${exe:-/usr/bin/herbstluftwm}"
         ;;
@@ -38,6 +38,10 @@ case ${session} in
     "spectrwm")
         export DESKTOP_SESSION="spectrwm"
         export WM_EXEC="${exe:-/usr/bin/spectrwm}"
+        ;;
+    "xmonad")
+        export DESKTOP_SESSION="xmonad"
+        export WM_EXEC="${exe:-/usr/bin/xmonad}"
         ;;
     *)
         unset DESKTOP_SESSION

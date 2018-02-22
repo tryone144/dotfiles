@@ -14,12 +14,32 @@ screen_geometry="$(xrandr -d "${DISPLAY}" --query | grep ' primary ' | sed -n '1
 screen_width="$(echo "${screen_geometry}" | cut -d'x' -f1)"
 screen_height="$(echo "${screen_geometry}" | cut -d'x' -f2)"
 
+# default power commands
 cmds="$(cat <<EOF
 > poweroff
 > reboot
 > suspend
 > hibernate
 > lock screen
+EOF
+)"
+
+# wm specific commands
+awesome_cmds="$(cat <<EOF
+
+> quit awesomewm
+EOF
+)"
+
+franken_cmds="$(cat <<EOF
+
+> quit frankenwm
+EOF
+)"
+
+herbstluft_cmds="$(cat <<EOF
+
+> quit herbstluft
 EOF
 )"
 
@@ -30,25 +50,24 @@ i3_cmds="$(cat <<EOF
 EOF
 )"
 
-herbstluft_cmds="$(cat <<EOF
+xmonad_cmds="$(cat <<EOF
 
-> quit herbstluft
-EOF
-)"
-
-franken_cmds="$(cat <<EOF
-
-> quit frankenwm
+> restart xmonad
+> quit xmonad
 EOF
 )"
 
 case "${DESKTOP_SESSION}" in
-    "i3")
-        cmds="${cmds}${i3_cmds}" ;;
-    "herbstluftwm")
-        cmds="${cmds}${herbstluft_cmds}" ;;
+    "awesomewm")
+        cmds="${cmds}${awesome_cmds}" ;;
     "frankenwm")
         cmds="${cmds}${franken_cmds}" ;;
+    "herbstluftwm")
+        cmds="${cmds}${herbstluft_cmds}" ;;
+    "i3")
+        cmds="${cmds}${i3_cmds}" ;;
+    "xmonad")
+        cmds="${cmds}${xmonad_cmds}" ;;
 esac
 
 lines_num=$(echo "${cmds}" | wc -l)
@@ -78,15 +97,22 @@ case "${value:2}" in
     "lock screen") # lock screen
         ${WM_SCRIPTS}/locker.sh &
         ;;
+    "quit awesomewm") # quit awesomewm
+        ;;
+    "quit frankenwm") # quit frankenwm
+        ;;
+    "quit herbstluft") # quit herbstluftwm
+        ;;
     "reload i3") # reload i3
         i3-msg reload
         ;;
     "quit i3") # quit i3
         i3-msg exit
         ;;
-    "quit herbstluft") # quit herbstluftwm
+    "restart xmonad") # restart xmonad
+        xmonad --recompile; xmonad --restart
         ;;
-    "quit frankenwm") # quit frankenwm
+    "quit xmonad") # quit xmonad
         ;;
     *) # aborted, do nothing
         ;;
