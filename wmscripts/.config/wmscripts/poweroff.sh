@@ -5,9 +5,9 @@
 #   needs: [dmenu2]
 #
 # file: ~/.config/wmscripts/poweroff.sh
-# v1.3 / 2016.08.23
+# v1.4 / 2018.03.06
 #
-# (c) 2016 Bernd Busse
+# (c) 2018 Bernd Busse
 #
 
 screen_geometry="$(xrandr -d "${DISPLAY}" --query | grep ' primary ' | sed -n '1p' | grep -o -e '[0-9]\+x[0-9]\+')"
@@ -27,7 +27,8 @@ EOF
 # wm specific commands
 awesome_cmds="$(cat <<EOF
 
-> quit awesomewm
+> restart awesome
+> quit awesome
 EOF
 )"
 
@@ -76,7 +77,7 @@ height=$((${lines_num} * ${lines_height}))
 width=640
 
 value="$(echo "${cmds}" | /usr/bin/dmenu -f -i -nb '#1A1A1A' -nf '#BEBEBE' -sb '#1793D1' -sf '#FFFFFF' -dim 0.5 \
-    -l ${lines_num} -h ${lines_height} -x $(((${screen_width} - ${width}) / 2)) -y $(((${screen_height} - ${height}) / 2)) -w ${width} -fn 'Source Code Pro-14:bold')"
+    -l ${lines_num} -h ${lines_height} -x $(((${screen_width} - ${width}) / 2)) -y $(((${screen_height} - ${height}) / 2)) -w ${width} -fn 'Hack-14:bold')"
 
 # check choosen value
 case "${value:2}" in
@@ -97,7 +98,11 @@ case "${value:2}" in
     "lock screen") # lock screen
         ${WM_SCRIPTS}/locker.sh &
         ;;
-    "quit awesomewm") # quit awesomewm
+    "restart awesome") # restart awesomewm
+        awesome-client "awesome.restart()"
+        ;;
+    "quit awesome") # quit awesomewm
+        awesome-client "awesome.quit()"
         ;;
     "quit frankenwm") # quit frankenwm
         ;;
