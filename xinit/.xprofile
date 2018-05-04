@@ -19,6 +19,10 @@
 export WM_SCRIPTS="${HOME}/.config/wmscripts/"
 export PATH="${PATH}:${WM_SCRIPTS%/}"
 
+# set gnome-control-center variable
+export XDG_CURRENT_PROFILE=GNOME
+
+# load autostart applications
 case ${DESKTOP_SESSION} in
     *"awesomewm")
         export AWESOME_CONFIG="${HOME}/.config/awesome/"
