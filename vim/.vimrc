@@ -4,9 +4,9 @@
 "   plugin-management with 'vim-plug'
 "
 " file: ~/.vimrc
-" v1.2 / 2017.10.09
+" v1.3 / 2018.03.26
 "
-" (c) 2016 Bernd Busse
+" (c) 2018 Bernd Busse
 "
 
 set nocompatible
@@ -87,25 +87,28 @@ Plug 'scrooloose/nerdtree', { 'on':  ['NERDTree', 'NERDTreeToggle', 'NERDTreeFin
 Plug 'jiangmiao/auto-pairs'
 
 " vimtex - latex tools
-Plug 'lervag/vimtex'
+Plug 'lervag/vimtex', { 'for': ['tex', 'latex'] }
 
-" rust-lang - rust support
-Plug 'rust-lang/rust.vim'
+" rust - rust support
+Plug 'rust-lang/rust.vim', { 'for': 'rust' }
 
 " typescript - typescript support
 Plug 'leafgarland/typescript-vim'
 
-" rust - syntax and stuff for the rust language
-Plug 'rust-lang/rust.vim'
-
 " gitgutter - git status
 Plug 'airblade/vim-gitgutter'
 
-" deoplete - auto complete (NeoVim)
-Plug 'Shougo/deoplete.nvim', has('nvim') ? {} : { 'on': [] }
+" completion-manager - auto complete (NeoVim)
+Plug 'roxma/nvim-completion-manager', has('nvim') ? {} : { 'on': [] }
+
+" ale - async syntax checking and linting
+Plug 'w0rp/ale'
 
 " syntastic - syntax checking
-Plug 'scrooloose/syntastic'
+" Plug 'scrooloose/syntastic'
+
+" clippy - syntax checking with cargo-clippy
+" Plug 'wagnerf42/vim-clippy', { 'for': 'rust' }
 
 " FastFold - faster fold calculation
 Plug 'Konfekt/FastFold'
@@ -143,13 +146,21 @@ let g:tex_fold_enabled = 1
 " gitgutter
 let g:gitgutter_map_keys = 0
 
+" ale
+let g:ale_lint_on_enter = 0
+let g:ale_lint_on_text_changed = 'never'
+
 " syntastic
-let g:clang_c_options = '-std=gnu11'
-let g:clang_cpp_options = '-std=c++11 -stdlib=libc++'
+"let g:syntastic_check_on_open = 0
+"let g:syntastic_check_on_wq = 0
+"let g:clang_c_options = '-std=gnu11'
+"let g:clang_cpp_options = '-std=c++11 -stdlib=libc++'
+"let g:syntastic_python_checkers = ['python', 'flake8']
+"let g:syntastic_rust_checkers = ['rustc', 'clippy']
 
 " FastFold
 let g:fastfold_savehook = 1
-let g:fastfold_fold_command_suffixes =  ['x','X','a','A','o','O','c','C']
+let g:fastfold_fold_command_suffixes =  ['x', 'X', 'a', 'A', 'o', 'O', 'c', 'C', 'r', 'R', 'm', 'M']
 let g:fastfold_fold_movement_commands = [']z', '[z', 'zj', 'zk']
 
 " Key shortcuts
@@ -191,8 +202,8 @@ nmap <leader>zu <Plug>(FastFoldUpdate)
 " NVIM specific options
 "=======================================
 if has('nvim')
-    " Use deoplete.
-    let g:deoplete#enable_at_startup = 1
+    " autocomplete (omnicomplete) on CTRL-Space
+    inoremap <expr> <C-Space> pumvisible()? "\<C-n>" : "\<C-p>"
 else
 endif
 
