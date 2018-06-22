@@ -6,8 +6,8 @@ Just my 0.02$ to all the dotfile collections.
     acpi[etc]           -> acpi handler (backlight)
     archey3             -> config for archey3
     bash                -> bash config with custom prompt and aliases
-    compton             -> compton compositor with minmal transparency
-    dunst               -> dunst config (default)
+    compton             -> compton compositor with minmal transparency ([kawase blur fork](tryone144/compton))
+    dunst               -> dunst config
     gtk                 -> special GTK Settings
     i3                  -> i3 configuration
     issue[etc]          -> /etc/issue with archlinux logo
@@ -17,9 +17,9 @@ Just my 0.02$ to all the dotfile collections.
     reflector[etc]      -> updates pacman's mirrorlist once a week with German mirrors
     tmux                -> tmux config
     urxvt               -> urxvt config
-    vim                 -> .vimrc with sane defaults, few plugins
+    vim                 -> magic .vimrc with (too many) plugins, nvim compatible
     wmscripts           -> various shell-scripts for dmenu/poweroff/volume/etc.
-    xinit               -> .xinitrc and .xprofile for use with startx and hlwm/i3
+    xinit               -> .xinitrc and .xprofile for use with startx and i3/awesome/xmonad
 
 All files created on ArchLinux 64Bit machine.
 Filemanagement is done with GNU stow.
@@ -50,7 +50,7 @@ vim):
 
 The folders with [etc] mark need to be moved to /etc/ on your system. Copy them by hand:
 
-    $ sudo cp -r lightdm/* /
+    $ sudo cp -r reflector/* /
 
 
 Warnings
@@ -77,7 +77,7 @@ License
 
 The MIT License (MIT)
 
-Copyright (c) 2016 Bernd Busse
+Copyright (c) 2018 Bernd Busse
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
