@@ -4,7 +4,7 @@
 "   plugin-management with 'vim-plug'
 "
 " file: ~/.vimrc
-" v1.3 / 2018.03.26
+" v1.3 / 2018.05.23
 "
 " (c) 2018 Bernd Busse
 "
@@ -14,51 +14,62 @@ set encoding=utf8
 set ffs=unix,dos,mac
 set autoread
 
-" tab editing
+" /* TAB EDITING */ {{{
 set tabstop=4
 set shiftwidth=4
 set expandtab
 set smarttab
 set autoindent
 setlocal indentkeys+=0
+" }}}
 
-" appearance
+" /* APPEARANCE */ {{{
+" UI
 set showmode
 set showmatch
 set number
+set relativenumber
 set ruler
 set hidden
+set scrolloff=5
 
-set splitbelow
-set splitright
-
-set hlsearch
-set incsearch
 set wildmenu
 set mouse=a
 set laststatus=2
 set timeoutlen=1000
 set ttimeoutlen=0
 
-set scrolloff=5
-
-set list
-set listchars=tab:>-,trail:~,extends:>,precedes:<,
-set whichwrap=""
-
-set grepprg=grep\ -nH\ $*
-
-" use system clipboard
-set clipboard=unnamed
-set clipboard+=unnamedplus
-
+set hlsearch
+set incsearch
 " reset last search
 let @/ = ""
 
-" handle filetypes
+" Windows / Splits
+set splitbelow
+set splitright
+
+" Highlight
+set list
+set listchars=tab:>-,trail:~,extends:>,precedes:<,
+set whichwrap=""
+" }}}
+
+" /* EXTERNAL TOOLS */ {{{
+set path=**
+set grepprg=grep\ -nH\ $*
+" }}}
+
+" /* USE SYSTEM CLIPBOARD */ {{{
+set clipboard=unnamed
+set clipboard+=unnamedplus
+" }}}
+
+" /* FILETYPES HANDLING */ {{{
 filetype plugin indent on
 syntax on
+" }}}
 
+" /* AUTOCOMMANDS */ {{{
 if has('autocmd')
     " show NERDTree if no files where specified on startup
     "autocmd StdinReadPre * let s:std_in=1
@@ -66,10 +77,50 @@ if has('autocmd')
     "autocmd VimEnter * if argc() == 1 && isdirectory(argv()[0]) && !exists("s:std_in") | exe 'NERDTree' argv()[0] | wincmd p | ene | endif
     " close anyway if NERDTree is the last window
     autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
+
+    " toggle between absolute and relative line numbers
+    augroup numbertoggle
+        autocmd!
+        autocmd BufEnter,FocusGained,InsertLeave * set relativenumber
+        autocmd BufLeave,FocusLost,InsertEnter * set number norelativenumber
+    augroup END
 endif
+" }}}
+
+" /* CUSTOM FUNCTIONS */ {{{
+"=======================================
+" NERDTree - open tree, highlight current Buffer in open tree or close tree
+function! BBToggleNERDTree()
+    if &diff | return | endif
+    if (exists("b:NERDTree") && b:NERDTree.isTabTree()) | NERDTreeClose
+    elseif (exists("t:NERDTreeBufName") && (bufwinnr(t:NERDTreeBufName) != -1)) | NERDTreeFind
+    else | NERDTreeFind
+    endif
+endfunction
+
+" Jump to next closed fold
+function! BBJumpNextClosedFold(cnt, dir)
+    echo "Count: " . a:cnt
+    let cmd = 'norm!z' . a:dir
+    let view = winsaveview()
+    let [c, l0, l, open] = [1, 0, view.lnum, 1]
+    while l != l0 && open
+        exe cmd
+        let [l0, l] = [l, line('.')]
+        let open = foldclosed(l) < 0
+        " FIXME: a:cnt > max possible jumps doesn't work when last fold is
+        " open
+        if !open && c < a:cnt && l != l0
+            let c = c+1
+            let open = 1
+        endif
+    endwhile
+    if open | call winrestview(view) | endif
+endfunction
+" }}}
 
 
-" Plugin setup (vim-plug)
+" /* PLUGIN SETUP (VIM-PLUG) */ {{{
 "=======================================
 call plug#begin('~/.vim/plugged')
 
@@ -113,67 +164,96 @@ Plug 'w0rp/ale'
 " FastFold - faster fold calculation
 Plug 'Konfekt/FastFold'
 
+" BBye - close buffers without closing windows
+Plug 'moll/vim-bbye'
+
 " colorschemes
 Plug 'easysid/mod8.vim'
 Plug 'Lokaltog/vim-distinguished'
 Plug 'w0ng/vim-hybrid'
 
 call plug#end()
+" }}}
 
-" airline
+" /* PLUGIN SETTINGS: airline */ {{{
 let g:airline_powerline_fonts = 1
 let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tagbar#enabled = 0
 let g:airline#extensions#tmuxline#enabled = 0
+" }}}
 
-" NERDTree - open tree, highlight current Buffer in open tree or close tree
-function! BBToggleNERDTree()
-    if &diff | return | endif
-    if (exists("b:NERDTree") && b:NERDTree.isTabTree()) | NERDTreeClose
-    elseif (exists("t:NERDTreeBufName") && (bufwinnr(t:NERDTreeBufName) != -1)) | NERDTreeFind
-    else | NERDTreeFind
-    endif
-endfunction
-
-" auto-pairs
+" /* PLUGIN SETTINGS: auto-pairs */ {{{
 let g:AutoPairsShortcutToggle = '<C-c>'
 let g:AutoPairsShortcutFastWrap = '<C-w>'
+let g:AutoPairsShortcutJump = '<C-a>'
+let g:AutoPairsShortcutBackInsert = '<C-b>'
+" }}}
 
-" vimtex
+" /* PLUGIN SETTINGS: vimtex */ {{{
 let g:tex_flavor = 'latex'
 let g:tex_fold_enabled = 1
+" }}}
 
-" gitgutter
+" /* PLUGIN SETTINGS: gitgutter */ {{{
 let g:gitgutter_map_keys = 0
+" }}}
 
-" ale
+" /* PLUGIN SETTINGS: ale */ {{{
 let g:ale_lint_on_enter = 0
 let g:ale_lint_on_text_changed = 'never'
+" }}}
 
-" syntastic
+" /* PLUGIN SETTINGS: syntastic */ {{{
 "let g:syntastic_check_on_open = 0
 "let g:syntastic_check_on_wq = 0
 "let g:clang_c_options = '-std=gnu11'
 "let g:clang_cpp_options = '-std=c++11 -stdlib=libc++'
+"let g:syntastic_always_populate_loc_list = 1
 "let g:syntastic_python_checkers = ['python', 'flake8']
 "let g:syntastic_rust_checkers = ['rustc', 'clippy']
+" }}}
 
-" FastFold
+" /* PLUGIN SETTINGS: FastFold */ {{{
 let g:fastfold_savehook = 1
 let g:fastfold_fold_command_suffixes =  ['x', 'X', 'a', 'A', 'o', 'O', 'c', 'C', 'r', 'R', 'm', 'M']
 let g:fastfold_fold_movement_commands = [']z', '[z', 'zj', 'zk']
+" }}}
 
-" Key shortcuts
+
+" /* CUSTOM KEYMAP */ {{{
 "=======================================
-
 let mapleader = "\<Space>"
+
+" Vim. Live it!
+" or just use neo2 :)
+"inoremap <Up> <nop>
+"vnoremap <Up> <nop>
+"inoremap <Down> <nop>
+"vnoremap <Down> <nop>
+"inoremap <Left> <nop>
+"vnoremap <Right> <nop>
+"vnoremap <Left> <nop>
+"inoremap <Right> <nop>
+" B-A-<start>
+
+"nnoremap <Up> <nop>
+"nnoremap <Down> <nop>
+"nnoremap <Left> <nop>
+"nnoremap <Right> <nop>
+
+" save shortcut (only works with disabled flow-control)
+nnoremap <C-s> :update<CR>
+inoremap <C-s> <C-o>:update<CR>
+vmap <C-s> <ESC>:update<CR>gv
 
 " buffer navigation
 nmap <silent> <C-p> :bprevious <CR>
 nmap <silent> <C-n> :bnext <CR>
+nmap <silent> <leader>bn :bnext <CR>
+nmap <silent> <leader>bp :bprevious <CR>
 nmap <silent> <leader>br :e <CR>
 nmap <silent> <leader>ba :enew <CR><C-o>
-nmap <silent> <leader>bq :bdelete <CR>
+nmap <silent> <leader>bq :Bwipeout <CR>
 nmap <silent> <leader><Tab> :bnext <CR>
 
 " window navigation
@@ -182,15 +262,19 @@ nnoremap <C-j> <C-w><C-j>
 nnoremap <C-k> <C-w><C-k>
 nnoremap <C-l> <C-w><C-l>
 
+" fold navigation
+nnoremap zJ :<C-u>call BBJumpNextClosedFold(v:count1, 'j')<CR>
+nnoremap zK :<C-u>call BBJumpNextClosedFold(v:count1, 'k')<CR>
+
 " tags
 nnoremap ü <C-]>
-nnoremap Ü <C-O>
+nnoremap Ü <C-t>
 
 " jumps
 nnoremap ä <C-o>
 nnoremap Ä <Tab>
 
-" search highlight
+" reset search highlight
 nnoremap <silent> <CR> :nohlsearch <CR><CR>
 
 " NERDTree
@@ -198,23 +282,27 @@ nnoremap <silent> <C-o> :call BBToggleNERDTree()<CR>
 
 " FastFold
 nmap <leader>zu <Plug>(FastFoldUpdate)
+" }}}
 
-" NVIM specific options
+
+" /* NVIM SPECIFIC OPTIONS */ {{{
 "=======================================
 if has('nvim')
     " autocomplete (omnicomplete) on CTRL-Space
     inoremap <expr> <C-Space> pumvisible()? "\<C-n>" : "\<C-p>"
 else
 endif
+" }}}
 
 
-" GUI options
+" /* GUI OPTIONS (color-scheme) */ {{{
 "=======================================
 if has("gui_running")
     " GUI - Theme
     set t_Co=256
     set background=dark
     colorscheme hybrid
+    highlight LineNr ctermfg=green
 
     set guioptions-=T
     set guifont=Source\ Code\ Pro\ for\ Powerline\ 10
@@ -225,11 +313,15 @@ else
     if &t_Co == 8
         set t_Co=256
         colorscheme distinguished
+        highlight LineNr ctermfg=green
     else
         set t_Co=256
         set background=dark
         colorscheme hybrid
         "highlight Normal ctermbg=black
+        highlight LineNr ctermfg=green
     endif
 endif
+" }}}
 
+"" vim:fdm=marker:fdl=0
