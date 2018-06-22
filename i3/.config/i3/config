@@ -238,7 +238,7 @@ bar {
     mode                        hide
     hidden_state                hide
     position                    top
-    modifier                    Mod3
+    modifier                    none
 
     workspace_buttons           yes
     strip_workspace_numbers     yes
@@ -272,7 +272,7 @@ bar {
     mode                hide
     hidden_state        hide
     position            bottom
-    modifier            Mod3
+    modifier            none
 
     workspace_buttons   no
     tray_output         primary
