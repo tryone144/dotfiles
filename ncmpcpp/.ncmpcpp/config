@@ -8,7 +8,7 @@
 #lyrics_directory = ~/.lyrics
 
 ##### connection settings #####
-mpd_host = localhost
+mpd_host = G0dm0D3@localhost
 mpd_port = 6600
 mpd_connection_timeout = 5
 mpd_music_dir = ~/Musik/Library
