@@ -13,6 +13,7 @@ Just my 0.02$ to all the dotfile collections.
     issue[etc]          -> /etc/issue with archlinux logo
     htop                -> automaticaly generated htoprc
     lightdm[etc]        -> gtk-greeter with custom theme and wallpaper (UNMAINTANED)
+    neovim              -> neovim config based on the .vimrc
     termite             -> termite config
     reflector[etc]      -> updates pacman's mirrorlist once a week with German mirrors
     tmux                -> tmux config
