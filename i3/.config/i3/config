@@ -4,9 +4,9 @@
 #   needs: i3-gaps
 #
 # file: ~/.config/i3/config
-# v0.7.4 / 2016.08.23
+# v0.7.5 / 2018.06.24
 #
-# (c) 2016 Bernd Busse
+# (c) 2018 Bernd Busse
 #
 
 ###############
@@ -15,6 +15,7 @@
 
 # Modifier key <win>
 set $mod Mod4
+set $neo4 Mod3
 
 # Use Mouse+$mod to drag floating windows to their wanted position
 floating_modifier $mod
@@ -60,6 +61,7 @@ bindsym $mod+Shift+r    reload
 bindsym $mod+Control+r  restart
 # exit i3 (logs you out of your X session)
 bindsym $mod+Shift+q    exec --no-startup-id ${WM_SCRIPTS}/poweroff.sh
+bindsym $mod+Shift+x    exec --no-startup-id ${WM_SCRIPTS}/poweroff.sh
 # show i3bar with systray
 bindsym $mod+t          bar mode toggle tray
 bindsym $mod+b          bar mode toggle backup
@@ -105,11 +107,23 @@ bindsym $mod+Down           focus down
 bindsym $mod+Left           focus left
 bindsym $mod+Right          focus right
 
+# change focus (neo2 layer 4)
+bindsym $mod+$neo4+Up       focus up
+bindsym $mod+$neo4+Down     focus down
+bindsym $mod+$neo4+Left     focus left
+bindsym $mod+$neo4+Right    focus right
+
 # move focused window
 bindsym $mod+Shift+Up       move up
 bindsym $mod+Shift+Down     move down
 bindsym $mod+Shift+Left     move left
 bindsym $mod+Shift+Right    move right
+
+# move focused window (neo2 layer 4)
+bindsym $mod+Shift+$neo4+Up     focus up
+bindsym $mod+Shift+$neo4+Down   focus down
+bindsym $mod+Shift+$neo4+Left   focus left
+bindsym $mod+Shift+$neo4+Right  focus right
 
 # split in horizontal orientation
 bindsym $mod+h      split h
