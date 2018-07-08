@@ -50,7 +50,7 @@ set splitright
 
 " Highlight
 set list
-set listchars=tab:>-,trail:~,extends:>,precedes:<,
+set listchars=tab:>-,trail:~,extends:»,precedes:«,nbsp:␣
 set whichwrap=""
 " }}}
 
@@ -71,12 +71,19 @@ syntax on
 
 " /* AUTOCOMMANDS */ {{{
 if has('autocmd')
+    " set C source and header to plain c with doxygen docs
+    autocmd BufRead,BufNewFile *.h,*.c,*.H,*.C let g:load_doxygen_syntax = 1 | set filetype=c
+    autocmd BufRead,BufNewFile *.tex let g:ale_open_list = 0 "| let g:deoplete#omni#input_patterns.tex = g:vimtex#re#deoplete
+
     " show NERDTree if no files where specified on startup
     "autocmd StdinReadPre * let s:std_in=1
     "autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
     "autocmd VimEnter * if argc() == 1 && isdirectory(argv()[0]) && !exists("s:std_in") | exe 'NERDTree' argv()[0] | wincmd p | ene | endif
     " close anyway if NERDTree is the last window
     autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
+
+    " close scratch window when leaving insert or completion
+    autocmd InsertLeave,CompleteDone * if pumvisible() == 0 | pclose | endif
 
     " toggle between absolute and relative line numbers
     augroup numbertoggle
@@ -89,7 +96,7 @@ endif
 
 " /* CUSTOM FUNCTIONS */ {{{
 "=======================================
-" NERDTree - open tree, highlight current Buffer in open tree or close tree
+" NERDTree - open tree, highlight current Buffer in open tree or close tree {{{2
 function! BBToggleNERDTree()
     if &diff | return | endif
     if (exists("b:NERDTree") && b:NERDTree.isTabTree()) | NERDTreeClose
@@ -97,8 +104,9 @@ function! BBToggleNERDTree()
     else | NERDTreeFind
     endif
 endfunction
+" }}}
 
-" Jump to next closed fold
+" Jump to next closed fold {{{2
 function! BBJumpNextClosedFold(cnt, dir)
     echo "Count: " . a:cnt
     let cmd = 'norm!z' . a:dir
@@ -117,6 +125,7 @@ function! BBJumpNextClosedFold(cnt, dir)
     endwhile
     if open | call winrestview(view) | endif
 endfunction
+" }}}
 " }}}
 
 
@@ -177,9 +186,17 @@ call plug#end()
 
 " /* PLUGIN SETTINGS: airline */ {{{
 let g:airline_powerline_fonts = 1
+
+let g:airline#extensions#ale#enabled = 1
 let g:airline#extensions#tabline#enabled = 1
+let g:airline#extensions#vimtex#enabled = 1
 let g:airline#extensions#tagbar#enabled = 0
 let g:airline#extensions#tmuxline#enabled = 0
+" }}}
+
+" /* PLUGIN SETTINGS: nerdtree */ {{{
+let g:NERDTreeShowHidden = 1
+let g:NERDTreeQuitOnOpen = 1
 " }}}
 
 " /* PLUGIN SETTINGS: auto-pairs */ {{{
@@ -190,6 +207,8 @@ let g:AutoPairsShortcutBackInsert = '<C-b>'
 " }}}
 
 " /* PLUGIN SETTINGS: vimtex */ {{{
+let g:vimtex_enabled = 1
+let g:vimtex_compiler_enabled = 0
 let g:tex_flavor = 'latex'
 let g:tex_fold_enabled = 1
 " }}}
@@ -201,6 +220,21 @@ let g:gitgutter_map_keys = 0
 " /* PLUGIN SETTINGS: ale */ {{{
 let g:ale_lint_on_enter = 0
 let g:ale_lint_on_text_changed = 'never'
+let g:ale_open_list = 1
+let g:ale_list_window_size = 5
+
+let g:ale_echo_msg_error_str = 'EE'
+let g:ale_echo_msg_warning_str = 'WW'
+let g:ale_echo_msg_format = '%severity%: [%linter%] %s'
+
+let g:ale_linters = {
+            \ 'c': ['gcc', 'clangtidy', 'flawfinder'],
+            \ }
+
+let g:ale_c_parse_makefile = 1
+let g:ale_c_clangtidy_checks = ['-*', 'bugprone-*', 'cert-*-c', 'misc-*', 'mpi-*',
+            \ 'clang-analyzer-*', '-clang-analyzer-cplusplus.*', '-clang-analyzer-optin.*', '-clang-analyzer-osx.*',
+            \ 'modernize-*', 'performance-*', 'readability-*']
 " }}}
 
 " /* PLUGIN SETTINGS: syntastic */ {{{
@@ -288,8 +322,6 @@ nmap <leader>zu <Plug>(FastFoldUpdate)
 " /* NVIM SPECIFIC OPTIONS */ {{{
 "=======================================
 if has('nvim')
-    " autocomplete (omnicomplete) on CTRL-Space
-    inoremap <expr> <C-Space> pumvisible()? "\<C-n>" : "\<C-p>"
 else
 endif
 " }}}
