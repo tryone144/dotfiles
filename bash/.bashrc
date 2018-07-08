@@ -18,7 +18,7 @@
 [[ -f ~/.bash_aliases ]] && . ~/.bash_aliases
 
 export PATH="$(ruby -e 'puts Gem.user_dir')/bin:$PATH"
-export EDITOR="vim"
+export EDITOR="nvim"
 
 # Disable GTK3 Window borders
 export GTK_CSD=0
@@ -39,7 +39,7 @@ export LESS_TERMCAP_ue=$'\E[0m'             # end underline
 [[ -r ~/.local/share/bash-completion/tmuxinator.bash ]] && source ~/.local/share/bash-completion/tmuxinator.bash
 
 # The Fuck (command regeneration)
-alias fuck='eval $(thefuck $(fc -ln -1)); history -r'
+eval "$(thefuck --alias)"
 
 # Le Prompts
 #PS1='[\u@\h \W]\$ ' # Default Bash Prompt
