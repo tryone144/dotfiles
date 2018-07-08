@@ -3,8 +3,8 @@
 " Personal Vim configuration
 "   plugin-management with 'vim-plug'
 "
-" file: ~/.vimrc
-" v1.3 / 2018.05.23
+" file: ~/.vimrc
+" v1.4 / 2018.07.08
 "
 " (c) 2018 Bernd Busse
 "
@@ -258,43 +258,69 @@ let g:fastfold_fold_movement_commands = [']z', '[z', 'zj', 'zk']
 "=======================================
 let mapleader = "\<Space>"
 
+" /* MOVEMENT */ {{{2
 " Vim. Live it!
-" or just use neo2 :)
-"inoremap <Up> <nop>
+"nnoremap <Up> <nop>
 "vnoremap <Up> <nop>
-"inoremap <Down> <nop>
+"nnoremap <Down> <nop>
 "vnoremap <Down> <nop>
-"inoremap <Left> <nop>
+"nnoremap <Left> <nop>
 "vnoremap <Right> <nop>
 "vnoremap <Left> <nop>
-"inoremap <Right> <nop>
+"nnoremap <Right> <nop>
 " B-A-<start>
 
-"nnoremap <Up> <nop>
-"nnoremap <Down> <nop>
-"nnoremap <Left> <nop>
-"nnoremap <Right> <nop>
+" or just use neo2 :)
+inoremap <Up> <nop>
+inoremap <Down> <nop>
+inoremap <Left> <nop>
+inoremap <Right> <nop>
 
-" save shortcut (only works with disabled flow-control)
-nnoremap <C-s> :update<CR>
-inoremap <C-s> <C-o>:update<CR>
-vmap <C-s> <ESC>:update<CR>gv
+nnoremap <PageUp> <C-u>
+nnoremap <PageDown> <C-d>
+" }}}
 
-" buffer navigation
-nmap <silent> <C-p> :bprevious <CR>
-nmap <silent> <C-n> :bnext <CR>
-nmap <silent> <leader>bn :bnext <CR>
-nmap <silent> <leader>bp :bprevious <CR>
-nmap <silent> <leader>br :e <CR>
-nmap <silent> <leader>ba :enew <CR><C-o>
-nmap <silent> <leader>bq :Bwipeout <CR>
-nmap <silent> <leader><Tab> :bnext <CR>
+" , as : is faster to reach
+nmap , :
+vmap , :
 
-" window navigation
-nnoremap <C-h> <C-w><C-h>
-nnoremap <C-j> <C-w><C-j>
-nnoremap <C-k> <C-w><C-k>
-nnoremap <C-l> <C-w><C-l>
+" no 'ex' mode
+nmap Q <NOP>
+
+" /* FILE SAVING */ {{{2
+"nnoremap <C-s> :update<CR>
+"inoremap <C-s> <C-o>:update<CR>
+"vmap <C-s> <ESC>:update<CR>gv
+
+nnoremap <leader>ss :update<CR>
+nnoremap <leader>bs :update<CR>
+
+" safer version of ZZ
+nnoremap ZZ :confirm qa<CR>
+" }}}
+
+" /* WINDOW NAVIGATION */ {{{2
+" nnoremap <C-h> <C-w><C-h>
+" nnoremap <C-j> <C-w><C-j>
+" nnoremap <C-k> <C-w><C-k>
+" nnoremap <C-l> <C-w><C-l>
+nnoremap <silent> <leader><Left> <C-w><C-h>
+nnoremap <silent> <leader><Down> <C-w><C-j>
+nnoremap <silent> <leader><Up> <C-w><C-k>
+nnoremap <silent> <leader><Right> <C-w><C-l>
+nnoremap <silent> <leader>wq :close<CR>
+" }}}
+
+" /* BUFFER NAVIGATION */ {{{2
+nmap <silent> <C-p> :bprevious<CR>
+nmap <silent> <C-n> :bnext<CR>
+nmap <silent> <leader>bn :bnext<CR>
+nmap <silent> <leader>bp :bprevious<CR>
+nmap <silent> <leader>br :e<CR>
+nmap <silent> <leader>ba :enew<CR><C-o>
+nmap <silent> <leader>bq :Bwipeout<CR>
+nmap <silent> <leader><Tab> :bnext<CR>
+" }}}
 
 " fold navigation
 nnoremap zJ :<C-u>call BBJumpNextClosedFold(v:count1, 'j')<CR>
@@ -308,14 +334,24 @@ nnoremap Ü <C-t>
 nnoremap ä <C-o>
 nnoremap Ä <Tab>
 
+" ale linter err/warn list
+nnoremap <silent> <leader>ll :ALELint<CR>
+nnoremap <silent> <leader>lo :lopen 5<CR>
+nnoremap <silent> <leader>lc :lclose<CR>
+nnoremap <silent> <leader>ln :ALENextWrap<CR>
+nnoremap <silent> <leader>lp :ALEPreviousWrap<CR>
+
 " reset search highlight
-nnoremap <silent> <CR> :nohlsearch <CR><CR>
+nnoremap <silent> <CR> :nohlsearch<CR><CR>
 
 " NERDTree
 nnoremap <silent> <C-o> :call BBToggleNERDTree()<CR>
 
 " FastFold
 nmap <leader>zu <Plug>(FastFoldUpdate)
+
+" help in vertical split
+cabbrev vh vert help
 " }}}
 
 
