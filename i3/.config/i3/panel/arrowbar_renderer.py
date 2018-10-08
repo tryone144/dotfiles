@@ -23,29 +23,29 @@ SEPARATOR_SEGMENT_LEFT = ""    # \uE0B2
 SEPARATOR_PATH_RIGHT = ""      # \uE0B1
 SEPARATOR_PATH_LEFT = ""       # \uE0B3
 
-ICON_TIME = ""                 # \uF3B3
-ICON_BACKLIGHT = ""            # \uF29B
-ICON_CPU = ""                  # \uF2B3
-ICON_MEM = ""                  # \uF313
-ICON_TEMP = ""                 # \uF2B6
-ICON_WINTITLE = ""             # \uF119
+ICON_TIME = ""                 # \uF394
+ICON_BACKLIGHT = ""            # \uF388
+ICON_CPU = ""                  # \uF37F
+ICON_MEM = ""                  # \uF2EC
+ICON_TEMP = ""                 # \uF4B7
+ICON_WINTITLE = ""             # \uF2B3
 
 ICON_STORAGE_DISK = ""         # \uF44E
 ICON_STORAGE_HOME = ""         # \uF144
 
-ICON_BATTERY_EMPTY = ""        # \uF112
-ICON_BATTERY_LOW = ""          # \uF115
-ICON_BATTERY_HALF = ""         # \uF114
-ICON_BATTERY_FULL = ""         # \uF113
-ICON_BATTERY_CHARGE = ""       # \uF111
+ICON_BATTERY_EMPTY = ""        # \uF295
+ICON_BATTERY_LOW = ""          # \uF295
+ICON_BATTERY_HALF = ""         # \uF296
+ICON_BATTERY_FULL = ""         # \uF296
+ICON_BATTERY_CHARGE = ""       # \uF294
 
-ICON_VOLUME_MUTE = ""          # \uF3B9
-ICON_VOLUME_LOW = ""           # \uF3B8
-ICON_VOLUME_MEDIUM = ""        # \uF3B7
-ICON_VOLUME_HIGH = ""          # \uF3BA
+ICON_VOLUME_MUTE = ""          # \uF3A2
+ICON_VOLUME_LOW = ""           # \uF3A1
+ICON_VOLUME_MEDIUM = ""        # \uF131
+ICON_VOLUME_HIGH = ""          # \uF123
 
-ICON_NETWORK_WIFI = ""         # \uF25C
-ICON_NETWORK_ETHER = ""        # \uF341
+ICON_NETWORK_WIFI = ""         # \uF26D
+ICON_NETWORK_ETHER = ""        # \uF22F
 ICON_NETWORK_USB = ""          # \uF2B8
 
 # RegEx and format-strings

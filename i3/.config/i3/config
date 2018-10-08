@@ -29,26 +29,26 @@ set $beamer-vga     DP2
 set $beamer-hdmi    HDMI1
 
 # workspaces
-# workspace 1: Terminal     # \uF2BA
-set $ws_1           1
-# workspace 2: Chromium     # \uF4DB
-set $ws_2           2
-# workspace 3: Hash         # \uF219
-set $ws_3           3
-# workspace 4: Tag          # \uF2AA
-set $ws_4           4
-# workspace 5: Screen       # \uF1FC
-set $ws_5           5
+# workspace 1: Terminal     # \uF136
+set $ws_1           1
+# workspace 2: Chromium     # \uF22F
+set $ws_2           2
+# workspace 3: Hash         # \uF2FA
+set $ws_3           3
+# workspace 4: Tag          # \uF35A
+set $ws_4           4
+# workspace 5: Screen       # \uF2DF
+set $ws_5           5
 # workspace 6
 set $ws_6           6
 # workspace 7
 set $ws_7           7
 # workspace 8
 set $ws_8           8
-# workspace 9: Telegram     # \uF2C3
-set $ws_9           9
-# workspace 10: Music       # \uF20C
-set $ws_0           10
+# workspace 9: Telegram     # \uF33E
+set $ws_9           9
+# workspace 10: Music       # \uF46C
+set $ws_0           10
 
 
 #################
@@ -291,7 +291,7 @@ bar {
     workspace_buttons   no
     tray_output         primary
     # manually fix issues/2933 until pull/2992 is in master
-    status_command      while true; do echo ""; done
+    #status_command      while true; do echo ""; done
 
     font                pango:Ubuntu Mono 10
 }
