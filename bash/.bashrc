@@ -18,6 +18,7 @@
 [[ -f ~/.bash_aliases ]] && . ~/.bash_aliases
 
 export PATH="$(ruby -e 'puts Gem.user_dir')/bin:$PATH"
+export PATH="~/.cargo/bin:$PATH"
 export EDITOR="nvim"
 
 # Disable GTK3 Window borders
