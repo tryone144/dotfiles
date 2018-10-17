@@ -24,10 +24,10 @@ SEPARATOR_PATH_RIGHT = ""      # \uE0B1
 SEPARATOR_PATH_LEFT = ""       # \uE0B3
 
 ICON_TIME = ""                 # \uF394
-ICON_BACKLIGHT = ""            # \uF388
+ICON_BACKLIGHT = ""            # \uF4B7
 ICON_CPU = ""                  # \uF37F
 ICON_MEM = ""                  # \uF2EC
-ICON_TEMP = ""                 # \uF4B7
+ICON_TEMP = ""                 # \uF390
 ICON_WINTITLE = ""             # \uF2B3
 
 ICON_STORAGE_DISK = ""         # \uF44E
