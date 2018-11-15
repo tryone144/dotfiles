@@ -17,14 +17,18 @@ service="com.github.chjj.compton.${dpy}"
 interface='com.github.chjj.compton'
 object='/com/github/chjj/compton'
 
-opt_openclose="$( dbus-send --print-reply=literal --dest="${service}" "${object}"
-    "${interface}.opts_get" string:no_fading_openclose | awk '{print $2;}' )"
-opt_unredir="$( dbus-send --print-reply=literal --dest="${service}" "${object}"
-    "${interface}.opts_get" string:unredir_if_possible | awk '{print $2;}' )"
+#opt_fadedelta="$( dbus-send --print-reply=literal --dest="${service}" "${object}" \
+#    "${interface}.opts_get" "string:fade_delta" | awk '{print $2;}' )"
+opt_openclose="$( dbus-send --print-reply=literal --dest="${service}" "${object}" \
+    "${interface}.opts_get" "string:no_fading_openclose" | awk '{print $2;}' )"
+opt_unredir="$( dbus-send --print-reply=literal --dest="${service}" "${object}" \
+    "${interface}.opts_get" "string:unredir_if_possible" | awk '{print $2;}' )"
 
 # Enable compton's fade-in effect so that the lockscreen gets a nice fade-in effect.
 # If disable unredir_if_possible is enabled in compton's config, we may need to
 # disable that to avoid flickering. YMMV.
+#dbus-send --type=method_call --dest="${service}" "${object}" "${interface}.opts_set" \
+#    "string:fade_delta" "int32:10"
 dbus-send --type=method_call --dest="${service}" "${object}" "${interface}.opts_set" \
     "string:no_fading_openclose" "boolean:false"
 dbus-send --type=method_call --dest="${service}" "${object}" "${interface}.opts_set" \
@@ -62,6 +66,8 @@ fi
 sleep 0.2
 
 # Revert compton's config changes.
+#dbus-send --type=method_call --dest="${service}" "${object}" "${interface}.opts_set" \
+#    "string:fade_delta" "int32:${opt_fadedelta}"
 dbus-send --type=method_call --dest="${service}" "${object}" "${interface}.opts_set" \
     "string:no_fading_openclose" "boolean:${opt_openclose}"
 dbus-send --type=method_call --dest="${service}" "${object}" "${interface}.opts_set" \
