@@ -104,6 +104,33 @@ alias sha1test='_hashtest "sha1" 40'
 alias sha256test='_hashtest "sha256" 64'
 alias sha512test='_hashtest "sha512" 128'
 
+# Manage vpn connections via systemd units
+function vpn() {
+    case ${1} in
+        start)
+            echo "Start VPN '${2}'..."
+            systemctl start "openvpn-client@${2}.service" || echo "Error: command failed" >&2
+            ;;
+        stop)
+            echo "Stop VPN '${2}'..."
+            systemctl stop "openvpn-client@${2}.service" || echo "Error: command failed" >&2
+            ;;
+        restart)
+            echo "Restart VPN '${2}'..."
+            systemctl restart "openvpn-client@${2}.service" || echo "Error: command failed" >&2
+            ;;
+        status)
+            echo "Status of VPN '${2}':"
+            systemctl status "openvpn-client@${2}.service"
+            ;;
+        *)
+            echo "unknown command: ${@}" >&2
+            echo "Usage: vpn [start|stop|restart|status] id" >&2
+            return 1
+            ;;
+    esac
+}
+
 # Manage local and remote proxy settings
 function manage_proxy() {
     case ${1} in
