@@ -19,6 +19,7 @@
 
 export PATH="$(ruby -e 'puts Gem.user_dir')/bin:$PATH"
 export PATH="~/.cargo/bin:$PATH"
+export PATH="~/.local/bin:$PATH"
 export EDITOR="nvim"
 
 # Disable GTK3 Window borders
@@ -75,6 +76,7 @@ export PROMPT_COMMAND=_update_ps1
 
 #Archey3 greeting
 if [[ ! -n ${NO_ARCHEY+found} ]] && [[ -n ${DISPLAY} || -n ${SSH_CONNECTION} || -n ${TMUX} ]]; then 
-    archey3 --config=~/.config/archey3.cfg
+    #archey3 --config=~/.config/archey3.cfg
+    /bin/true
 fi
 

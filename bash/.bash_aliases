@@ -73,7 +73,7 @@ function battery() {
     for bat in $(upower -e | grep 'battery'); do
         output="$(upower -i $bat)"
         _name="$(echo "$output" | grep 'native-path' | sed -re 's/^\s*native-path:\s*(.*)$/\1/g')"
-        _percentage="$(echo "$output" | grep 'percentage' | sed -re 's/^\s*percentage:\s*([0-9][0-9]%)$/\1/g')"
+        _percentage="$(echo "$output" | grep 'percentage' | sed -re 's/^\s*percentage:\s*([0-9]?[0-9]%)$/\1/g')"
         _state="$(echo "$output" | grep 'state' | sed -re 's/^\s*state:\s*(.*)$/\1/g')"
         echo "${_name}: ${_percentage} (${_state})"
     done
