@@ -159,7 +159,15 @@ Plug 'leafgarland/typescript-vim'
 Plug 'airblade/vim-gitgutter'
 
 " completion-manager - auto complete (NeoVim)
-Plug 'roxma/nvim-completion-manager', has('nvim') ? {} : { 'on': [] }
+" Plug 'roxma/nvim-completion-manager', has('nvim') ? {} : { 'on': [] }
+
+" deoplete - auto completion
+Plug 'Shougo/deoplete.nvim', has('nvim') ? { 'do': ':UpdateRemotePlugins' } : {}
+Plug 'roxma/nvim-yarp', has('nvim') ? { 'on': [] } : {}
+Plug 'roxma/vim-hug-neovim-rpc', has('nvim') ? { 'on': [] } : {}
+" deoplete provider
+Plug 'Shougo/neco-syntax'
+Plug 'Shougo/neoinclude.vim', { 'for': ['c', 'cpp'] }
 
 " ale - async syntax checking and linting
 Plug 'w0rp/ale'
@@ -215,6 +223,35 @@ let g:tex_fold_enabled = 1
 
 " /* PLUGIN SETTINGS: gitgutter */ {{{
 let g:gitgutter_map_keys = 0
+" }}}
+
+" /* PLUGIN SETTINGS: deoplete */ {{{
+let g:deoplete#enable_at_startup = 1
+set completeopt+=noinsert
+
+"call deoplete#enable_logging('DEBUG', 'deoplete.log')
+call deoplete#custom#option({
+            \ 'auto_complete': v:true,
+            \ 'complete_method': 'completefunc',
+            \ })
+call deoplete#custom#source('_', 'matchers', ['matcher_fuzzy', 'matcher_length'])
+
+call deoplete#custom#option('sources', {
+            \ '_': ['buffer', 'file', 'syntax'],
+            \ })
+
+if !exists('g:deoplete#omni#input_patterns') | let g:deoplete#omni#input_patterns = {} | endif
+
+"if !exists('g:neoinclude#paths') | let g:neoinclude#paths = {} | endif
+"let g:neoinclude#paths.c = '.,/usr/include/*'
+"let g:neoinclude#paths['c.doxygen'] = '.,/usr/include/*'
+"if !exists('g:neoinclude#delimiters') | let g:neoinclude#delimiters = {} | endif
+"let g:neoinclude#paths.c = ','
+"let g:neoinclude#paths['c.doxygen'] = ','
+"if !exists('g:neoinclude#exts') | let g:neoinclude#exts = {} | endif
+"let g:neoinclude#exts.c = ['', 'h', 'H']
+"let g:neoinclude#exts['c.doxygen'] = ['', 'h', 'H']
+"let g:neoinclude#exts.cpp = ['', 'h', 'hpp', 'hxx']
 " }}}
 
 " /* PLUGIN SETTINGS: ale */ {{{
@@ -320,6 +357,20 @@ nmap <silent> <leader>br :e<CR>
 nmap <silent> <leader>ba :enew<CR><C-o>
 nmap <silent> <leader>bq :Bwipeout<CR>
 nmap <silent> <leader><Tab> :bnext<CR>
+" }}}
+
+" /* AUTOCLOMPLETION */ {{{2
+" autocomplete (completefunc with deoplete) on CTRL-Space
+inoremap <silent> <expr><C-Space> pumvisible()? "\<C-n>" : deoplete#manual_complete()
+
+" keep backspace working
+inoremap <silent> <expr><C-h> deoplete#smart_close_popup() . "\<C-h>"
+inoremap <silent> <expr><BS> deoplete#smart_close_popup() . "\<C-h>"
+
+" close popup and save indent
+"inoremap <silent> <expr><CR> deoplete#close_popup() . "\<CR>"
+inoremap <silent> <expr><CR> pumvisible()? deoplete#close_popup() : "\<CR>"
+inoremap <silent> <expr><C-e> "\<C-e>" . deoplete#close_popup()
 " }}}
 
 " fold navigation
