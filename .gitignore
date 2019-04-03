@@ -10,3 +10,6 @@ gtk/.config/gtk*/servers
 
 # ncmpcpp error log
 ncmpcpp/.ncmpcpp/error.log
+
+# fish temporary config
+fish/.config/fish/fishd.*
