@@ -60,8 +60,8 @@ color4  = #03a9f4
 color12 = #81d4fa
 
 # magenta
-color5  = #e91e63
-color13 = #ad1457
+color5 = #ad1457
+color13 = #e91e63
 
 # cyan
 color6  = #009688
