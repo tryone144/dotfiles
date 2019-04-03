@@ -20,15 +20,15 @@ if [[ -z ${DISPLAY} ]] && [[ "${XDG_VTNR}" == 1 ]]; then
     exec startx
 fi
 
-# X autostart on vt2 [xmonad]
+# X autostart on vt2 [awesomewm]
 if [[ -z ${DISPLAY} ]] && [[ "${XDG_VTNR}" == 2 ]]; then
-    export X_SESSION=xmonad
+    export X_SESSION=awesome
     exec startx
 fi
 
-# X autostart on vt3 [awesomewm]
+# X autostart on vt3 [lxqt]
 if [[ -z ${DISPLAY} ]] && [[ "${XDG_VTNR}" == 3 ]]; then
-    export X_SESSION=awesome
+    export X_SESSION=lxqt
     exec startx
 fi
 

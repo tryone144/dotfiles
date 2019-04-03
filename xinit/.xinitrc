@@ -43,6 +43,10 @@ case ${session} in
         export DESKTOP_SESSION="xmonad"
         export WM_EXEC="${exe:-/usr/bin/xmonad}"
         ;;
+    "lxqt")
+        export DESKTOP_SESSION="lxqt"
+        export WM_EXEC="${exe:-/usr/bin/startlxqt}"
+        ;;
     *)
         unset DESKTOP_SESSION
         export WM_EXEC="${exe:-${1}}"
