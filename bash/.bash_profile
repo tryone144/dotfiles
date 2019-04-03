@@ -2,10 +2,10 @@
 # BASH
 # .bash_profile to source .bashrc and start my graphical session
 #
-# file: ~/.bashrc
-# v0.5 / 2018.02.15
+# file: ~/.bash_profile
+# v1.0 / 2019.04.03
 #
-# (c) 2018 Bernd Busse
+# (c) 2019 Bernd Busse
 #
 
 # source .profile

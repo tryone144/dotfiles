@@ -1,14 +1,13 @@
 #
 # BASH
-# .bashrc with archey greeting and custom prompt (powerline-style)
-# imports custom functions
-#   needs: [archey3]
-#          [powerline-fonts]
+# .bashrc with custom prompt (powerline-style)
+# imports custom functions, supports launching into fish
+#   needs: [powerline-fonts]
 # 
 # file: ~/.bashrc
-# v1.7 / 2016.01.08
+# v1.8 / 2019.04.03
 #
-# (c) 2015 Bernd Busse
+# (c) 2019 Bernd Busse
 #
 
 # If not running interactively, don't do anything
@@ -17,9 +16,6 @@
 # import custom functions
 [[ -f ~/.bash_aliases ]] && . ~/.bash_aliases
 
-export PATH="$(ruby -e 'puts Gem.user_dir')/bin:$PATH"
-export PATH="~/.cargo/bin:$PATH"
-export PATH="~/.local/bin:$PATH"
 export EDITOR="nvim"
 
 # Disable GTK3 Window borders
@@ -74,9 +70,12 @@ function _update_ps1() {
 }
 export PROMPT_COMMAND=_update_ps1
 
-#Archey3 greeting
-if [[ ! -n ${NO_ARCHEY+found} ]] && [[ -n ${DISPLAY} || -n ${SSH_CONNECTION} || -n ${TMUX} ]]; then 
-    #archey3 --config=~/.config/archey3.cfg
-    /bin/true
-fi
+# Archey3 greeting (too cumbersome)
+#if [[ ! -n ${NO_ARCHEY+found} ]] && [[ -n ${DISPLAY} || -n ${SSH_CONNECTION} || -n ${TMUX} ]]; then
+#    archey3 --config=~/.config/archey3.cfg
+#fi
 
+# Change interactive shell to /bin/fish
+if [[ -z "${NO_FISH+found}" ]] && [[ -z "${BASH_EXECUTION_STRING}" ]] && [[ -n "${DISPLAY}" || -n "${SSH_CONNECTION}" ]]; then
+    exec /bin/fish
+fi
