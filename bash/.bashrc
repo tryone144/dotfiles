@@ -5,7 +5,7 @@
 #   needs: [powerline-fonts]
 # 
 # file: ~/.bashrc
-# v1.8 / 2019.04.03
+# v1.8.1 / 2019.05.02
 #
 # (c) 2019 Bernd Busse
 #
@@ -18,20 +18,20 @@
 
 export EDITOR="nvim"
 
-# Disable GTK3 Window borders
-export GTK_CSD=0
-
-unset SSH_ASKPASS
-#export $(gnome-keyring-daemon -s)
+# Fix wonky completion on default tool with 'bash-completion'
+compopt -o bashdefault ls
+compopt -o bashdefault rm
+compopt -o bashdefault cp
 
 # Colorized manpages
-export LESS_TERMCAP_mb=$'\E[01;31m'         # begin blink
-export LESS_TERMCAP_md=$'\E[01;38;5;196m'   # begin bold
-export LESS_TERMCAP_me=$'\E[0m'             # end mode
-export LESS_TERMCAP_so=$'\E[38;5;226m'      # begin standout
-export LESS_TERMCAP_se=$'\E[0m'             # end standout
-export LESS_TERMCAP_us=$'\E[04;38;5;63m'    # begin underline
-export LESS_TERMCAP_ue=$'\E[0m'             # end underline
+export LESS=-R      # Output ANSI escapes as-is
+export LESS_TERMCAP_mb=$'\e[1;4;37m'        # begin blink
+export LESS_TERMCAP_md=$'\e[1;38;5;197m'    # begin bold
+export LESS_TERMCAP_me=$'\e[0m'             # end mode
+export LESS_TERMCAP_so=$'\e[1;38;5;39m'     # begin standout
+export LESS_TERMCAP_se=$'\e[0m'             # end standout
+export LESS_TERMCAP_us=$'\e[1;38;5;220m'    # begin underline
+export LESS_TERMCAP_ue=$'\e[0m'             # end underline
 
 # Load tmuxinator completion
 [[ -r ~/.local/share/bash-completion/tmuxinator.bash ]] && source ~/.local/share/bash-completion/tmuxinator.bash

@@ -20,6 +20,9 @@ __USER_BIN="${HOME}/.local/bin"
 __XTOOLS_RPI_BIN="/opt/arm-rpi-linux-gnueabihf/bin"
 [[ "${PATH}" = *"${__XTOOLS_RPI_BIN}"* ]] || export PATH="$PATH:$__XTOOLS_RPI_BIN"
 
+# Disable GTK3 Window borders
+export GTK_CSD=0
+
 # Enable GTK for Java Swing applications
 export _JAVA_OPTIONS='-Dawt.useSystemAAFontSettings=on 
                       -Dswing.defaultlaf=com.sun.java.swing.plaf.gtk.GTKLookAndFeel 
@@ -27,3 +30,5 @@ export _JAVA_OPTIONS='-Dawt.useSystemAAFontSettings=on
 
 export SDL_VIDEO_FULLSCREEN_HEAD=0
 
+# Do no use fancy GTK dialog for SSH/GitHub passwords
+unset SSH_ASKPASS
