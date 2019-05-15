@@ -5,42 +5,38 @@
 # (sourced by lightdm and .xinitrc)
 #   needs: [dex]
 #          [argyllcms]
-#          [nitrogen]
 #          [dunst]
 #          [compton]
 #
 # file: ~/.xprofile
-# v1.4.1 / 2018.02.14
+# v1.5 / 2019.05.15
 #
-# (c) 2018 Bernd Busse
+# (c) 2019 Bernd Busse
 #
 
 # set config dir and run autostart files with dapper
-export WM_SCRIPTS="${HOME}/.config/wmscripts/"
+export WM_SCRIPTS="${HOME}/.local/share/wmscripts/"
 export PATH="${PATH}:${WM_SCRIPTS%/}"
 
 # set gnome-control-center variable
 export XDG_CURRENT_PROFILE=GNOME
 
+# set wm config locations
+export AWESOME_CONFIG="${HOME}/.config/awesome/"
+export HLWM_CONFIG="${HOME}/.config/herbstluftwm/"
+export I3_CONFIG="${HOME}/.config/i3/"
+
 # load autostart applications
 case ${DESKTOP_SESSION} in
     *"awesomewm")
-        export AWESOME_CONFIG="${HOME}/.config/awesome/"
         dex -ae MATE
         export $(gnome-keyring-daemon -s)
         ;;
     *"herbstluftwm")
-        export HLWM_CONFIG="${HOME}/.config/herbstluftwm/"
         dex -ae MATE
         export $(gnome-keyring-daemon -s)
         ;;
     *"i3")
-        export I3_CONFIG="${HOME}/.config/i3/"
-        dex -ae MATE
-        export $(gnome-keyring-daemon -s)
-        ;;
-    *"spectrwm")
-        export SPECTR_CONFIG="${HOME}/.config/spectrwm/"
         dex -ae MATE
         export $(gnome-keyring-daemon -s)
         ;;

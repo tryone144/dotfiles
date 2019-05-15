@@ -32,12 +32,6 @@ awesome_cmds="$(cat <<EOF
 EOF
 )"
 
-franken_cmds="$(cat <<EOF
-
-> quit frankenwm
-EOF
-)"
-
 herbstluft_cmds="$(cat <<EOF
 
 > quit herbstluft
@@ -61,11 +55,9 @@ EOF
 case "${DESKTOP_SESSION}" in
     "awesomewm")
         cmds="${cmds}${awesome_cmds}" ;;
-    "frankenwm")
-        cmds="${cmds}${franken_cmds}" ;;
     "herbstluftwm")
         cmds="${cmds}${herbstluft_cmds}" ;;
-    "i3")
+    "i3"|*"/i3"|*"/i3-with-shmlog")
         cmds="${cmds}${i3_cmds}" ;;
     "xmonad")
         cmds="${cmds}${xmonad_cmds}" ;;

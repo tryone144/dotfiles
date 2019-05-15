@@ -35,10 +35,6 @@ case ${session} in
         export DESKTOP_SESSION="i3"
         export WM_EXEC="${exe:-/usr/bin/i3}"
         ;;
-    "spectrwm")
-        export DESKTOP_SESSION="spectrwm"
-        export WM_EXEC="${exe:-/usr/bin/spectrwm}"
-        ;;
     "xmonad")
         export DESKTOP_SESSION="xmonad"
         export WM_EXEC="${exe:-/usr/bin/xmonad}"
