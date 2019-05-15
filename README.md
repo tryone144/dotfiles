@@ -8,19 +8,20 @@ Just my 0.02$ to all the dotfile collections.
     bash                -> bash config with custom prompt and aliases
     compton             -> compton compositor with minmal transparency ([kawase blur fork](tryone144/compton))
     dunst               -> dunst config
+    fish                -> fish config with custom prompt and aliases
     gtk                 -> special GTK Settings
     i3                  -> i3 configuration
     issue[etc]          -> /etc/issue with archlinux logo
     htop                -> automaticaly generated htoprc
-    lightdm[etc]        -> gtk-greeter with custom theme and wallpaper (UNMAINTANED)
+    lightdm[etc]        -> gtk-greeter with custom theme and wallpaper (UNMAINTAINED)
     neovim              -> neovim config based on the .vimrc
     termite             -> termite config
     reflector[etc]      -> updates pacman's mirrorlist once a week with German mirrors
     tmux                -> tmux config
-    urxvt               -> urxvt config
+    urxvt               -> urxvt config (UNMAINTAINED)
     vim                 -> magic .vimrc with (too many) plugins, nvim compatible
     wmscripts           -> various shell-scripts for dmenu/poweroff/volume/etc.
-    xinit               -> .xinitrc and .xprofile for use with startx and i3/awesome/xmonad
+    xinit               -> .xinitrc and .xprofile for use with startx and i3/awesome/...
 
 All files created on ArchLinux 64Bit machine.
 Filemanagement is done with GNU stow.
@@ -78,7 +79,7 @@ License
 
 The MIT License (MIT)
 
-Copyright (c) 2018 Bernd Busse
+Copyright (c) 2019 Bernd Busse
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
