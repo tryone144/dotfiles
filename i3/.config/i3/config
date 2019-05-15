@@ -2,11 +2,12 @@
 # I3WM
 # main config for i3
 #   needs: i3-gaps
+#          [nitrogen]
 #
 # file: ~/.config/i3/config
-# v0.7.5 / 2018.06.24
+# v0.8 / 2019.05.15
 #
-# (c) 2018 Bernd Busse
+# (c) 2019 Bernd Busse
 #
 
 ###############
@@ -67,6 +68,16 @@ bindsym $mod+t          bar mode toggle tray
 bindsym $mod+b          bar mode toggle backup
 
 
+##################
+## STARTUP APPS ##
+##################
+
+# set wallpaper with nitrogen
+exec_always --no-startup-id nitrogen --restore
+
+# start systemd user services (compton, ...)
+exec_always --no-startup-id systemctl --user start i3.target
+
 #############
 ## HOTKEYS ##
 #############
@@ -121,10 +132,10 @@ bindsym $mod+Shift+Left     move left
 bindsym $mod+Shift+Right    move right
 
 # move focused window (neo2 layer 4)
-bindsym $mod+Shift+$neo4+Up     focus up
-bindsym $mod+Shift+$neo4+Down   focus down
-bindsym $mod+Shift+$neo4+Left   focus left
-bindsym $mod+Shift+$neo4+Right  focus right
+bindsym $mod+Shift+$neo4+Up     move up
+bindsym $mod+Shift+$neo4+Down   move down
+bindsym $mod+Shift+$neo4+Left   move left
+bindsym $mod+Shift+$neo4+Right  move right
 
 # split in horizontal orientation
 bindsym $mod+h      split h
@@ -294,8 +305,6 @@ bar {
 
     workspace_buttons   no
     tray_output         primary
-    # manually fix issues/2933 until pull/2992 is in master
-    #status_command      while true; do echo ""; done
 
     font                pango:Ubuntu Mono 10
 }

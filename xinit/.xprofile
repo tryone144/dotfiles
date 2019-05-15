@@ -69,12 +69,3 @@ if [[ ${HOSTNAME} == "sachnix" ]]; then
     dispwin -d 1 -I ~/.local/share/colord/DELL\ U2410\ -\ 20150506.icc &
     dispwin -d 2 -I ~/.local/share/colord/SAMSUNG\ SyncMaster245B\ -\ 20150506.icc &
 fi
-
-# (re)set wallpaper with nitrogen
-nitrogen --restore &
-
-# start notification-daemon 'dunst'
-[[ -z $(pgrep dunst) ]] && dunst &
-
-# start compositor 'compton'
-[[ -z $(pgrep compton) ]] && compton &
