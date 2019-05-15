@@ -33,6 +33,9 @@ export LESS_TERMCAP_se=$'\e[0m'             # end standout
 export LESS_TERMCAP_us=$'\e[1;38;5;220m'    # begin underline
 export LESS_TERMCAP_ue=$'\e[0m'             # end underline
 
+# Colorized GCC
+export GCC_COLORS='error=1;35:warning=1;31:note=1;36:caret=1;32:locus=1:quote=1'
+
 # Load tmuxinator completion
 [[ -r ~/.local/share/bash-completion/tmuxinator.bash ]] && source ~/.local/share/bash-completion/tmuxinator.bash
 
