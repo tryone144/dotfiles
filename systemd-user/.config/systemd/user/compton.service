@@ -1,0 +1,9 @@
+[Unit]
+Description=X Window Compositor
+
+[Service]
+Type=simple
+ExecStart=/usr/bin/compton --dbus
+KillMode=mixed
+KillSignal=SIGINT
+

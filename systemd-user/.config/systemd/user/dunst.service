@@ -1,0 +1,8 @@
+[Unit]
+Description=Lightweight Notification Daemon
+
+[Service]
+Type=simple
+ExecStart=/usr/bin/dunst
+KillMode=mixed
+KillSignal=SIGINT
