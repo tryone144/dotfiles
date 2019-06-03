@@ -23,7 +23,7 @@ fi
 if (( $( which xfce4-screenshooter 2>&1 1>/dev/null; echo $? ) != 0 )); then
     _date="$(date +%Y%m%d_%H%M%S)"
     _filename="${dest_folder}/screenshot_root_${_date}.png"
-    
+
     # take screenshot
     import -window root "${_filename}"
 else
