@@ -17,17 +17,18 @@ alias ls='ls --color=auto -h'
 alias grep='grep --color=auto'
 alias mux='tmuxinator'
 alias archey="archey3 --config=~/.config/archey3.cfg"
+
+alias gnome-control-center="XDG_CURRENT_DESKTOP=GNOME /usr/bin/gnome-control-center"
+
 alias rcd='ranger --choosedir=${HOME}/.cache/rangertarget; cd "$( cat ~/.cache/rangertarget )"'
 alias clr='clear; archey3 --config=~/.config/archey3.cfg'
 alias clrmem="sudo bash -c 'echo 3 > /proc/sys/vm/drop_caches'"
 alias cpu-perf='sudo cpupower frequency-set -g performance'
 alias cpu-save='sudo cpupower frequency-set -g ondemand'
 
-alias update='yaourt -Syua'
 alias copy='xclip -selection clipboard'
 alias webcam='mplayer tv:// -tv driver=v4l2 -vo gl'
 alias rainbow='for i in {0..255}; do echo -e "\e[0;38;5;${i};49;22m${i}: COLOR RAINBOW \e[7m INVERT :D \e[0m"; done'
-alias win7='_PWD=${PWD}; cd /opt/kvm/; ./start_win7.sh -spice-client spicy; cd ${_PWD}'
 
 alias rublogin='sudo /etc/NetworkManager/dispatcher.d/20-rublogin eth0 up'
 #alias vpn-bussenet='_PWD=${PWD}; cd ~/.openvpn/busse-rs/; sudo openvpn --config ./denknix-TO-IPFire.ovpn; cd ${_PWD}'
