@@ -82,7 +82,8 @@ bindsym $mod+Shift+d    exec --no-startup-id ${WM_SCRIPTS}/launcher.sh cmd
 bindsym $mod+Shift+Delete    exec --no-startup-id ${WM_SCRIPTS}/locker.sh
 
 # make screenshot
-bindsym --release $mod+Print    exec --no-startup-id ${WM_SCRIPTS}/screenshot.sh
+bindsym --release $mod+Print        exec --no-startup-id ${WM_SCRIPTS}/screenshot.sh
+bindsym --release $mod+Shift+Print  exec --no-startup-id ${WM_SCRIPTS}/screenshot.sh region
 
 # change volume
 bindsym XF86AudioRaiseVolume    exec --no-startup-id ${WM_SCRIPTS}/volume.sh raise 5

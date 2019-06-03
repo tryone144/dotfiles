@@ -11,18 +11,26 @@
 # (c) 2016 Bernd Busse
 #
 
-if (( $( which xdg-user-dir 2>&1 /dev/null; echo $? ) != 0 )); then
-    _folder=~/
+if (( $( which xdg-user-dir 2>&1 1>/dev/null; echo $? ) != 0 )); then
+    dest_folder=~/
 else
-    _folder="$( xdg-user-dir "PICTURES" )/screenshots/"
-    if [[ ! -d "${_folder}" ]]; then
-        mkdir -p "${_folder}"
+    dest_folder="$( xdg-user-dir "PICTURES" )/screenshots/"
+    if [[ ! -d "${dest_folder}" ]]; then
+        mkdir -p "${dest_folder}"
     fi
 fi
 
-_date="$(date +%Y%m%d_%H%M%S)"
-_filename="${_folder}/screenshot_root_${_date}.png"
-
-# take screenshot
-import -window root "${_filename}"
-
+if (( $( which xfce4-screenshooter 2>&1 1>/dev/null; echo $? ) != 0 )); then
+    _date="$(date +%Y%m%d_%H%M%S)"
+    _filename="${dest_folder}/screenshot_root_${_date}.png"
+    
+    # take screenshot
+    import -window root "${_filename}"
+else
+    case ${1} in
+        "r" | "region")
+            xfce4-screenshooter --region --save "${dest_folder}" ;;
+        *)
+            xfce4-screenshooter --fullscreen --save "${dest_folder}" ;;
+    esac
+fi
