@@ -71,6 +71,13 @@ syntax on
 
 " /* AUTOCOMMANDS */ {{{
 if has('autocmd')
+    " enable ncm2 for all buffers
+    augroup ncm2
+        autocmd BufEnter * call ncm2#enable_for_buffer()
+        autocmd User Ncm2PopupOpen set completeopt=noinsert,menuone,noselect
+        autocmd User Ncm2PopupClose set completeopt=menuone
+    augroup END
+
     " set C source and header to plain c with doxygen docs
     autocmd BufRead,BufNewFile *.h,*.c,*.H,*.C let g:load_doxygen_syntax = 1 | set filetype=c
     autocmd BufRead,BufNewFile *.tex let g:ale_open_list = 0 "| let g:deoplete#omni#input_patterns.tex = g:vimtex#re#deoplete
@@ -155,28 +162,32 @@ Plug 'rust-lang/rust.vim', { 'for': 'rust' }
 " typescript - typescript support
 Plug 'leafgarland/typescript-vim'
 
+" arm-syntax - armv7 syntax highlight
+Plug 'ARM9/arm-syntax-vim'
+
 " gitgutter - git status
 Plug 'airblade/vim-gitgutter'
 
-" completion-manager - auto complete (NeoVim)
-" Plug 'roxma/nvim-completion-manager', has('nvim') ? {} : { 'on': [] }
+" fugitive - git diffing
+Plug 'tpope/vim-fugitive'
 
-" deoplete - auto completion
-Plug 'Shougo/deoplete.nvim', has('nvim') ? { 'do': ':UpdateRemotePlugins' } : {}
-Plug 'roxma/nvim-yarp', has('nvim') ? { 'on': [] } : {}
+" ncm2- auto completion
+Plug 'ncm2/ncm2'
+Plug 'roxma/nvim-yarp'
 Plug 'roxma/vim-hug-neovim-rpc', has('nvim') ? { 'on': [] } : {}
-" deoplete provider
+" ncm2 provider
+Plug 'ncm2/ncm2-bufword'
+Plug 'ncm2/ncm2-path'
 Plug 'Shougo/neco-syntax'
-Plug 'Shougo/neoinclude.vim', { 'for': ['c', 'cpp'] }
+Plug 'ncm2/ncm2-neoinclude' | Plug 'Shougo/neoinclude.vim'
+" ncm2 LanguageServer client
+Plug 'autozimu/LanguageClient-neovim', {
+    \ 'branch': 'next',
+    \ 'do': 'bash install.sh',
+    \ }
 
 " ale - async syntax checking and linting
 Plug 'w0rp/ale'
-
-" syntastic - syntax checking
-" Plug 'scrooloose/syntastic'
-
-" clippy - syntax checking with cargo-clippy
-" Plug 'wagnerf42/vim-clippy', { 'for': 'rust' }
 
 " FastFold - faster fold calculation
 Plug 'Konfekt/FastFold'
@@ -225,33 +236,13 @@ let g:tex_fold_enabled = 1
 let g:gitgutter_map_keys = 0
 " }}}
 
-" /* PLUGIN SETTINGS: deoplete */ {{{
-let g:deoplete#enable_at_startup = 1
-set completeopt+=noinsert
+" /* PLUGIN SETTINGS: ncm2 / LanguageClient */ {{{
+"set completeopt=noinsert,menuone,noselect
 
-"call deoplete#enable_logging('DEBUG', 'deoplete.log')
-call deoplete#custom#option({
-            \ 'auto_complete': v:true,
-            \ 'complete_method': 'completefunc',
-            \ })
-call deoplete#custom#source('_', 'matchers', ['matcher_fuzzy', 'matcher_length'])
-
-call deoplete#custom#option('sources', {
-            \ '_': ['buffer', 'file', 'syntax'],
-            \ })
-
-if !exists('g:deoplete#omni#input_patterns') | let g:deoplete#omni#input_patterns = {} | endif
-
-"if !exists('g:neoinclude#paths') | let g:neoinclude#paths = {} | endif
-"let g:neoinclude#paths.c = '.,/usr/include/*'
-"let g:neoinclude#paths['c.doxygen'] = '.,/usr/include/*'
-"if !exists('g:neoinclude#delimiters') | let g:neoinclude#delimiters = {} | endif
-"let g:neoinclude#paths.c = ','
-"let g:neoinclude#paths['c.doxygen'] = ','
-"if !exists('g:neoinclude#exts') | let g:neoinclude#exts = {} | endif
-"let g:neoinclude#exts.c = ['', 'h', 'H']
-"let g:neoinclude#exts['c.doxygen'] = ['', 'h', 'H']
-"let g:neoinclude#exts.cpp = ['', 'h', 'hpp', 'hxx']
+let g:LanguageClient_serverCommands = {
+    \ 'rust': ['rustup', 'run', 'stable', 'rls'],
+    \ 'python': ['pyls'],
+    \ }
 " }}}
 
 " /* PLUGIN SETTINGS: ale */ {{{
@@ -266,6 +257,7 @@ let g:ale_echo_msg_format = '%severity%: [%linter%] %s'
 
 let g:ale_linters = {
             \ 'c': ['gcc', 'clangtidy', 'flawfinder'],
+            \ 'asm': [],
             \ }
 
 let g:ale_c_parse_makefile = 1
@@ -360,17 +352,8 @@ nmap <silent> <leader><Tab> :bnext<CR>
 " }}}
 
 " /* AUTOCLOMPLETION */ {{{2
-" autocomplete (completefunc with deoplete) on CTRL-Space
-inoremap <silent> <expr><C-Space> pumvisible()? "\<C-n>" : deoplete#manual_complete()
-
-" keep backspace working
-inoremap <silent> <expr><C-h> deoplete#smart_close_popup() . "\<C-h>"
-inoremap <silent> <expr><BS> deoplete#smart_close_popup() . "\<C-h>"
-
-" close popup and save indent
-"inoremap <silent> <expr><CR> deoplete#close_popup() . "\<CR>"
-inoremap <silent> <expr><CR> pumvisible()? deoplete#close_popup() : "\<CR>"
-inoremap <silent> <expr><C-e> "\<C-e>" . deoplete#close_popup()
+" autocomplete (completefunc with ncm2) on CTRL-Space
+inoremap <silent> <expr><C-Space> pumvisible()? "\<C-n>" : ncm2#manual_trigger()
 " }}}
 
 " fold navigation
