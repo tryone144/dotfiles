@@ -232,6 +232,9 @@ gaps outer 0
 ## RULES ##
 ###########
 
+# make all tooltip windows floating (fixes hopper peek)
+for_window [window_type=tooltip] floating enable
+
 # make minecraft floating
 for_window [class="net-minecraft-bootstrap-Bootstrap"] floating enable
 for_window [class="^Minecraft" instance="^Minecraft"] floating enable
