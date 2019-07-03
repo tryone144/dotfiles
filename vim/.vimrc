@@ -14,6 +14,8 @@ set encoding=utf8
 set ffs=unix,dos,mac
 set autoread
 
+set secure
+
 " /* TAB EDITING */ {{{
 set tabstop=4
 set shiftwidth=4
@@ -78,6 +80,11 @@ if has('autocmd')
         autocmd User Ncm2PopupClose set completeopt=menuone
     augroup END
 
+    " determine python linter depending on Shebang if not in venv
+    autocmd FileType python if $VIRTUAL_ENV == "" |
+        \ let b:ale_python_flake8_executable = BBParseShebang(expand('<afile>', 1))['exe'] |
+        \ let b:ale_python_flake8_options = '-m flake8' | endif
+
     " set C source and header to plain c with doxygen docs
     autocmd BufRead,BufNewFile *.h,*.c,*.H,*.C let g:load_doxygen_syntax = 1 | set filetype=c
     autocmd BufRead,BufNewFile *.tex let g:ale_open_list = 0 "| let g:deoplete#omni#input_patterns.tex = g:vimtex#re#deoplete
@@ -111,7 +118,23 @@ function! BBToggleNERDTree()
     else | NERDTreeFind
     endif
 endfunction
-" }}}
+" }}}2
+
+" Parse Shebang line (taken from syntastic utils) {{{2
+function! BBParseShebang(buf) abort
+    for lnum in range(1, 5)
+        let line = get(getbufline(a:buf, lnum), 0, '')
+        if line =~# '^#!'
+            let line = substitute(line, '\v^#!\s*(\S+/env(\s+-\S+)*\s+)?', '', '')
+            let exe = matchstr(line, '\m^\S*\ze')
+            let args = split(matchstr(line, '\m^\S*\zs.*'))
+            return { 'exe': exe, 'args': args }
+        endif
+    endfor
+
+    return { 'exe': '', 'args': [] }
+endfunction
+" }}}2
 
 " Jump to next closed fold {{{2
 function! BBJumpNextClosedFold(cnt, dir)
@@ -132,7 +155,7 @@ function! BBJumpNextClosedFold(cnt, dir)
     endwhile
     if open | call winrestview(view) | endif
 endfunction
-" }}}
+" }}}2
 " }}}
 
 
@@ -304,6 +327,8 @@ inoremap <Up> <nop>
 inoremap <Down> <nop>
 inoremap <Left> <nop>
 inoremap <Right> <nop>
+inoremap <Home> <nop>
+inoremap <End> <nop>
 
 nnoremap <PageUp> <C-u>
 nnoremap <PageDown> <C-d>
