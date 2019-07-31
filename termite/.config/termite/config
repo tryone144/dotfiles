@@ -25,11 +25,11 @@ scroll_on_output = false
 urgent_on_bell = true
 audible_bell = false
 
-browser = chromium
+browser = firefox
 clickable_url = false
 
 geometry = 132x43
-size_hints = true
+size_hints = false
 
 # modified material <http://www.xcolors.net/dl/material>
 [colors]
