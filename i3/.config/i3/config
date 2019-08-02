@@ -251,8 +251,7 @@ for_window [class="net-minecraft-bootstrap-Bootstrap"] floating enable
 for_window [class="^Minecraft" instance="^Minecraft"] floating enable
 
 # make steam friends and messages floating
-for_window [class="Steam" title="Freunde"] floating enable, move window to workspace current
-for_window [class="Steam" title=".* - Chat"] floating enable
+for_window [class="Steam" title="^Friends List"] floating enable, move window to workspace current
 
 
 #########
