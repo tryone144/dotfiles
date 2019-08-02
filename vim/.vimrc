@@ -87,14 +87,19 @@ if has('autocmd')
 
     " set C source and header to plain c with doxygen docs
     autocmd BufRead,BufNewFile *.h,*.c,*.H,*.C let g:load_doxygen_syntax = 1 | set filetype=c
-    autocmd BufRead,BufNewFile *.tex let g:ale_open_list = 0 "| let g:deoplete#omni#input_patterns.tex = g:vimtex#re#deoplete
+
+    " Hide loclist (lint-err) for LaTeX files
+    autocmd BufRead,BufNewFile *.tex let g:ale_open_list = 0
 
     " show NERDTree if no files where specified on startup
     "autocmd StdinReadPre * let s:std_in=1
     "autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
     "autocmd VimEnter * if argc() == 1 && isdirectory(argv()[0]) && !exists("s:std_in") | exe 'NERDTree' argv()[0] | wincmd p | ene | endif
     " close anyway if NERDTree is the last window
-    autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
+    autocmd BufEnter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
+
+    " close anyway if QuickFix is the last window
+    autocmd BufEnter * if (winnr("$") == 1 && &buftype ==# 'quickfix') | bd | q | endif
 
     " close scratch window when leaving insert or completion
     autocmd InsertLeave,CompleteDone * if pumvisible() == 0 | pclose | endif
@@ -366,14 +371,16 @@ nnoremap <silent> <leader>wq :close<CR>
 " }}}
 
 " /* BUFFER NAVIGATION */ {{{2
-nmap <silent> <C-p> :bprevious<CR>
-nmap <silent> <C-n> :bnext<CR>
-nmap <silent> <leader>bn :bnext<CR>
-nmap <silent> <leader>bp :bprevious<CR>
+"nmap <silent> <C-p> :bprevious<CR>
+nmap <silent> <C-p> :bprevious<Bar>if &buftype ==# 'quickfix'<Bar>bprevious<Bar>endif<CR>
+"nmap <silent> <C-n> :bnext<CR>
+nmap <silent> <C-n> :bnext<Bar>if &buftype ==# 'quickfix'<Bar>bnext<Bar>endif<CR>
+nmap <silent> <leader>bn <C-n>
+nmap <silent> <leader>bp <C-p>
 nmap <silent> <leader>br :e<CR>
 nmap <silent> <leader>ba :enew<CR><C-o>
 nmap <silent> <leader>bq :Bwipeout<CR>
-nmap <silent> <leader><Tab> :bnext<CR>
+nmap <silent> <leader><Tab> <C-n>
 " }}}
 
 " /* AUTOCLOMPLETION */ {{{2
