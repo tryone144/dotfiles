@@ -141,7 +141,7 @@ function manage_proxy() {
             echo "Setting proxy to ${PROXY_IP}:${PROXY_PORT}..."
             export http_proxy="http://${PROXY_IP}:${PROXY_PORT}"; export HTTP_PROXY="${http_proxy}"
             export https_proxy="http://${PROXY_IP}:${PROXY_PORT}"; export HTTPS_PROXY="${https_proxy}"
-            export ftp_proxy="ftp://${PROXY_IP}:${PROXY_PORT}"; export FTP_PROXY="${https_proxy}"
+            export ftp_proxy="http://${PROXY_IP}:${PROXY_PORT}"; export FTP_PROXY="${ftp_proxy}"
             export no_proxy="127.0.0.1, localhost, 192.168.110.1, 192.168.110.15"; export NO_PROXY="${no_proxy}"
             gsettings set org.gnome.system.proxy mode 'manual' 
             gsettings set org.gnome.system.proxy.http host "${PROXY_IP}"

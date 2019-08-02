@@ -32,7 +32,7 @@ if [[ -z ${DISPLAY} ]] && [[ "${XDG_VTNR}" == 3 ]]; then
     exec startx
 fi
 
-# autostart tmux on tty5 and tty6
-if [[ -z ${TMUX} ]] && [[ -z ${DISPLAY} ]] && [[ -n ${XDG_VTNR} ]] && (( ${XDG_VTNR} == 5 || ${XDG_VTNR} == 6 )); then
+# autostart tmux on tty4
+if [[ -z ${TMUX} ]] && [[ -z ${DISPLAY} ]] && [[ -n ${XDG_VTNR} ]] && (( ${XDG_VTNR} == 4 )); then
     exec tmux
 fi

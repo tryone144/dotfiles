@@ -5,7 +5,7 @@
 #   needs: [powerline-fonts]
 # 
 # file: ~/.bashrc
-# v1.8.1 / 2019.05.02
+# v1.8.2 / 2019.05.15
 #
 # (c) 2019 Bernd Busse
 #
@@ -35,9 +35,6 @@ export LESS_TERMCAP_ue=$'\e[0m'             # end underline
 
 # Colorized GCC
 export GCC_COLORS='error=1;35:warning=1;31:note=1;36:caret=1;32:locus=1:quote=1'
-
-# Load tmuxinator completion
-[[ -r ~/.local/share/bash-completion/tmuxinator.bash ]] && source ~/.local/share/bash-completion/tmuxinator.bash
 
 # The Fuck (command regeneration)
 eval "$(thefuck --alias)"
