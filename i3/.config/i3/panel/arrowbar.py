@@ -85,7 +85,8 @@ def stdin_thread():
         while True:
             _head = sys.stdin.readline()
             if _head == "":
-                thread_die(quit_event, "stdin closed.")
+                thread_die("STDIN closed while reading JSON header.")
+                return
             try:
                 json.loads(_head)
             finally:
@@ -95,7 +96,8 @@ def stdin_thread():
         while True:
             _start = sys.stdin.readline()
             if _start == "":
-                thread_die(quit_event, "stdin closed.")
+                thread_die("STDIN closed while reading JSON start tag.")
+                return
             if _start[0] == "[":
                 break
 
@@ -103,7 +105,8 @@ def stdin_thread():
         while True:
             _line = sys.stdin.readline()
             if _line == "":
-                thread_die(quit_event, "stdin closed.")
+                thread_die("STDIN closed.")
+                return
             if _line.startswith(","):
                 _line = _line[1:]
 
@@ -116,6 +119,7 @@ def stdin_thread():
                           "Error decoding JSON: " + e.msg + "\n")
     except Exception as e:
         thread_die(exception=e)
+        return
 
 
 def thread_die(msg="Thread stopped unexpectedly", exception=None):
@@ -169,6 +173,7 @@ def main(use_ws=False, use_title=False):
             callback.task_done()
     except KeyboardInterrupt:
         fprint_nb(sys.stderr, "Got KeyboardInterrupt. exiting...\n")
+
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(

@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 #
 # I3WM
 # wrapper for lemonbar statusline
@@ -9,7 +9,7 @@
 #          [ionicons-font]
 #
 # file: ~/.config/i3/lemonbar.sh
-# v0.4.2 / 2015.11.13
+# v0.4.3 / 2019.08.06
 #
 
 panel_fifo="/dev/shm/i3_lemonbar_${USER}"
@@ -34,9 +34,7 @@ trap 'trap - TERM; kill 0' INT TERM QUIT EXIT
 [ -e "${panel_fifo}" ] && rm "${panel_fifo}"
 mkfifo "${panel_fifo}"
 
-# start status provider
 export PATH="${PATH}:${I3_CONFIG}/scripts:${I3_CONFIG}/panel"
-j4status -c "${config}" > "${panel_fifo}" &
 
 # start lemonbar
 arrowbar.py --workspace --title < "${panel_fifo}" 2>> /tmp/arrowbar.log \
@@ -67,5 +65,8 @@ arrowbar.py --workspace --title < "${panel_fifo}" 2>> /tmp/arrowbar.log \
             esac
         done
     } && kill 0 &
+
+# start status provider
+j4status -c "${config}" > "${panel_fifo}"
 
 wait
