@@ -50,8 +50,9 @@ sleep 0.2
 #${I3_CONFIG}/scripts/volume.py mute
 
 # lock screen
-#sxlock -p 'password1234' -u "${USER}@${HOSTNAME}" -f '-*-hack-medium-r-normal-*-24-90-*-*-*-*-iso10646-*'
-sxlock -p 'password1234' -u "${USER}@${HOSTNAME}" -f '-*-ubuntu mono-medium-r-normal-*-24-90-*-*-*-*-iso10646-*'
+#sxlock -p 'password1234' -u "${USER}@${HOSTNAME}" -f '-*-ubuntu mono-medium-r-normal-*-24-90-*-*-*-*-iso10646-*'
+sxlock -p 'password1234' -u "${USER}@${HOSTNAME}" -f '-*-hack-medium-r-normal-*-20-120-*-*-*-*-iso10646-*'
+#sxlock -p 'password1234' -u "${USER}@${HOSTNAME}" -f '-*-dejavu sans mono-medium-r-normal-*-24-120-*-*-*-*-iso10646-*'
 
 ############################################################
 
