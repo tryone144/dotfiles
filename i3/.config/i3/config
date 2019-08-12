@@ -101,6 +101,12 @@ bindsym XF86AudioRaiseVolume    exec --no-startup-id ${WM_SCRIPTS}/volume.sh rai
 bindsym XF86AudioLowerVolume    exec --no-startup-id ${WM_SCRIPTS}/volume.sh lower 5
 bindsym XF86AudioMute           exec --no-startup-id ${WM_SCRIPTS}/volume.sh toggle
 
+# media player controls
+bindsym XF86AudioPlay   exec --no-startup-id ${WM_SCRIPTS}/mediactl.sh toggle
+bindsym XF86AudioStop   exec --no-startup-id ${WM_SCRIPTS}/mediactl.sh stop
+bindsym XF86AudioPrev   exec --no-startup-id ${WM_SCRIPTS}/mediactl.sh prev
+bindsym XF86AudioNext   exec --no-startup-id ${WM_SCRIPTS}/mediactl.sh next
+
 # xrandr tools
 bindsym XF86Display     exec --no-startup-id ${WM_SCRIPTS}/xrotate.sh
 bindsym XF86Explorer    exec --no-startup-id ${WM_SCRIPTS}/beamer.sh
