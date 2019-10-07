@@ -268,6 +268,10 @@ let g:gitgutter_map_keys = 0
 "set completeopt=noinsert,menuone,noselect
 
 let g:LanguageClient_serverCommands = {
+    \ 'c': ['ccls', '--log-file=/tmp/cc.log'],
+    \ 'cpp': ['ccls', '--log-file=/tmp/cc.log'],
+    \ 'cuda': ['ccls', '--log-file=/tmp/cc.log'],
+    \ 'objc': ['ccls', '--log-file=/tmp/cc.log'],
     \ 'rust': ['rustup', 'run', 'stable', 'rls'],
     \ 'python': ['pyls'],
     \ }
@@ -284,7 +288,7 @@ let g:ale_echo_msg_warning_str = 'WW'
 let g:ale_echo_msg_format = '%severity%: [%linter%] %s'
 
 let g:ale_linters = {
-            \ 'c': ['gcc', 'clangtidy', 'flawfinder'],
+            \ 'c': ['gcc', 'flawfinder'],
             \ 'asm': [],
             \ }
 
@@ -292,16 +296,6 @@ let g:ale_c_parse_makefile = 1
 let g:ale_c_clangtidy_checks = ['-*', 'bugprone-*', 'cert-*-c', 'misc-*', 'mpi-*',
             \ 'clang-analyzer-*', '-clang-analyzer-cplusplus.*', '-clang-analyzer-optin.*', '-clang-analyzer-osx.*',
             \ 'modernize-*', 'performance-*', 'readability-*']
-" }}}
-
-" /* PLUGIN SETTINGS: syntastic */ {{{
-"let g:syntastic_check_on_open = 0
-"let g:syntastic_check_on_wq = 0
-"let g:clang_c_options = '-std=gnu11'
-"let g:clang_cpp_options = '-std=c++11 -stdlib=libc++'
-"let g:syntastic_always_populate_loc_list = 1
-"let g:syntastic_python_checkers = ['python', 'flake8']
-"let g:syntastic_rust_checkers = ['rustc', 'clippy']
 " }}}
 
 " /* PLUGIN SETTINGS: FastFold */ {{{
