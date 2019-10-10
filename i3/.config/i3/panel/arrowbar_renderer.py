@@ -326,10 +326,8 @@ class Renderer(object):
     def update_outputs(self, objects):
         self.outputs.clear()
         for o in objects:
-            if "active" in o.keys() and o["active"] and "name" in o.keys():
-                if self.show_on is None \
-                        or o["name"] in self.show_on:
-                    self.outputs.append(o["name"])
+            if o.active and (self.show_on is None or o.name in self.show_on):
+                self.outputs.append(o.name)
 
     def update_status(self, objects):
         # clear old status
@@ -400,13 +398,11 @@ class Renderer(object):
                          color_fg=COLOR_WORKSPACE_INACTIVE_FG,
                          color_bg=COLOR_WORKSPACE_INACTIVE_BG)
 
-        if "output" in ws.keys():
-            new["output"] = ws.output
-
-        if "focused" in ws.keys() and ws.focused:
+        new["output"] = ws.output
+        if ws.focused:
             new["color_fg"] = COLOR_WORKSPACE_ACTIVE_FG
             new["color_bg"] = COLOR_WORKSPACE_ACTIVE_BG
-        elif "urgent" in ws.keys() and ws.urgent:
+        elif ws.urgent:
             new["color_fg"] = COLOR_WORKSPACE_URGENT_FG
             new["color_bg"] = COLOR_WORKSPACE_URGENT_BG
 

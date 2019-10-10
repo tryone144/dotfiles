@@ -55,11 +55,12 @@ def on_change_output(i3, event):
 def i3ipc_thread(use_ws=False, use_title=False):
     try:
         i3 = i3ipc.Connection()
-        conf = i3.get_bar_config("status")
+        # conf = i3.get_bar_config("status")
 
         if renderer is not None:
-            if "outputs" in conf.keys():
-                renderer.set_outputs(conf["outputs"])
+            # "outputs" is not returned by i3ipc
+            # if "outputs" in conf.keys():
+            #     renderer.set_outputs(conf["outputs"])
             if use_ws:
                 renderer.update_workspace(i3.get_workspaces())
             if use_title:
