@@ -51,6 +51,11 @@ set $ws_9           9
 # workspace 10: Music       # \uF46C
 set $ws_0           10
 
+workspace $ws_7 output $right-mon $notebook
+workspace $ws_8 output $right-mon $notebook
+workspace $ws_9 output $right-mon $notebook
+workspace $ws_10 output $right-mon $notebook
+
 
 #################
 ## WM CONTROLS ##
@@ -77,6 +82,10 @@ exec_always --no-startup-id nitrogen --restore
 
 # start systemd user services (compton, ...)
 exec_always --no-startup-id systemctl --user start i3.target
+
+# start htop, KeePassXC
+exec --no-startup-id i3-msg 'workspace 7; exec termite -e htop; exec keepassxc; workspace 1' &
+
 
 #############
 ## HOTKEYS ##
@@ -252,6 +261,13 @@ gaps outer 0
 
 # make all tooltip windows floating (fixes hopper peek)
 for_window [window_type=tooltip] floating enable
+
+# put utilities on their ws
+for_window [class="^keepassxc$"] move window to workspace $ws_8
+for_window [class="^Evolution$" instance="^evolution$"] move window to workspace $ws_9
+for_window [class="^TelegramDesktop$" instance="^telegram-desktop$"] move window to workspace $ws_9
+for_window [class="^Pavucontrol$" instance="^pavucontrol$"] move window to workspace $ws_0
+for_window [class="^cantata$"] move window to workspace $ws_0
 
 # make minecraft floating
 for_window [class="net-minecraft-bootstrap-Bootstrap"] floating enable
