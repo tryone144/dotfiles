@@ -83,14 +83,15 @@ exec_always --no-startup-id systemctl --user start i3.target
 #############
 
 # start terminal emulator
-bindsym $mod+Return     exec --no-startup-id termite
+bindsym $mod+Return     exec termite
 
 # start dmenu launcher
 bindsym $mod+d          exec --no-startup-id ${WM_SCRIPTS}/launcher.sh desktop
 bindsym $mod+Shift+d    exec --no-startup-id ${WM_SCRIPTS}/launcher.sh cmd
 
 # lock screen
-bindsym $mod+Shift+Delete    exec --no-startup-id ${WM_SCRIPTS}/locker.sh
+bindsym $mod+Shift+Delete   exec --no-startup-id ${WM_SCRIPTS}/locker.sh
+bindsym $mod+l              exec --no-startup-id ${WM_SCRIPTS}/locker.sh
 
 # make screenshot
 bindsym --release $mod+Print        exec --no-startup-id ${WM_SCRIPTS}/screenshot.sh
