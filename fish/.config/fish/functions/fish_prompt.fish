@@ -46,6 +46,22 @@ function _prompt_git
     echo -n (__fish_git_prompt "$__prompt_gitfmt")
 end
 
+function _prompt_venv
+    if not set -q __prompt_venvfmt
+        set -g __prompt_venvfmt "∷"(set_color brred)"⟨"(set_color normal)"%s%s"(set_color brred)"⟩"
+    end
+
+    if set -q VIRTUAL_ENV
+
+        set -l auto ""
+        if set -q VF_AUTO_ACTIVATED
+            set venv_auto (set_color brred)"|"(set_color green)"auto"
+        end
+
+        printf "$__prompt_venvfmt" (basename "$VIRTUAL_ENV") "$venv_auto"
+    end
+end
+
 function fish_prompt -d "Print the input prompt"
     # Cache last exit status
     set -l exit_status $status
@@ -69,8 +85,8 @@ function fish_prompt -d "Print the input prompt"
         set prompt_char "✘"
     end
 
-    set -l fmt_l1 "$pc_border╦═⟪%s$pc_border⟫$pc_sep∷$pc_border⟨%s$pc_border⟩%s$pc_sep∷❮❯"(set_color normal)
-    printf "$fmt_l1\n" "$__prompt_segment_user" (_prompt_pwd) (_prompt_git)
+    set -l fmt_l1 "$pc_border╦═⟪%s$pc_border⟫$pc_sep∷$pc_border⟨%s$pc_border⟩%s$pc_sep%s$pc_sep∷❮❯"(set_color normal)
+    printf "$fmt_l1\n" "$__prompt_segment_user" (_prompt_pwd) (_prompt_git) (_prompt_venv)
 
     set -l fmt_l2 "$pc_border╚═❯"(set_color normal)" $pc_prompt%s"(set_color normal)" "
     printf "$fmt_l2" "$prompt_char"
