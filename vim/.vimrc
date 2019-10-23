@@ -4,15 +4,18 @@
 "   plugin-management with 'vim-plug'
 "
 " file: ~/.vimrc
-" v1.4 / 2018.07.08
+" v1.5 / 2019.10.14
 "
-" (c) 2018 Bernd Busse
+" (c) 2019 Bernd Busse
 "
 
 set nocompatible
 set encoding=utf8
 set ffs=unix,dos,mac
 set autoread
+
+set undodir=~/.vim/undobuffer
+set undofile
 
 set secure
 
@@ -46,6 +49,12 @@ set incsearch
 " reset last search
 let @/ = ""
 
+" Folds
+set foldmethod=syntax
+set foldnestmax=10
+"set nofoldenable
+set foldlevelstart=20
+
 " Windows / Splits
 set splitbelow
 set splitright
@@ -54,6 +63,9 @@ set splitright
 set list
 set listchars=tab:>-,trail:~,extends:»,precedes:«,nbsp:␣
 set whichwrap=""
+
+set cmdheight=2
+set shortmess=aFc
 " }}}
 
 " /* EXTERNAL TOOLS */ {{{
@@ -73,17 +85,18 @@ syntax on
 
 " /* AUTOCOMMANDS */ {{{
 if has('autocmd')
-    " enable ncm2 for all buffers
-    augroup ncm2
-        autocmd BufEnter * call ncm2#enable_for_buffer()
-        autocmd User Ncm2PopupOpen set completeopt=noinsert,menuone,noselect
-        autocmd User Ncm2PopupClose set completeopt=menuone
-    augroup END
 
     " determine python linter depending on Shebang if not in venv
     autocmd FileType python if $VIRTUAL_ENV == "" |
         \ let b:ale_python_flake8_executable = BBParseShebang(expand('<afile>', 1))['exe'] |
         \ let b:ale_python_flake8_options = '-m flake8' | endif
+    autocmd FileType python if $VIRTUAL_ENV == "" |
+        \ call coc#config('coc.preferences', {
+            \ 'python.pythonPath': BBParseShebang(expand('<afile>', 1))['exe']
+            \ }) | endif
+
+    " Coc Actions
+    autocmd CursorHold * silent call CocActionAsync('highlight')
 
     " set C source and header to plain c with doxygen docs
     autocmd BufRead,BufNewFile *.h,*.c,*.H,*.C let g:load_doxygen_syntax = 1 | set filetype=c
@@ -97,6 +110,9 @@ if has('autocmd')
     "autocmd VimEnter * if argc() == 1 && isdirectory(argv()[0]) && !exists("s:std_in") | exe 'NERDTree' argv()[0] | wincmd p | ene | endif
     " close anyway if NERDTree is the last window
     autocmd BufEnter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
+
+    " close anyway if Vista is the last window
+    autocmd BufEnter * if (winnr("$") == 1 && vista#sidebar#IsVisible()) | q | endif
 
     " close anyway if QuickFix is the last window
     autocmd BufEnter * if (winnr("$") == 1 && &buftype ==# 'quickfix') | bd | q | endif
@@ -181,14 +197,8 @@ Plug 'scrooloose/nerdtree', { 'on':  ['NERDTree', 'NERDTreeToggle', 'NERDTreeFin
 " auto-pairs - auto braces
 Plug 'jiangmiao/auto-pairs'
 
-" vimtex - latex tools
-Plug 'lervag/vimtex', { 'for': ['tex', 'latex'] }
-
 " rust - rust support
 Plug 'rust-lang/rust.vim', { 'for': 'rust' }
-
-" typescript - typescript support
-Plug 'leafgarland/typescript-vim'
 
 " arm-syntax - armv7 syntax highlight
 Plug 'ARM9/arm-syntax-vim'
@@ -199,20 +209,23 @@ Plug 'airblade/vim-gitgutter'
 " fugitive - git diffing
 Plug 'tpope/vim-fugitive'
 
-" ncm2- auto completion
-Plug 'ncm2/ncm2'
-Plug 'roxma/nvim-yarp'
-Plug 'roxma/vim-hug-neovim-rpc', has('nvim') ? { 'on': [] } : {}
-" ncm2 provider
-Plug 'ncm2/ncm2-bufword'
-Plug 'ncm2/ncm2-path'
-Plug 'Shougo/neco-syntax'
-Plug 'ncm2/ncm2-neoinclude' | Plug 'Shougo/neoinclude.vim'
-" ncm2 LanguageServer client
-Plug 'autozimu/LanguageClient-neovim', {
-    \ 'branch': 'next',
-    \ 'do': 'bash install.sh',
-    \ }
+" vista - lsp aware tagbar
+Plug 'liuchengxu/vista.vim'
+
+" coc - lsp auto completion
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
+Plug 'neoclide/coc-css', {'do': 'yarn install --frozen-lockfile'}
+Plug 'neoclide/coc-highlight', {'do': 'yarn install --frozen-lockfile'}
+Plug 'neoclide/coc-html', {'do': 'yarn install --frozen-lockfile'}
+Plug 'neoclide/coc-json', {'do': 'yarn install --frozen-lockfile'}
+Plug 'neoclide/coc-neco', {'do': 'yarn install --frozen-lockfile'}
+Plug 'neoclide/coc-python', {'do': 'yarn install --frozen-lockfile'}
+Plug 'neoclide/coc-rls', {'do': 'yarn install --frozen-lockfile'}
+Plug 'neoclide/coc-snippets', {'do': 'yarn install --frozen-lockfile'}
+Plug 'neoclide/coc-tsserver', {'do': 'yarn install --frozen-lockfile'}
+Plug 'neoclide/coc-vetur', {'do': 'yarn install --frozen-lockfile'}
+Plug 'neoclide/coc-vimtex', {'do': 'yarn install --frozen-lockfile'}
+Plug 'neoclide/coc-yaml', {'do': 'yarn install --frozen-lockfile'}
 
 " ale - async syntax checking and linting
 Plug 'w0rp/ale'
@@ -235,9 +248,9 @@ call plug#end()
 let g:airline_powerline_fonts = 1
 
 let g:airline#extensions#ale#enabled = 1
+let g:airline#extensions#coc#enabled = 1
 let g:airline#extensions#tabline#enabled = 1
-let g:airline#extensions#vimtex#enabled = 1
-let g:airline#extensions#tagbar#enabled = 0
+let g:airline#extensions#tagbar#enabled = 1
 let g:airline#extensions#tmuxline#enabled = 0
 " }}}
 
@@ -253,34 +266,18 @@ let g:AutoPairsShortcutJump = '<C-a>'
 let g:AutoPairsShortcutBackInsert = '<C-b>'
 " }}}
 
-" /* PLUGIN SETTINGS: vimtex */ {{{
-let g:vimtex_enabled = 1
-let g:vimtex_compiler_enabled = 0
-let g:tex_flavor = 'latex'
-let g:tex_fold_enabled = 1
-" }}}
-
 " /* PLUGIN SETTINGS: gitgutter */ {{{
 let g:gitgutter_map_keys = 0
 " }}}
 
-" /* PLUGIN SETTINGS: ncm2 / LanguageClient */ {{{
-"set completeopt=noinsert,menuone,noselect
-
-let g:LanguageClient_serverCommands = {
-    \ 'c': ['ccls', '--log-file=/tmp/cc.log'],
-    \ 'cpp': ['ccls', '--log-file=/tmp/cc.log'],
-    \ 'cuda': ['ccls', '--log-file=/tmp/cc.log'],
-    \ 'objc': ['ccls', '--log-file=/tmp/cc.log'],
-    \ 'rust': ['rustup', 'run', 'stable', 'rls'],
-    \ 'python': ['pyls'],
-    \ }
+" /* PLUGIN SETTINGS: coc */ {{{
+let g:coc_snippet_next = '<tab>'
 " }}}
 
 " /* PLUGIN SETTINGS: ale */ {{{
 let g:ale_lint_on_enter = 0
 let g:ale_lint_on_text_changed = 'never'
-let g:ale_open_list = 1
+let g:ale_open_list = 0
 let g:ale_list_window_size = 5
 
 let g:ale_echo_msg_error_str = 'EE'
@@ -290,6 +287,8 @@ let g:ale_echo_msg_format = '%severity%: [%linter%] %s'
 let g:ale_linters = {
             \ 'c': ['gcc', 'flawfinder'],
             \ 'asm': [],
+            \ 'python': [],
+            \ 'rust': [],
             \ }
 
 let g:ale_c_parse_makefile = 1
@@ -378,13 +377,26 @@ nmap <silent> <leader><Tab> <C-n>
 " }}}
 
 " /* AUTOCLOMPLETION */ {{{2
-" autocomplete (completefunc with ncm2) on CTRL-Space
-inoremap <silent> <expr><C-Space> pumvisible()? "\<C-n>" : ncm2#manual_trigger()
+" use <c-space>for trigger completion
+inoremap <silent> <expr><C-Space> pumvisible() ? "\<C-n>" : coc#refresh()
+
+nmap <silent> gd <Plug>(coc-definition)
+nmap <silent> gi <Plug>(coc-implementation)
+nmap <silent> gr <Plug>(coc-references)
+
+nmap <silent> ll :CocList diagnostics<CR>
+nmap <silent> ln <Plug>(coc-diagnostic-next)
+nmap <silent> lp <Plug>(coc-diagnostic-prev)
+
+nmap <silent> lf :CocAction quickfix<CR>
+vmap <silent> lf :CocAction format<CR>
 " }}}
 
 " fold navigation
-nnoremap zJ :<C-u>call BBJumpNextClosedFold(v:count1, 'j')<CR>
-nnoremap zK :<C-u>call BBJumpNextClosedFold(v:count1, 'k')<CR>
+nnoremap zn zj
+nnoremap zp zk
+nnoremap zN :<C-u>call BBJumpNextClosedFold(v:count1, 'j')<CR>
+nnoremap zP :<C-u>call BBJumpNextClosedFold(v:count1, 'k')<CR>
 
 " tags
 nnoremap ü <C-]>
@@ -398,8 +410,6 @@ nnoremap Ä <Tab>
 nnoremap <silent> <leader>ll :ALELint<CR>
 nnoremap <silent> <leader>lo :lopen 5<CR>
 nnoremap <silent> <leader>lc :lclose<CR>
-nnoremap <silent> <leader>ln :ALENextWrap<CR>
-nnoremap <silent> <leader>lp :ALEPreviousWrap<CR>
 
 " reset search highlight
 nnoremap <silent> <CR> :nohlsearch<CR><CR>
