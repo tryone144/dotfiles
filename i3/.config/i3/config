@@ -269,6 +269,7 @@ for_window [window_type=tooltip] floating enable
 
 # KeepassXC on scratchpad
 for_window [class="^keepassxc$"] move window to scratchpad, resize set 1280 720, move position center
+for_window [class="^keepassxc$" window_type=dialog] floating disable, move window to workspace current, floating enable, move position center
 bindsym $mod+minus [class="^keepassxc$"] scratchpad show, resize set 1280 720, move position center
 
 # put utilities on their ws
