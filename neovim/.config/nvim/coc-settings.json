@@ -1,5 +1,6 @@
 {
     "codeLens.enable": true,
+    "diagnostic.virtualText": true,
     "python.venvPath": "~/.virtualenvs",
     "python.linting.enabled": true,
     "python.linting.pylintEnabled": false,

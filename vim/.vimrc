@@ -40,7 +40,7 @@ set scrolloff=5
 
 set wildmenu
 set mouse=a
-set laststatus=2
+set laststatus=1
 set timeoutlen=1000
 set ttimeoutlen=0
 
