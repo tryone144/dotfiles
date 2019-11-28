@@ -85,7 +85,7 @@ exec_always --no-startup-id nitrogen --restore &
 exec_always --no-startup-id systemctl --user start i3.target &
 
 # start htop, KeePassXC
-exec --no-startup-id i3-msg 'workspace 7; exec --no-startup-id termite -e htop; exec --no-startup-id keepassxc; workspace 1' &
+exec --no-startup-id i3-msg 'exec --no-startup-id termite -e htop; exec --no-startup-id keepassxc;' &
 
 
 #############
@@ -268,11 +268,12 @@ gaps outer 0
 for_window [window_type=tooltip] floating enable
 
 # KeepassXC on scratchpad
-for_window [class="^keepassxc$"] move window to scratchpad, resize set 1280 720, move position center
-for_window [class="^keepassxc$" window_type=dialog] floating disable, move window to workspace current, floating enable, move position center
-bindsym $mod+minus [class="^keepassxc$"] scratchpad show, resize set 1280 720, move position center
+for_window [class="^KeePassXC$"] move window to scratchpad, resize set 1280 720, move position center
+for_window [class="^KeePassXC$" window_type=dialog] floating disable, move window to workspace current, floating enable, move position center
+bindsym $mod+minus [class="^KeePassXC$"] scratchpad show, resize set 1280 720, move position center
 
 # put utilities on their ws
+for_window [class="^Termite$" title="^htop"] move window to workspace $ws_7
 for_window [class="^Evolution$" instance="^evolution$"] move window to workspace $ws_9
 for_window [class="^TelegramDesktop$" instance="^telegram-desktop$"] move window to workspace $ws_9
 for_window [class="^Pavucontrol$" instance="^pavucontrol$"] move window to workspace $ws_0
