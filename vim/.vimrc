@@ -202,6 +202,9 @@ Plug 'jiangmiao/auto-pairs'
 " rust - rust support
 Plug 'rust-lang/rust.vim', { 'for': 'rust' }
 
+" clang-format - support for clang-format formatting
+Plug 'rhysd/vim-clang-format', { 'for': 'c' }
+
 " arm-syntax - armv7 syntax highlight
 Plug 'ARM9/arm-syntax-vim'
 
@@ -270,6 +273,13 @@ let g:AutoPairsShortcutBackInsert = '<C-b>'
 
 " /* PLUGIN SETTINGS: gitgutter */ {{{
 let g:gitgutter_map_keys = 0
+" }}}
+
+" /* PLUGIN SETTINGS: vim-clang-format /* {{{
+let g:clang_format#code_style = 'llvm'
+let g:clang_format#detect_style_file = 1
+let g:clang_format#auto_format = 0
+let g:clang_format#auto_format_on_insert_leave = 0
 " }}}
 
 " /* PLUGIN SETTINGS: coc */ {{{
