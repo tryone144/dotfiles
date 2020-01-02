@@ -40,9 +40,11 @@ set scrolloff=5
 
 set wildmenu
 set mouse=a
-set laststatus=1
+set laststatus=2
+set cmdheight=2
 set timeoutlen=1000
 set ttimeoutlen=0
+set updatetime=300
 
 set hlsearch
 set incsearch
@@ -388,8 +390,8 @@ nmap <silent> ll :CocList diagnostics<CR>
 nmap <silent> ln <Plug>(coc-diagnostic-next)
 nmap <silent> lp <Plug>(coc-diagnostic-prev)
 
-nmap <silent> lf :CocAction quickfix<CR>
-vmap <silent> lf :CocAction format<CR>
+nmap <silent> lf <Plug>(coc-fix-current)
+vmap <silent> lf <Plug>(coc-format-selected)
 " }}}
 
 " fold navigation
