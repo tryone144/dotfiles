@@ -4,6 +4,7 @@ SETUVAR __fish_classic_git_prompt_initialized:\x1d
 SETUVAR __fish_init_2_39_8:\x1d
 SETUVAR __fish_init_2_3_0:\x1d
 SETUVAR __fish_init_3_x:\x1d
+SETUVAR __fish_initialized:3100
 SETUVAR fish_color_autosuggestion:white
 SETUVAR fish_color_cancel:red
 SETUVAR fish_color_command:green
@@ -15,6 +16,7 @@ SETUVAR fish_color_error:red
 SETUVAR fish_color_escape:yellow
 SETUVAR fish_color_history_current:\x2d\x2dbold
 SETUVAR fish_color_host:yellow
+SETUVAR fish_color_host_remote:yellow
 SETUVAR fish_color_match:\x2d\x2dbackground\x3dbrblue
 SETUVAR fish_color_normal:normal
 SETUVAR fish_color_operator:blue

@@ -28,5 +28,3 @@ function update_colorscheme -d "(Re-)Set universal colorscheme variables"
     set -u fish_pager_color_secondary   normal
 end
 
-# load virtualfish
-eval (python -m virtualfish auto_activation)
