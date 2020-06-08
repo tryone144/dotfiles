@@ -4,13 +4,14 @@
  *   needs: [breeze-default-cursor-theme]
  *
  * file: ~/.Xresources
- * v1.5 / 2018.02.14
+ * v1.6 / 2020.06.08
  *
- * (c) 2018 Bernd Busse
+ * (c) 2020 Bernd Busse
  */
 
 /* includes */
 #include ".Xresources.d/rxvt-unicode"
+#include ".Xresources.d/sxiv"
 
 /* xcursor */
 Xcursor.theme: Breeze_Default
