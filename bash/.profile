@@ -12,6 +12,8 @@
 # Add binary locations in home folder to path
 __RUBY_BIN="$(ruby -e 'puts Gem.user_dir')/bin"
 [[ "${PATH}" = *"${__RUBY_BIN}"* ]] || export PATH="$__RUBY_BIN:$PATH"
+__NODE_BIN="${HOME}/.node_modules/bin"
+[[ "${PATH}" = *"${__NODE_BIN}"* ]] || export PATH="$__NODE_BIN:$PATH"
 __RUST_BIN="${HOME}/.cargo/bin"
 [[ "${PATH}" = *"${__RUST_BIN}"* ]] || export PATH="$__RUST_BIN:$PATH"
 __USER_BIN="${HOME}/.local/bin"
