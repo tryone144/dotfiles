@@ -61,8 +61,37 @@ __vte_osc7 () {
   printf "\033]7;file://%s%s\007" "${HOSTNAME:-}" "$(__vte_urlencode "${PWD}")"
 }
 
+function _fancy_ps1() {
+    local exit_status="$?"
+    local color_bg="\e[1;36m"
+    local prompt_char="$"
+    local prompt_col="\e[1;32m"
+    local user_col="\e[1;32m"
+    local host_col="\e[1m"
+    local cwd_col="\e[1;37m"
+
+    if [[ "$exit_status" -ne 0 ]]; then
+        color_bg="\e[1;35m"
+        prompt_char="%"
+        prompt_col="\e[1;31m"
+    fi
+
+    if [[ "$UID" -eq 0 ]]; then
+        user_col="\e[1;31m"
+    fi
+
+    if [[ -n "$SSH_CONNECTION" ]]; then
+        host_col="\e[1;33m"
+    fi
+
+    local line_one="\[$color_bg\]┬─[\[$user_col\]\u\[\e[0m\]@\[$host_col\]\h\[\e[0m$color_bg\]]\[\e[0m\]:\[$color_bg\]<\[$cwd_col\]\w\[\e[0m$color_bg\]>\[\e[0m\]:‹›"
+    local line_two="\[$color_bg\]└─›\[$prompt_col\] $prompt_char \[\e[0m\]"
+    echo -e "$line_one\n$line_two"
+}
+
 function _update_ps1() {
-    export PS1="$( arrowline ${?} 2> /dev/null || echo 'arrowline failed! [\u@\h \W]\$ ' )"
+    # export PS1="$( arrowline ${?} 2> /dev/null || echo 'arrowline failed! [\u@\h \W]\$ ' )"
+    export PS1="$( _fancy_ps1 || echo '[\u@\h \W]\$ ' )"
 
     local pwd='~'
     [ "$PWD" != "$HOME" ] && pwd=${PWD/#$HOME\//\~\/}
