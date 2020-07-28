@@ -2,5 +2,6 @@
 Description=Window Manager i3
 Requires=default.target
 After=default.target
+Wants=redshift.service
 Wants=compton.service
 Wants=dunst.service
