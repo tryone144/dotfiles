@@ -95,9 +95,12 @@ exec --no-startup-id i3-msg 'exec --no-startup-id termite -e htop; exec --no-sta
 # start terminal emulator
 bindsym $mod+Return     exec termite
 
-# start dmenu launcher
-bindsym $mod+d          exec --no-startup-id ${WM_SCRIPTS}/launcher.sh desktop
-bindsym $mod+Shift+d    exec --no-startup-id ${WM_SCRIPTS}/launcher.sh cmd
+# common applications
+bindsym $mod+n          exec firefox
+
+# start rofi launcher
+bindsym --release $mod+d        exec --no-startup-id "rofi -theme launcher -show drun"
+bindsym --release $mod+Shift+d  exec --no-startup-id "rofi -theme launcher -show run"
 
 # lock screen
 bindsym --release $mod+Shift+Delete exec --no-startup-id ${WM_SCRIPTS}/locker.sh
@@ -287,7 +290,10 @@ for_window [class="net-minecraft-bootstrap-Bootstrap"] floating enable
 for_window [class="^Minecraft" instance="^Minecraft"] floating enable
 
 # make steam friends and messages floating
-for_window [class="Steam" title="^Friends List"] floating enable, move window to workspace current
+for_window [class="^Steam$" title="^Friends List"] floating enable, move window to workspace current
+for_window [class="^Steam$" title="^Steam Guard"] floating enable, move window to workspace current
+# make firefox about floating
+for_window [class="^firefox$" window_role="^About"] floating enable, move window to workspace current
 
 
 #########
