@@ -15,7 +15,8 @@
 panel_fifo="/dev/shm/i3_lemonbar_${USER}"
 config="${I3_CONFIG}/panel/j4status-${HOSTNAME}.conf"
 
-font_normal="Source Code Pro for Powerline-9"
+#font_normal="Source Code Pro for Powerline-9"
+font_normal="Source Code Pro-9"
 font_icon="Ionicons-12"
 
 if [[ $(pgrep -cx $(basename $0)) -gt 1 ]] ; then
