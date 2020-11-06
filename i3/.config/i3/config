@@ -100,8 +100,11 @@ bindsym $mod+d          exec --no-startup-id ${WM_SCRIPTS}/launcher.sh desktop
 bindsym $mod+Shift+d    exec --no-startup-id ${WM_SCRIPTS}/launcher.sh cmd
 
 # lock screen
-bindsym $mod+Shift+Delete   exec --no-startup-id ${WM_SCRIPTS}/locker.sh
-bindsym $mod+l              exec --no-startup-id ${WM_SCRIPTS}/locker.sh
+bindsym --release $mod+Shift+Delete exec --no-startup-id ${WM_SCRIPTS}/locker.sh
+bindsym --release $mod+l            exec --no-startup-id ${WM_SCRIPTS}/locker.sh
+
+# blank screen (dpms)
+bindsym --release $mod+Shift+l      exec --no-startup-id sleep 1 && xset dpms force off
 
 # make screenshot
 bindsym --release $mod+Print        exec --no-startup-id ${WM_SCRIPTS}/screenshot.sh
