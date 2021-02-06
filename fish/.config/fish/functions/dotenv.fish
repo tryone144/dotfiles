@@ -1,12 +1,14 @@
 function dotenv --description 'Load environment variables from .env file'
-    set -l envfile ".env"
+    set -la envfiles ".env"
     if test (count $argv) -gt 0
-        set envfile "$argv[1]"
+        set envfiles $argv
     end
 
-    if test -e "$envfile"
-        for line in (cat "$envfile")
-            set -xg (echo "$line" | cut -d'=' -f1) (echo "$line" | cut -d'=' -f2-)
+    for file in $envfiles
+        if test -e "$file"
+            for line in (cat "$file")
+                set -xg (echo "$line" | cut -d'=' -f1) (echo "$line" | cut -d'=' -f2-)
+            end
         end
     end
 end
