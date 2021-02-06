@@ -2,7 +2,7 @@
 # BASH
 # .profile to set up $PATH and other environment options
 # sourced by .bash_profile
-# 
+#
 # file: ~/.profile
 # v1.0 / 2019.04.12
 #
@@ -21,9 +21,6 @@ __USER_BIN="${HOME}/.local/bin"
 
 __XTOOLS_RPI_BIN="/opt/arm-rpi-linux-gnueabihf/bin"
 [[ "${PATH}" = *"${__XTOOLS_RPI_BIN}"* ]] || export PATH="$PATH:$__XTOOLS_RPI_BIN"
-
-# Disable GTK3 Window borders
-export GTK_CSD=0
 
 # Enable GTK for Java Swing applications
 export _JAVA_OPTIONS='-Dawt.useSystemAAFontSettings=on 
