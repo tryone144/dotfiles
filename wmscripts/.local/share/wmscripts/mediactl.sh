@@ -110,7 +110,7 @@ function mpris_canplay() {
     local reply="$( mpris_call "${service}" "Player.CanPlay" 2>/dev/null )"
 
     if [[ "${service}" == "${MPRIS_PLASMA}" ]]; then
-        mpris_call "Player.Metadata" | grep -e '^kde:mediaSrc' 2>&1 >/dev/null
+        mpris_call "${service}" "Player.Metadata" | grep -e '^kde:mediaSrc' 2>&1 >/dev/null
         if [[ "$?" -eq 0 ]] && [[ "$reply" == "true" ]]; then
             return 0
         fi
