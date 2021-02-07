@@ -1,0 +1,16 @@
+/**
+ * ROFI
+ * General Rofi configuration — Application launcher
+ *
+ * file: ~/.config/rofi/launcher.rasi
+ * v0.1 / 2020.11.06
+ *
+ * (c) 2020 Bernd Busse
+ **/
+
+@import "config.d/default.rasi"
+@import "config.d/launcher.rasi"
+
+@theme "theme.d/launcher.rasi"
+
+/* vim:ft=css

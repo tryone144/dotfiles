@@ -1,0 +1,197 @@
+/**
+ * ROFI
+ * General Rofi theme — Defaults
+ *
+ * file: ~/.config/rofi/theme.d/default.rasi
+ * v0.1 / 2020.11.06
+ *
+ * (c) 2020 Bernd Busse
+ **/
+
+* {
+    /* colorscheme based on the Material Pale Night theme for Sublime Text */
+    white:      #bfc7d5;
+    light-grey: #989aa2b2;
+    grey:       #697098;
+    dark-grey:  #3e4452;
+    black:      #292d3ecc;
+    blue:       #82b1ff;
+    green:      #c3e88d;
+    red:        #ff5370;
+    yellow:     #ffcb6b;
+
+    foreground: var(white);
+    normal-foreground: var(foreground);
+    urgent-foreground: var(dark-grey);
+    active-foreground: var(green);
+    alternate-normal-foreground: var(normal-foreground);
+    alternate-urgent-foreground: var(urgent-foreground);
+    alternate-active-foreground: var(active-foreground);
+    selected-normal-foreground: var(yellow);
+    selected-urgent-foreground: var(red);
+    selected-active-foreground: var(green);
+
+    background: var(black);
+    normal-background: transparent;
+    urgent-background: var(red);
+    active-background: var(normal-background);
+    alternate-normal-background: var(normal-background);
+    alternate-urgent-background: var(urgent-background);
+    alternate-active-background: var(active-background);
+    selected-normal-background: var(dark-grey);
+    selected-urgent-background: var(selected-normal-background);
+    selected-active-background: var(selected-normal-background);
+
+    font:             "Hack 12";
+    text-color:       var(normal-foreground);
+    background-color: var(normal-background);
+}
+
+/* global list element styles */
+element {
+    padding: 1px;
+    spacing: 0.5em;
+    border:  0;
+}
+
+element normal.normal {
+    text-color:       var(normal-foreground);
+    background-color: var(normal-background);
+}
+element normal.urgent {
+    text-color:       var(urgent-foreground);
+    background-color: var(urgent-background);
+}
+element normal.active {
+    text-color:       var(active-foreground);
+    background-color: var(active-background);
+}
+
+element alternate.normal {
+    text-color:       var(alternate-normal-foreground);
+    background-color: var(alternate-normal-background);
+}
+element alternate.urgent {
+    text-color:       var(alternate-urgent-foreground);
+    background-color: var(alternate-urgent-background);
+}
+element alternate.active {
+    text-color:       var(alternate-active-foreground);
+    background-color: var(alternate-active-background);
+}
+
+element selected.normal {
+    text-color:       var(selected-normal-foreground);
+    background-color: var(selected-normal-background);
+}
+element selected.urgent {
+    text-color:       var(selected-urgent-foreground);
+    background-color: var(selected-urgent-background);
+}
+element selected.active {
+    text-color:       var(selected-active-foreground);
+    background-color: var(selected-active-background);
+}
+
+button selected {
+    text-color: var(selected-normal-foreground);
+}
+
+/* window styles */
+window {
+    transparency: "real";
+    background-color: var(background);
+}
+mainbox {
+    padding: 4px;
+}
+
+/* input styles */
+inputbar {
+    padding:      1px;
+    margin:       2px;
+    spacing:      0;
+    text-color:   var(normal-foreground);
+    border:       0 0 2px 0;
+    border-color: var(light-grey);
+    children:     [ prompt, textbox-prompt-colon, entry, num-filtered-rows, textbox-num-sep, num-rows, case-indicator ];
+}
+prompt {
+    margin:     0 0.2em;
+    font: "Hack Bold 12";
+    text-color: var(blue);
+}
+textbox-prompt-colon {
+    margin:     0 0.4em 0 0;
+    expand:     false;
+    str:        "❯";
+    text-color: inherit;
+}
+entry {
+    placeholder-color: var(grey);
+    placeholder:       "Search Application";
+}
+num-filtered-rows {
+    expand:     false;
+    text-color: var(grey);
+}
+textbox-num-sep {
+    expand:     false;
+    str:        "/";
+    text-color: var(grey);
+}
+num-rows {
+    expand:     false;
+    text-color: var(grey);
+}
+case-indicator {
+    text-color: var(grey);
+}
+
+/* message styles */
+message {
+    padding:      1px 0.5em;
+    margin:       2px;
+    border:       0 0 2px 0;
+    border-color: var(light-grey);
+}
+error-message {
+    padding: 0.5em;
+    margin:  2px;
+}
+textbox {
+    text-color:       var(normal-foreground);
+    background-color: var(normal-background);
+}
+
+/* list styles */
+listview {
+    margin:       2px;
+    scrollbar:    true;
+    spacing:      2px;
+    fixed-height: 0;
+}
+scrollbar {
+    handle-width:     0.5em;
+    handle-color:     var(light-grey);
+    background-color: var(dark-grey);
+}
+element-text {
+    text-color:       inherit;
+    background-color: inherit;
+    highlight:        inherit;
+}
+element-icon {
+    text-color:       inherit;
+    background-color: inherit;
+    size:             1.5ch;
+}
+
+/* sidebar styles */
+mode-switcher {
+    border:           0 0 2px 0;
+    border-color:     var(light-grey);
+    background-color: var(dark-grey);
+}
+
+/* vim:ft=css

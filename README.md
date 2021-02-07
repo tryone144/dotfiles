@@ -17,6 +17,7 @@ Just my 0.02$ to all the dotfile collections.
     neovim              -> neovim config based on the .vimrc
     termite             -> termite config
     reflector[etc]      -> updates pacman's mirrorlist once a week with German mirrors
+    rofi                -> rofi config / styles
     systemd-user        -> systemd user-services for compton/dunst/etc.
     tmux                -> tmux config
     urxvt               -> urxvt config (UNMAINTAINED)

@@ -1,0 +1,20 @@
+/**
+ * ROFI
+ * General Rofi configuration — Defaults
+ *
+ * file: ~/.config/rofi/config.d/default.rasi
+ * v0.1 / 2020.11.04
+ *
+ * (c) 2020 Bernd Busse
+ **/
+
+configuration {
+    icon-theme: "FlatWoken";
+    terminal: "termite";
+    ssh-command: "{terminal} -e \"{ssh-client} {host} [-p {port}]\"";
+    run-shell-command: "{terminal} -e \"{cmd}\"";
+    sorting-method: "fzf";
+    case-sensitive: false;
+}
+
+/* vim:ft=css

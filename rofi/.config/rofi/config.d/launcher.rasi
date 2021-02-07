@@ -1,0 +1,27 @@
+/**
+ * ROFI
+ * General Rofi configuration — Application launcher
+ *
+ * file: ~/.config/rofi/config.d/launcher.rasi
+ * v0.1 / 2020.11.06
+ *
+ * (c) 2020 Bernd Busse
+ **/
+
+configuration {
+    modi: [ drun, run ];
+    show-icons: true;
+    sort: true;
+
+    location: 1;
+    xoffset: 16;
+    yoffset: 28;
+    width: 35;
+    lines: 12;
+    columns: 1;
+
+    display-drun: "λ";
+    display-run: "#";
+}
+
+/* vim:ft=css
