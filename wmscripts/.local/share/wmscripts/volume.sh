@@ -11,48 +11,50 @@
 # (c) 2016 Bernd Busse
 #
 
+SCRIPT_DIR=$(cd $(dirname "${BASH_SOURCE[0]}") && pwd)
+
 usage() {
-    echo "usage: ${0} {{mute|unmute|toggle|get} | {lower|raise} [STEP]}" >&2
+    echo "usage: ${0} {{mute|unmute|toggle|get} | {lower|raise} [STEP] | set VOLUME}" >&2
     exit 1
 }
 
-#MIXER='alsa'
-MIXER='pulse'
-CONTROL='Master'
-SINK='combined'
-
+SINK="alsa_output.pci-0000_0e_00.4.analog-surround-51"
 STEP="5"
 
 case ${1} in
     "g"|"get")
-        output="$( amixer -D ${MIXER} -- sget ${CONTROL} | tail -n 1 )"
-        enabled="$( echo "${output}" | grep -wo 'on' )"
-        volume="${output#*\[}"
-        if [[ "${enabled}" == "on" ]]; then
-            echo "${volume%%]*}"
-        else
-            echo "${volume%%]*} (muted)"
+        if [[ -n "${SINK}" ]]; then
+            "${SCRIPT_DIR}/volume.py" --sink "${SINK}" get 2> /dev/null
         fi
-        ;;
+        if [[ $? -ne 0 ]] || [[ -z "${SINK}" ]]; then
+            output="$( amixer -D 'default' -- sget 'Master' | tail -n 1 )"
+            enabled="$( echo "${output}" | grep -wo "on" )"
+            volume="${output#*\[}"
+            if [[ "${enabled}" == "on" ]]; then
+                echo "${volume%%]*}"
+            else
+                echo "${volume%%]*} (muted)"
+            fi
+        fi ;;
     "t"|"toggle")
-        [[ "$MIXER" == "pulse" ]] && pactl set-sink-mute ${SINK} toggle &> /dev/null \
-            || amixer -D 'default' -- sset ${CONTROL} toggle &> /dev/null ;;
+        [[ -n "${SINK}" ]] && "${SCRIPT_DIR}/volume.py" --sink "${SINK}" toggle &> /dev/null \
+            || amixer -D 'default' -- sset 'Master' toggle &> /dev/null ;;
     "m"|"mute")
-        [[ "$MIXER" == "pulse" ]] && pactl set-sink-mute ${SINK} 1 &> /dev/null \
-            || amixer -D 'default' -- sset ${CONTROL} off &>/dev/null ;;
+        [[ -n "${SINK}" ]] && "${SCRIPT_DIR}/volume.py" --sink "${SINK}" mute &> /dev/null \
+            || amixer -D 'default' -- sset 'Master' off &>/dev/null ;;
     "u"|"unmute")
-        [[ "$MIXER" == "pulse" ]] && pactl set-sink-mute ${SINK} 0 &> /dev/null \
-            || amixer -D 'default' -- sset ${CONTROL} on &>/dev/null ;;
+        [[ -n "${SINK}" ]] && "${SCRIPT_DIR}/volume.py" --sink "${SINK}" unmute &> /dev/null \
+            || amixer -D 'default' -- sset 'Master' on &>/dev/null ;;
     "l"|"lower")
-        [[ "$MIXER" == "pulse" ]] && pactl set-sink-volume ${SINK} -${2:-${STEP}}% &> /dev/null \
-            || amixer -D 'default' -- sset ${CONTROL} ${2:-${STEP}}%- &>/dev/null;;
+        [[ -n "${SINK}" ]] && "${SCRIPT_DIR}/volume.py" --sink "${SINK}" lower "${2:-${STEP}}%" &> /dev/null \
+            || amixer -D 'default' -- sset 'Master' ${2:-${STEP}}%- &>/dev/null ;;
     "r"|"raise")
-        [[ "$MIXER" == "pulse" ]] && pactl set-sink-volume ${SINK} +${2:-${STEP}}% &> /dev/null \
-            || amixer -D 'default' -- sset ${CONTROL} ${2:-${STEP}}%+ &>/dev/null;;
+        [[ -n "${SINK}" ]] && "${SCRIPT_DIR}/volume.py" --sink "${SINK}" raise "${2:-${STEP}}%" &> /dev/null \
+            || amixer -D 'default' -- sset 'Master' ${2:-${STEP}}%+ &>/dev/null ;;
     "s"|"set")
         [[ -n "${2}" ]] \
-            && ( [[ "$MIXER" == "pulse" ]] && pactl set-sink-volume ${SINK} ${2}% &> /dev/null \
-            || amixer -D 'default' -- sset ${CONTROL} ${2} &>/dev/null ) ;;
+            && ( [[ -n "${SINK}" ]] && "${SCRIPT_DIR}/volume.py" --sink "${SINK}" set "${2}" &> /dev/null \
+            || amixer -D 'default' -- sset 'Master' "${2}%" &>/dev/null ) ;;
     *)
         $(usage)
         ;;
