@@ -1,10 +1,9 @@
 "
 " VIM
 " Personal Vim configuration
-"   plugin-management with 'vim-plug'
 "
 " file: ~/.vimrc
-" v1.5 / 2019.10.14
+" v1.9 / 2020.01.05
 "
 " (c) 2019 Bernd Busse
 "
@@ -30,7 +29,7 @@ setlocal indentkeys+=0
 
 " /* APPEARANCE */ {{{
 " UI
-set showmode
+set noshowmode
 set showmatch
 set number
 set relativenumber
@@ -40,11 +39,12 @@ set scrolloff=5
 
 set wildmenu
 set mouse=a
-set laststatus=2
+set laststatus=0
 set cmdheight=2
 set timeoutlen=1000
 set ttimeoutlen=0
 set updatetime=300
+set shortmess=aFc
 
 set hlsearch
 set incsearch
@@ -65,9 +65,6 @@ set splitright
 set list
 set listchars=tab:>-,trail:~,extends:»,precedes:«,nbsp:␣
 set whichwrap=""
-
-set cmdheight=2
-set shortmess=aFc
 " }}}
 
 " /* EXTERNAL TOOLS */ {{{
@@ -85,26 +82,38 @@ filetype plugin indent on
 syntax on
 " }}}
 
-" /* AUTOCOMMANDS */ {{{
+" /* CUSTOM FUNCTIONS */
+source ~/.vim/startup/functions.vim
+
+
+" /* GLOBAL AUTOCOMMANDS */ {{{
 if has('autocmd')
-
     " determine python linter depending on Shebang if not in venv
-    autocmd FileType python if $VIRTUAL_ENV == "" |
-        \ let b:ale_python_flake8_executable = BBParseShebang(expand('<afile>', 1))['exe'] |
-        \ let b:ale_python_flake8_options = '-m flake8' | endif
-    autocmd FileType python if $VIRTUAL_ENV == "" |
-        \ call coc#config('coc.preferences', {
-            \ 'python.pythonPath': BBParseShebang(expand('<afile>', 1))['exe']
-            \ }) | endif
+    "autocmd FileType python if $VIRTUAL_ENV == "" |
+    "    \ let b:ale_python_flake8_executable = BB_ParseShebang(expand('<afile>', 1))['exe'] |
+    "    \ let b:ale_python_flake8_options = '-m flake8' | endif
+    "autocmd FileType python if $VIRTUAL_ENV == "" |
+    "    \ call coc#config('coc.preferences', {
+    "        \ 'python.pythonPath': BB_ParseShebang(expand('<afile>', 1))['exe']
+    "        \ }) | endif
 
-    " Coc Actions
-    autocmd CursorHold * silent call CocActionAsync('highlight')
-
-    " set C source and header to plain c with doxygen docs
-    autocmd BufRead,BufNewFile *.h,*.c,*.H,*.C let g:load_doxygen_syntax = 1 | set filetype=c
+    " set filetype for non-autodetected files
+    augroup ftdetect
+        autocmd!
+        " set C source and header to plain c with doxygen docs
+        autocmd BufRead,BufNewFile *.h,*.c,*.H,*.C let g:load_doxygen_syntax = 1 | set filetype=c
+        autocmd BufRead,BufNewFile *.sage,*.spyx,*.pyx set filetype=python
+    augroup END
 
     " Hide loclist (lint-err) for LaTeX files
-    autocmd BufRead,BufNewFile *.tex let g:ale_open_list = 0
+    "autocmd BufRead,BufNewFile *.tex let g:ale_open_list = 0
+
+    " enable LanguageClient only for languages that have the server registered
+    augroup lsp_enable
+        autocmd!
+        "autocmd FileType c,python,rust call lsp#enable()
+        autocmd FileType c,cpp,cuda,objc,python,rust,vue LanguageClientStart
+    augroup END
 
     " show NERDTree if no files where specified on startup
     "autocmd StdinReadPre * let s:std_in=1
@@ -114,7 +123,7 @@ if has('autocmd')
     autocmd BufEnter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
 
     " close anyway if Vista is the last window
-    autocmd BufEnter * if (winnr("$") == 1 && vista#sidebar#IsVisible()) | q | endif
+    autocmd BufEnter * if (winnr("$") == 1 && vista#sidebar#IsOpen()) | q | endif
 
     " close anyway if QuickFix is the last window
     autocmd BufEnter * if (winnr("$") == 1 && &buftype ==# 'quickfix') | bd | q | endif
@@ -125,62 +134,13 @@ if has('autocmd')
     " toggle between absolute and relative line numbers
     augroup numbertoggle
         autocmd!
-        autocmd BufEnter,FocusGained,InsertLeave * set relativenumber
-        autocmd BufLeave,FocusLost,InsertEnter * set number norelativenumber
+        autocmd BufEnter,FocusGained,InsertLeave * if (&buftype !=# 'nofile') | set relativenumber | endif
+        autocmd BufLeave,FocusLost,InsertEnter * if (&buftype !=# 'nofile') | set number norelativenumber | endif
+        "autocmd BufEnter,FocusGained,InsertLeave * if (bufname('%') !=# '__LanguageClient__') | set relativenumber | endif
+        "autocmd BufLeave,FocusLost,InsertEnter * if (bufname('%') !=# '__LanguageClient__') | set number norelativenumber | endif
     augroup END
 endif
 " }}}
-
-" /* CUSTOM FUNCTIONS */ {{{
-"=======================================
-" NERDTree - open tree, highlight current Buffer in open tree or close tree {{{2
-function! BBToggleNERDTree()
-    if &diff | return | endif
-    if (exists("b:NERDTree") && b:NERDTree.isTabTree()) | NERDTreeClose
-    elseif (exists("t:NERDTreeBufName") && (bufwinnr(t:NERDTreeBufName) != -1)) | NERDTreeFind
-    else | NERDTreeFind
-    endif
-endfunction
-" }}}2
-
-" Parse Shebang line (taken from syntastic utils) {{{2
-function! BBParseShebang(buf) abort
-    for lnum in range(1, 5)
-        let line = get(getbufline(a:buf, lnum), 0, '')
-        if line =~# '^#!'
-            let line = substitute(line, '\v^#!\s*(\S+/env(\s+-\S+)*\s+)?', '', '')
-            let exe = matchstr(line, '\m^\S*\ze')
-            let args = split(matchstr(line, '\m^\S*\zs.*'))
-            return { 'exe': exe, 'args': args }
-        endif
-    endfor
-
-    return { 'exe': '', 'args': [] }
-endfunction
-" }}}2
-
-" Jump to next closed fold {{{2
-function! BBJumpNextClosedFold(cnt, dir)
-    echo "Count: " . a:cnt
-    let cmd = 'norm!z' . a:dir
-    let view = winsaveview()
-    let [c, l0, l, open] = [1, 0, view.lnum, 1]
-    while l != l0 && open
-        exe cmd
-        let [l0, l] = [l, line('.')]
-        let open = foldclosed(l) < 0
-        " FIXME: a:cnt > max possible jumps doesn't work when last fold is
-        " open
-        if !open && c < a:cnt && l != l0
-            let c = c+1
-            let open = 1
-        endif
-    endwhile
-    if open | call winrestview(view) | endif
-endfunction
-" }}}2
-" }}}
-
 
 " /* PLUGIN SETUP (VIM-PLUG) */ {{{
 "=======================================
@@ -202,38 +162,72 @@ Plug 'jiangmiao/auto-pairs'
 " rust - rust support
 Plug 'rust-lang/rust.vim', { 'for': 'rust' }
 
+" vue-plugin - vue.js support
+Plug 'leafoftree/vim-vue-plugin', { 'for': 'vue' }
+
 " clang-format - support for clang-format formatting
-Plug 'rhysd/vim-clang-format', { 'for': 'c' }
+Plug 'rhysd/vim-clang-format', { 'for': ['c', 'cpp'] }
+
+" gas - GNU assembler syntax highlight
+Plug 'Shirk/vim-gas/'
 
 " arm-syntax - armv7 syntax highlight
 Plug 'ARM9/arm-syntax-vim'
+
+" pug - Pug template highlight
+Plug 'digitaltoad/vim-pug'
 
 " gitgutter - git status
 Plug 'airblade/vim-gitgutter'
 
 " fugitive - git diffing
-Plug 'tpope/vim-fugitive'
+"Plug 'tpope/vim-fugitive'
+
+" fzf - fuzzy search
+Plug 'junegunn/fzf'
+Plug 'junegunn/fzf.vim'
 
 " vista - lsp aware tagbar
 Plug 'liuchengxu/vista.vim'
 
 " coc - lsp auto completion
-Plug 'neoclide/coc.nvim', {'branch': 'release'}
-Plug 'neoclide/coc-css', {'do': 'yarn install --frozen-lockfile'}
-Plug 'neoclide/coc-highlight', {'do': 'yarn install --frozen-lockfile'}
-Plug 'neoclide/coc-html', {'do': 'yarn install --frozen-lockfile'}
-Plug 'neoclide/coc-json', {'do': 'yarn install --frozen-lockfile'}
-Plug 'neoclide/coc-neco', {'do': 'yarn install --frozen-lockfile'}
-Plug 'neoclide/coc-python', {'do': 'yarn install --frozen-lockfile'}
-Plug 'neoclide/coc-rls', {'do': 'yarn install --frozen-lockfile'}
-Plug 'neoclide/coc-snippets', {'do': 'yarn install --frozen-lockfile'}
-Plug 'neoclide/coc-tsserver', {'do': 'yarn install --frozen-lockfile'}
-Plug 'neoclide/coc-vetur', {'do': 'yarn install --frozen-lockfile'}
-Plug 'neoclide/coc-vimtex', {'do': 'yarn install --frozen-lockfile'}
-Plug 'neoclide/coc-yaml', {'do': 'yarn install --frozen-lockfile'}
+"Plug 'neoclide/coc.nvim', {'branch': 'release'}
+"Plug 'neoclide/coc-css', {'do': 'yarn install --frozen-lockfile'}
+"Plug 'neoclide/coc-highlight', {'do': 'yarn install --frozen-lockfile'}
+"Plug 'neoclide/coc-html', {'do': 'yarn install --frozen-lockfile'}
+"Plug 'neoclide/coc-json', {'do': 'yarn install --frozen-lockfile'}
+"Plug 'neoclide/coc-neco', {'do': 'yarn install --frozen-lockfile'}
+"Plug 'neoclide/coc-python', {'do': 'yarn install --frozen-lockfile'}
+"Plug 'neoclide/coc-rls', {'do': 'yarn install --frozen-lockfile'}
+"Plug 'neoclide/coc-snippets', {'do': 'yarn install --frozen-lockfile'}
+"Plug 'neoclide/coc-tsserver', {'do': 'yarn install --frozen-lockfile'}
+"Plug 'neoclide/coc-vetur', {'do': 'yarn install --frozen-lockfile'}
+"Plug 'neoclide/coc-vimtex', {'do': 'yarn install --frozen-lockfile'}
+"Plug 'neoclide/coc-yaml', {'do': 'yarn install --frozen-lockfile'}
+
+" LanguageClient - async LanguageServer client
+Plug 'autozimu/LanguageClient-neovim', {'branch': 'next', 'do': 'bash install.sh'}
+
+" autocompletion sources
+Plug 'Shougo/neco-syntax'
+Plug 'Shougo/neco-vim'
+
+" asyncomplete - async autocompletion
+Plug 'prabirshrestha/asyncomplete.vim'
+Plug 'prabirshrestha/asyncomplete-lsp.vim'
+Plug 'prabirshrestha/asyncomplete-buffer.vim'
+Plug 'prabirshrestha/asyncomplete-file.vim'
+Plug 'prabirshrestha/asyncomplete-necosyntax.vim'
+Plug 'prabirshrestha/asyncomplete-necovim.vim'
+
+Plug 'file://' . expand('~/proj/vim-plugins/asyncomplete-LanguageClient.vim')
+
+" vim-lsp - async LanguageServer client
+Plug 'prabirshrestha/async.vim'
+Plug 'prabirshrestha/vim-lsp'
 
 " ale - async syntax checking and linting
-Plug 'w0rp/ale'
+"Plug 'w0rp/ale'
 
 " FastFold - faster fold calculation
 Plug 'Konfekt/FastFold'
@@ -242,21 +236,28 @@ Plug 'Konfekt/FastFold'
 Plug 'moll/vim-bbye'
 
 " colorschemes
-Plug 'easysid/mod8.vim'
 Plug 'Lokaltog/vim-distinguished'
-Plug 'w0ng/vim-hybrid'
+Plug 'morhetz/gruvbox'
+Plug 'kaicataldo/material.vim'
 
 call plug#end()
 " }}}
 
 " /* PLUGIN SETTINGS: airline */ {{{
 let g:airline_powerline_fonts = 1
+let g:airline_theme = 'zenburn'
 
-let g:airline#extensions#ale#enabled = 1
-let g:airline#extensions#coc#enabled = 1
+let g:airline#extensions#ale#enabled = 0
+let g:airline#extensions#coc#enabled = 0
+let g:airline#extensions#languageclient#enabled = 1
 let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tagbar#enabled = 1
 let g:airline#extensions#tmuxline#enabled = 0
+" }}}
+
+" /* PLUGIN SETTINGS: material */ {{{
+let g:material_terminal_italics = 1
+let g:material_theme_style = 'palenight'
 " }}}
 
 " /* PLUGIN SETTINGS: nerdtree */ {{{
@@ -282,31 +283,200 @@ let g:clang_format#auto_format = 0
 let g:clang_format#auto_format_on_insert_leave = 0
 " }}}
 
-" /* PLUGIN SETTINGS: coc */ {{{
-let g:coc_snippet_next = '<tab>'
+" /* PLUGIN SETTINGS: LanguageClient */ {{{
+let g:LanguageClient_autoStart = 0
+let g:LanguageClient_settingsPath = expand('~/.vim/lc-settings.json')
+let g:LanguageClient_serverCommands = {
+            \ 'c': ['ccls', '--log-file=/tmp/ccls.log'],
+            \ 'cpp': ['ccls', '--log-file=/tmp/ccls.log'],
+            \ 'cuda': ['ccls', '--log-file=/tmp/ccls.log'],
+            \ 'objc': ['ccls', '--log-file=/tmp/ccls.log'],
+            \ 'python': ['pyls'],
+            \ 'rust': ['rls'],
+            \ 'vue': ['vls'],
+            \ }
+let g:LanguageClient_rootMarkers = {
+            \ 'c': ['.ccls', 'compile_commands.json', '.vim/', '.git/', '.hg/'],
+            \ }
+
+let g:LanguageClient_changeThrottle = 0.2
+let g:LanguageClient_signatureHelpOnCompleteDone = 0
+
+" TODO: Add CodeLens once implemented
+
+let g:LanguageClient_diagnosticsEnable = 1
+"let g:LanguageClient_virtualTextPrefix = ' ¬ '
+let g:LanguageClient_virtualTextPrefix = ' ◉ '
+let g:LanguageClient_diagnosticsDisplay = {
+            \ 1: {'name': 'Error', 'texthl': 'LspErrorHighlight', 'signText': '✘', 'signTexthl': 'LspErrorText', 'virtualTexthl': 'LspErrorText'},
+            \ 2: {'name': 'Warning', 'texthl': 'LspWarningHighlight', 'signText': '‼', 'signTexthl': 'LspWarningText', 'virtualTexthl': 'LspWarningText'},
+            \ 3: {'name': 'Information', 'texthl': 'LspInformationHighlight', 'signText': 'ℹ', 'signTexthl': 'LspInformationText', 'virtualTexthl': 'LspInformationText'},
+            \ 4: {'name': 'Hint', 'texthl': 'LspHintHighlight', 'signText': '▸', 'signTexthl': 'LspHintText', 'virtualTexthl': 'LspHintText'},
+            \ }
+"let g:LanguageClient_loggingFile = expand('~/vim-lc.log')
+"let g:LanguageClient_loggingLevel = 'DEBUG'
+
+augroup LanguageClient_setup
+    autocmd!
+    " keep track if the language server is running
+    autocmd BufEnter * let b:Plugin_LanguageClient_started = 0
+    autocmd User LanguageClientStarted let b:Plugin_LanguageClient_started = 1
+    autocmd User LanguageClientStopped let b:Plugin_LanguageClient_started = 0
+    " show LanguageClient signature help on insert
+    autocmd InsertEnter,CursorMovedI * if b:Plugin_LanguageClient_started | echo "" | silent call LanguageClient#textDocument_signatureHelp({}, 's:HandleOutputNothing') | endif
+augroup END
+
+
+command! -nargs=0 -count=0 BBcodeAction :call LanguageClient#textDocument_codeAction()
+command! -nargs=0 -count=0 BBcodeLens :call LanguageClient#textDocument_codeLens()
+command! -nargs=0 -count=0 BBcodeFormat :call LanguageClient#textDocument_formatting()
+" }}}
+
+" /* PLUGIN SETTINGS: asyncomplete /* {{{
+"let g:asyncomplete_log_file = expand('~/vim-ac.log')
+
+" TODO: Add filter to remove duplicates
+
+" Activate additional completion sources
+augroup asyncomplete_install
+    autocmd!
+    au User asyncomplete_setup call asyncomplete#register_source(asyncomplete#sources#necovim#get_source_options({
+                \ 'name': 'necovim',
+                \ 'whitelist': ['vim'],
+                \ 'completor': function('asyncomplete#sources#necovim#completor'),
+                \ }))
+    au User asyncomplete_setup call asyncomplete#register_source(asyncomplete#sources#necosyntax#get_source_options({
+                \ 'name': 'necosyntax',
+                \ 'whitelist': ['*'],
+                \ 'completor': function('asyncomplete#sources#necosyntax#completor'),
+                \ }))
+    au User asyncomplete_setup call asyncomplete#register_source(asyncomplete#sources#buffer#get_source_options({
+                \ 'name': 'buffer',
+                \ 'whitelist': ['*'],
+                \ 'completor': function('asyncomplete#sources#buffer#completor'),
+                \ 'config': {
+                \    'max_buffer_size': 5000000,
+                \ },
+                \ }))
+    au User asyncomplete_setup call asyncomplete#register_source(asyncomplete#sources#file#get_source_options({
+                \ 'name': 'file',
+                \ 'whitelist': ['*'],
+                \ 'priority': 10,
+                \ 'completor': function('asyncomplete#sources#file#completor')
+                \ }))
+augroup END
+" }}}
+
+" /* PLUGIN SETTINGS: vim-lsp */ {{{
+let g:lsp_auto_enable = 0
+let g:lsp_diagnostics_enabled = 1
+let g:lsp_diagnostics_echo_cursor = 1
+let g:lsp_virtual_text_enabled = 1
+"let g:lsp_virtual_text_prefix = ' ¬ '
+let g:lsp_virtual_text_prefix = ' ◉ '
+
+let g:lsp_highlight_references_enabled = 1
+let g:lsp_peek_alignment = 'center'
+
+let g:lsp_signs_error = {'text': '✘'}
+let g:lsp_signs_warning = {'text': '‼'}
+let g:lsp_signs_information = {'text': 'ℹ'}
+let g:lsp_signs_hint = {'text': '▸'}
+let g:lsp_signs_priority_map = {
+                \ 'LspError': 20,
+                \ 'LspWarning': 12,
+                \ 'LspInformation': 9,
+                \ 'LspHint': 5,
+                \ }
+
+" c, cpp, cuda, objc ccls config
+if executable('ccls')
+    au User lsp_setup call lsp#register_server({
+                \ 'name': 'ccls',
+                \ 'cmd': {server_info->['ccls', '--log-file=/tmp/ccls.log']},
+                \ 'whitelist': ['c', 'cpp', 'cuda', 'objc'],
+                \ 'workspace_config': {
+                \   'ccls': {
+                \     'initializationOptions': {
+                \       'cache': {'directory': '/tmp/ccls'},
+                \     },
+                \   },
+                \ },
+                \ })
+endif
+
+" python pyls config
+if executable('pyls')
+    au User lsp_setup call lsp#register_server({
+                \ 'name': 'pyls',
+                \ 'cmd': {server_info->['pyls']},
+                \ 'whitelist': ['python'],
+                \ 'workspace_config': {
+                \   'pyls': {
+                \     'configurationSources': ['flake8'],
+                \     'plugins': {
+                \       'autopep8': {'enabled': v:false},
+                \       'flake8': {'enabled': v:true},
+                \       'folding': {'enabled': v:false},
+                \       'jedi_completion': {'enabled': v:true},
+                \       'jedi_definiton': {'enabled': v:true},
+                \       'jedi_highlight': {'enabled': v:true},
+                \       'jedi_hover': {'enabled': v:true},
+                \       'jedi_references': {'enabled': v:true},
+                \       'jedi_signature_help': {'enabled': v:true},
+                \       'jedi_symbols': {'enabled': v:true},
+                \       'mccabe': {'enabled': v:false},
+                \       'pycodestyle': {'enabled': v:false},
+                \       'pydocstyle': {'enabled': v:false},
+                \       'pyflakes': {'enabled': v:false},
+                \       'pylint': {'enabled': v:false},
+                \       'rope_completion': {'enabled': v:false},
+                \       'rope_rename': {'enabled': v:false},
+                \       'yapf': {'enabled': v:true},
+                \     },
+                \   },
+                \ },
+                \ })
+endif
+
+" rust rls config
+if executable('rls')
+    au User lsp_setup call lsp#register_server({
+                \ 'name': 'rls',
+                \ 'cmd': {server_info->['rls']},
+                \ 'whitelist': ['rust'],
+                \ 'workspace_config': {
+                \   'rust': {
+                \     'clippy_preference': 'on',
+                \   },
+                \ },
+                \ })
+endif
 " }}}
 
 " /* PLUGIN SETTINGS: ale */ {{{
+" TODO: add linter with virtual text for files who are missing language servers
 let g:ale_lint_on_enter = 0
 let g:ale_lint_on_text_changed = 'never'
 let g:ale_open_list = 0
 let g:ale_list_window_size = 5
 
-let g:ale_echo_msg_error_str = 'EE'
-let g:ale_echo_msg_warning_str = 'WW'
-let g:ale_echo_msg_format = '%severity%: [%linter%] %s'
+"let g:ale_echo_msg_error_str = 'EE'
+"let g:ale_echo_msg_warning_str = 'WW'
+"let g:ale_echo_msg_format = '%severity%: [%linter%] %s'
 
-let g:ale_linters = {
-            \ 'c': ['gcc', 'flawfinder'],
-            \ 'asm': [],
-            \ 'python': [],
-            \ 'rust': [],
-            \ }
+let g:ale_linters_explicit = 1
+"let g:ale_linters = {
+"            \ 'c': ['gcc', 'flawfinder'],
+"            \ 'asm': [],
+"            \ 'python': [],
+"            \ 'rust': [],
+"            \ }
 
-let g:ale_c_parse_makefile = 1
-let g:ale_c_clangtidy_checks = ['-*', 'bugprone-*', 'cert-*-c', 'misc-*', 'mpi-*',
-            \ 'clang-analyzer-*', '-clang-analyzer-cplusplus.*', '-clang-analyzer-optin.*', '-clang-analyzer-osx.*',
-            \ 'modernize-*', 'performance-*', 'readability-*']
+"let g:ale_c_parse_makefile = 1
+"let g:ale_c_clangtidy_checks = ['-*', 'bugprone-*', 'cert-*-c', 'misc-*', 'mpi-*',
+"            \ 'clang-analyzer-*', '-clang-analyzer-cplusplus.*', '-clang-analyzer-optin.*', '-clang-analyzer-osx.*',
+"            \ 'modernize-*', 'performance-*', 'readability-*']
 " }}}
 
 " /* PLUGIN SETTINGS: FastFold */ {{{
@@ -390,25 +560,39 @@ nmap <silent> <leader><Tab> <C-n>
 
 " /* AUTOCLOMPLETION */ {{{2
 " use <c-space>for trigger completion
-inoremap <silent> <expr><C-Space> pumvisible() ? "\<C-n>" : coc#refresh()
+inoremap <silent> <expr><C-Space> pumvisible() ? "\<C-n>" : asyncomplete#force_refresh()
+function! s:ExpandSnippetOrClosePum(accept) abort
+    if pumvisible()
+        if !empty(v:completed_item)
+            return a:accept ? asyncomplete#close_popup() : asyncomplete#cancel_popup()
+        else
+            return asyncomplete#close_popup() . (a:accept ? "\<CR>" : "\<Esc>")
+        endif
+    else
+        return a:accept ? "\<CR>" : "\<Esc>"
+    endif
+endfunction
+inoremap <silent> <expr><CR> <SID>ExpandSnippetOrClosePum(1)
+inoremap <silent> <expr><Esc> <SID>ExpandSnippetOrClosePum(0)
 
-nmap <silent> gd <Plug>(coc-definition)
-nmap <silent> gi <Plug>(coc-implementation)
-nmap <silent> gr <Plug>(coc-references)
 
-nmap <silent> ll :CocList diagnostics<CR>
-nmap <silent> ln <Plug>(coc-diagnostic-next)
-nmap <silent> lp <Plug>(coc-diagnostic-prev)
-
-nmap <silent> lf <Plug>(coc-fix-current)
-vmap <silent> lf <Plug>(coc-format-selected)
+"nmap <silent> gd <Plug>(coc-definition)
+"nmap <silent> gi <Plug>(coc-implementation)
+"nmap <silent> gr <Plug>(coc-references)
+"
+"nmap <silent> ll :CocList diagnostics<CR>
+"nmap <silent> ln <Plug>(coc-diagnostic-next)
+"nmap <silent> lp <Plug>(coc-diagnostic-prev)
+"
+"nmap <silent> lf <Plug>(coc-fix-current)
+"vmap <silent> lf <Plug>(coc-format-selected)
 " }}}
 
 " fold navigation
 nnoremap zn zj
 nnoremap zp zk
-nnoremap zN :<C-u>call BBJumpNextClosedFold(v:count1, 'j')<CR>
-nnoremap zP :<C-u>call BBJumpNextClosedFold(v:count1, 'k')<CR>
+nnoremap zN :<C-u>call BB_JumpNextClosedFold(v:count1, 'j')<CR>
+nnoremap zP :<C-u>call BB_JumpNextClosedFold(v:count1, 'k')<CR>
 
 " tags
 nnoremap ü <C-]>
@@ -419,7 +603,7 @@ nnoremap ä <C-o>
 nnoremap Ä <Tab>
 
 " ale linter err/warn list
-nnoremap <silent> <leader>ll :ALELint<CR>
+"nnoremap <silent> <leader>ll :ALELint<CR>
 nnoremap <silent> <leader>lo :lopen 5<CR>
 nnoremap <silent> <leader>lc :lclose<CR>
 
@@ -427,7 +611,7 @@ nnoremap <silent> <leader>lc :lclose<CR>
 nnoremap <silent> <CR> :nohlsearch<CR><CR>
 
 " NERDTree
-nnoremap <silent> <C-o> :call BBToggleNERDTree()<CR>
+nnoremap <silent> <C-o> :call BB_ToggleNERDTree()<CR>
 
 " FastFold
 nmap <leader>zu <Plug>(FastFoldUpdate)
@@ -437,41 +621,47 @@ cabbrev vh vert help
 " }}}
 
 
-" /* NVIM SPECIFIC OPTIONS */ {{{
-"=======================================
-if has('nvim')
-else
-endif
-" }}}
-
-
 " /* GUI OPTIONS (color-scheme) */ {{{
 "=======================================
+" FIXME: neovim assumes 256colors on linux console, this breaks all colorschemes
+
+" enable TrueColor if supported
+if has('termguicolors')
+    " TrueColor escape sequences for vim
+    let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
+    let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
+    " Undercurl escape sequences for vim
+    let &t_Cs = "\<Esc>[4:3m"
+    let &t_Ce = "\<Esc>[4:0m"
+    " enable gui support in terminal
+    set termguicolors
+endif
+
+" set colorscheme
+set background=dark
+
 if has("gui_running")
     " GUI - Theme
-    set t_Co=256
-    set background=dark
-    colorscheme hybrid
-    highlight LineNr ctermfg=green
+    colorscheme material
 
     set guioptions-=T
-    set guifont=Source\ Code\ Pro\ for\ Powerline\ 10
+    set guifont=Hack\ 10
     set lines=45
     set columns=132
 else
     " Console - Theme
     if &t_Co == 8
+        " FIXME: neovim assumes 256colors even on linux console
         set t_Co=256
         colorscheme distinguished
-        highlight LineNr ctermfg=green
     else
-        set t_Co=256
-        set background=dark
-        colorscheme hybrid
+        colorscheme material
         "highlight Normal ctermbg=black
-        highlight LineNr ctermfg=green
     endif
 endif
+
+" load custom colorscheme overrides
+source ~/.vim/startup/highlight.vim
 " }}}
 
 "" vim:fdm=marker:fdl=0

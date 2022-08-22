@@ -13,6 +13,8 @@
 " Set classical vim compatible options
 set runtimepath^=~/.vim runtimepath+=~/.vim/after
 let &packpath = &runtimepath
-" Load original .vimrc
-source ~/.vimrc
 
+" Load original .vimrc
+if !exists("g:vscode")
+    source ~/.vimrc
+endif
