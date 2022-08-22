@@ -13,26 +13,28 @@
 has_backlight="$( which xbacklight 2>/dev/null )"
 dpy="${DISPLAY/:/_}"
 
-service="com.github.chjj.compton.${dpy}"
-interface='com.github.chjj.compton'
-object='/com/github/chjj/compton'
+#picom_service="com.github.chjj.compton.${DISPLAY/:/_}"
+keepassxc_service="org.keepassxc.KeePassXC.MainWindow"
 
-#opt_fadedelta="$( dbus-send --print-reply=literal --dest="${service}" "${object}" \
+#opt_fadedelta="$( dbus-send --print-reply=literal --dest="${picom_service}" "${object}" \
 #    "${interface}.opts_get" "string:fade_delta" | awk '{print $2;}' )"
-opt_openclose="$( dbus-send --print-reply=literal --dest="${service}" "${object}" \
-    "${interface}.opts_get" "string:no_fading_openclose" | awk '{print $2;}' )"
-opt_unredir="$( dbus-send --print-reply=literal --dest="${service}" "${object}" \
-    "${interface}.opts_get" "string:unredir_if_possible" | awk '{print $2;}' )"
+#opt_openclose="$( dbus-send --print-reply=literal --dest="${picom_service}" "${object}" \
+#    "${interface}.opts_get" "string:no_fading_openclose" | awk '{print $2;}' )"
+#opt_unredir="$( dbus-send --print-reply=literal --dest="${picom_service}" "${object}" \
+#    "${interface}.opts_get" "string:unredir_if_possible" | awk '{print $2;}' )"
 
 # Enable compton's fade-in effect so that the lockscreen gets a nice fade-in effect.
 # If disable unredir_if_possible is enabled in compton's config, we may need to
 # disable that to avoid flickering. YMMV.
-#dbus-send --type=method_call --dest="${service}" "${object}" "${interface}.opts_set" \
+#dbus-send --type=method_call --dest="${picom_service}" "${object}" "${interface}.opts_set" \
 #    "string:fade_delta" "int32:10"
-dbus-send --type=method_call --dest="${service}" "${object}" "${interface}.opts_set" \
-    "string:no_fading_openclose" "boolean:false"
-dbus-send --type=method_call --dest="${service}" "${object}" "${interface}.opts_set" \
-    "string:unredir_if_possible" "boolean:false"
+#dbus-send --type=method_call --dest="${picom_service}" "${object}" "${interface}.opts_set" \
+#    "string:no_fading_openclose" "boolean:false"
+#dbus-send --type=method_call --dest="${picom_service}" "${object}" "${interface}.opts_set" \
+#    "string:unredir_if_possible" "boolean:false"
+
+# lock all open KeePassXC databases
+qdbus "${keepassxc_service}" /keepassxc org.keepassxc.MainWindow.lockAllDatabases
 
 # pause dunst notifications
 pkill -u ${USER} -USR1 dunst
@@ -67,12 +69,12 @@ fi
 sleep 0.2
 
 # Revert compton's config changes.
-#dbus-send --type=method_call --dest="${service}" "${object}" "${interface}.opts_set" \
+#dbus-send --type=method_call --dest="${picom_service}" "${object}" "${interface}.opts_set" \
 #    "string:fade_delta" "int32:${opt_fadedelta}"
-dbus-send --type=method_call --dest="${service}" "${object}" "${interface}.opts_set" \
-    "string:no_fading_openclose" "boolean:${opt_openclose}"
-dbus-send --type=method_call --dest="${service}" "${object}" "${interface}.opts_set" \
-    "string:unredir_if_possible" "boolean:${opt_unredir}"
+#dbus-send --type=method_call --dest="${picom_service}" "${object}" "${interface}.opts_set" \
+#    "string:no_fading_openclose" "boolean:${opt_openclose}"
+#dbus-send --type=method_call --dest="${picom_service}" "${object}" "${interface}.opts_set" \
+#    "string:unredir_if_possible" "boolean:${opt_unredir}"
 
 # unmute audio
 #if (( $is_muted == 0 )); then
