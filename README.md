@@ -4,6 +4,7 @@ Dotfiles
 Just my 0.02$ to all the dotfile collections.
 
     acpi[etc]           -> acpi handler (backlight)
+    alacritty           -> alacritty config
     archey3             -> config for archey3
     bash                -> bash config with custom prompt and aliases
     compton             -> compton compositor with minmal transparency ([kawase blur fork](tryone144/compton))
