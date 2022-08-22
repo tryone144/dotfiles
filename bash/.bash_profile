@@ -22,14 +22,16 @@ fi
 
 # X autostart on vt2 [awesomewm]
 if [[ -z ${DISPLAY} ]] && [[ "${XDG_VTNR}" == 2 ]]; then
-    export X_SESSION=awesome
-    exec startx
+    # export X_SESSION=awesome
+    # exec startx
+    true
 fi
 
 # X autostart on vt3 [lxqt]
 if [[ -z ${DISPLAY} ]] && [[ "${XDG_VTNR}" == 3 ]]; then
-    export X_SESSION=lxqt
-    exec startx
+    # export X_SESSION=lxqt
+    # exec startx
+    true
 fi
 
 # autostart tmux on tty4
