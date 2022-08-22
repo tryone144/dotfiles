@@ -62,6 +62,6 @@ unclutter --timeout 2 --jitter 20 --exclude-root --ignore-scrolling --fork
 
 # set display calibration profiles
 if [[ ${HOSTNAME} == "sachnix" ]]; then
-    dispwin -d 1 -I ~/.local/share/colord/DELL\ U2410\ -\ 20150506.icc &
-    dispwin -d 2 -I ~/.local/share/colord/SAMSUNG\ SyncMaster245B\ -\ 20150506.icc &
+    dispwin -d 2 -I ~/.local/share/colord/DELL\ U2410\ -\ 20150506.icc &
+    dispwin -d 1 -I ~/.local/share/colord/SAMSUNG\ SyncMaster245B\ -\ 20150506.icc &
 fi
