@@ -35,7 +35,7 @@ trap 'trap - TERM; kill 0' INT TERM QUIT EXIT
 [ -e "${panel_fifo}" ] && rm "${panel_fifo}"
 mkfifo "${panel_fifo}"
 
-export PATH="${PATH}:${I3_CONFIG}/scripts:${I3_CONFIG}/panel"
+export PATH="${PATH}:${I3_CONFIG}/panel"
 
 # start lemonbar
 arrowbar.py --workspace --title < "${panel_fifo}" 2>> /tmp/arrowbar.log \
@@ -45,21 +45,33 @@ arrowbar.py --workspace --title < "${panel_fifo}" 2>> /tmp/arrowbar.log \
         while read -r line; do
             section="$( echo "${line}" | cut -d '|' -f 1 )"
             action="$( echo "${line}" | cut -d '|' -f 2 )"
+            instance="$( echo "${line}" | cut -d '|' -f 3 )"
             case ${section} in
                 "i3")
                     case ${action} in
                         "change-ws")
-                            ws="$( echo "${line}" | cut -d '|' -f 3 )"
-                            i3-msg workspace $ws > /dev/null ;;
+                            i3-msg workspace $instance > /dev/null ;;
                     esac ;;
                 "volume")
                     case ${action} in
                         "toggle")
-                            volume.py toggle ;;
+                            if [[ -n "${instance}" ]]; then
+                                volume.py --sink "${instance}" toggle
+                            else
+                                volume.py toggle
+                            fi ;;
                         "raise")
-                            volume.py raise 5 ;;
+                            if [[ -n "${instance}" ]]; then
+                                volume.py --sink "${instance}" raise 5
+                            else
+                                volume.py raise 5
+                            fi ;;
                         "lower")
-                            volume.py lower 5 ;;
+                            if [[ -n "${instance}" ]]; then
+                                volume.py --sink "${instance}" lower 5
+                            else
+                                volume.py lower 5
+                            fi ;;
                     esac ;;
                 "date")
                     ;;

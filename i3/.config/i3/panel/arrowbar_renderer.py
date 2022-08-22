@@ -372,6 +372,8 @@ class Renderer(object):
             new["color_bg"] = COLOR_STATUS_TIME_BG
         elif new["name"] == "pulseaudio":
             new["actions"][0] = "volume|toggle"
+            if "instance" in tag.keys() and tag["instance"]:
+                new["actions"][0] += "|" + tag["instance"]
             new["color_bg"] = COLOR_STATUS_VOL_BG
             if "color" in tag.keys() and tag["color"] == COL_BAD:
                 new["text"] = new["text"].replace(ICON_VOLUME_HIGH,
