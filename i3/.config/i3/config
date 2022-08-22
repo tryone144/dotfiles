@@ -22,8 +22,8 @@ set $neo4 Mod3
 floating_modifier $mod
 
 # outputs
-set $left-mon       DVI-I-1
-set $right-mon      DVI-D-0
+set $left-mon       DVI-D-0
+set $right-mon      HDMI-0
 set $notebook       eDP1
 set $dock           DP2-2
 set $beamer-vga     DP2
@@ -294,6 +294,9 @@ for_window [class="^Steam$" title="^Friends List"] floating enable, move window 
 for_window [class="^Steam$" title="^Steam Guard"] floating enable, move window to workspace current
 # make firefox about floating
 for_window [class="^firefox$" window_role="^About"] floating enable, move window to workspace current
+# make zoom notifications floating
+for_window [class="^zoom $" title="zoom"] floating enable
+no_focus [class="^zoom $" title="zoom"]
 
 
 #########
