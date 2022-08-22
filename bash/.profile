@@ -19,8 +19,12 @@ __RUST_BIN="${HOME}/.cargo/bin"
 __USER_BIN="${HOME}/.local/bin"
 [[ "${PATH}" = *"${__USER_BIN}"* ]] || export PATH="$__USER_BIN:$PATH"
 
+__XTOOLS_ARM_BIN="/opt/gcc-arm-none-linux-gnueabihf/bin"
+[[ "${PATH}" = *"${__XTOOLS_ARM_BIN}"* ]] || export PATH="$PATH:$__XTOOLS_ARM_BIN"
 __XTOOLS_RPI_BIN="/opt/arm-rpi-linux-gnueabihf/bin"
 [[ "${PATH}" = *"${__XTOOLS_RPI_BIN}"* ]] || export PATH="$PATH:$__XTOOLS_RPI_BIN"
+
+export PLATFORMIO_CORE_DIR="/opt/platformio"
 
 # Enable GTK for Java Swing applications
 export _JAVA_OPTIONS='-Dawt.useSystemAAFontSettings=on 
