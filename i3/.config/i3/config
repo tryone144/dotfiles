@@ -85,7 +85,7 @@ exec_always --no-startup-id nitrogen --restore &
 exec_always --no-startup-id systemctl --user start i3.target &
 
 # start htop, KeePassXC
-exec --no-startup-id i3-msg 'exec --no-startup-id termite -e htop; exec --no-startup-id keepassxc;' &
+exec --no-startup-id i3-msg 'exec --no-startup-id alacritty -e htop; exec --no-startup-id keepassxc;' &
 
 
 #############
@@ -93,7 +93,7 @@ exec --no-startup-id i3-msg 'exec --no-startup-id termite -e htop; exec --no-sta
 #############
 
 # start terminal emulator
-bindsym $mod+Return     exec termite
+bindsym $mod+Return     exec alacritty
 
 # common applications
 bindsym $mod+n          exec firefox
@@ -176,6 +176,9 @@ bindsym $mod+e layout toggle split
 
 # toggle tiling / floating
 bindsym $mod+p      floating toggle
+
+# toggle sticky
+bindsym $mod+Shift+p      sticky toggle
 
 # change focus between tiling / floating windows
 bindsym $mod+space  focus mode_toggle
@@ -292,11 +295,15 @@ for_window [class="^Minecraft" instance="^Minecraft"] floating enable
 # make steam friends and messages floating
 for_window [class="^Steam$" title="^Friends List"] floating enable, move window to workspace current
 for_window [class="^Steam$" title="^Steam Guard"] floating enable, move window to workspace current
+
 # make firefox about floating
 for_window [class="^firefox$" window_role="^About"] floating enable, move window to workspace current
+# make firefox picture-in-picture window floating and sticky
+for_window [class="^firefox$" window_role="^PictureInPicture$"] floating enable, sticky enable
+
 # make zoom notifications floating
-for_window [class="^zoom $" title="zoom"] floating enable
-no_focus [class="^zoom $" title="zoom"]
+for_window [class="^zoom $" title="^zoom$"] floating enable
+no_focus [class="^zoom $" title="^zoom$"]
 
 
 #########
