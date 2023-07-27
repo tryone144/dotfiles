@@ -5,3 +5,4 @@ After=default.target
 Wants=redshift.service
 Wants=compton.service
 Wants=dunst.service
+Wants=xsettingsd.service

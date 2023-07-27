@@ -4,7 +4,7 @@
 # sourced by .bash_profile
 #
 # file: ~/.profile
-# v1.0 / 2019.04.12
+# v1.1 / 2023.07.27
 #
 # (c) 2019 Bernd Busse
 #
@@ -25,11 +25,6 @@ __XTOOLS_RPI_BIN="/opt/arm-rpi-linux-gnueabihf/bin"
 [[ "${PATH}" = *"${__XTOOLS_RPI_BIN}"* ]] || export PATH="$PATH:$__XTOOLS_RPI_BIN"
 
 export PLATFORMIO_CORE_DIR="/opt/platformio"
-
-# Enable GTK for Java Swing applications
-export _JAVA_OPTIONS='-Dawt.useSystemAAFontSettings=on 
-                      -Dswing.defaultlaf=com.sun.java.swing.plaf.gtk.GTKLookAndFeel 
-                      -Dswing.crossplatformlaf=com.sun.java.swing.plaf.gtk.GTKLookAndFeel'
 
 export SDL_VIDEO_FULLSCREEN_HEAD=0
 
