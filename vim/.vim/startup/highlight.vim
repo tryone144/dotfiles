@@ -1,12 +1,12 @@
 "
-" VIM
-" Personal Vim configuration
+" VIM / NEOVIM
+" Personal (neo)vim configuration
 "   colorscheme modifications
 "
 " file: ~/.vim/startup/highlight.vim
-" v1.9 / 2020.01.05
+" v2.0 / 2023.05.24
 "
-" (c) 2020 Bernd Busse
+" (c) 2023 Bernd Busse
 "
 
 " /* ADITIONAL COLORSCHEME HIGHLIGHTS */
@@ -15,22 +15,18 @@ function! BB_UpdateColorschemeHighlights()
     highlight LineNr guifg=#8bc34a ctermfg=2
     highlight CursorLineNr guifg=#ffeb3b ctermfg=3
 
-    " vim-lsp / LanguageClient diagnostic highlights
-    highlight LspErrorHighlight guisp=#ad1457 gui=undercurl cterm=undercurl term=undercurl
-    highlight LspErrorText guifg=#ad1457 guibg=NONE gui=NONE,bold,italic ctermfg=5 ctermbg=NONE cterm=NONE,bold,italic term=NONE,bold,italic
-    highlight clear LspErrorLine
+    " diagnostic highlights
+    highlight DiagnosticUnderlineError guisp=#ad1457 gui=undercurl cterm=undercurl term=undercurl
+    highlight DiagnosticError guifg=#ad1457 guibg=NONE gui=NONE,bold,italic ctermfg=5 ctermbg=NONE cterm=NONE,bold,italic term=NONE,bold,italic
 
-    highlight LspWarningHighlight guisp=#ffa74d gui=undercurl cterm=undercurl term=undercurl
-    highlight LspWarningText guifg=#ffa74d guibg=NONE gui=NONE,bold,italic ctermfg=9 ctermbg=NONE cterm=NONE,bold,italic term=NONE,bold,italic
-    highlight clear LspWarningLine
+    highlight DiagnosticUnderlineWarn guisp=#ffa74d gui=undercurl cterm=undercurl term=undercurl
+    highlight DiagnosticWarn guifg=#ffa74d guibg=NONE gui=NONE,bold,italic ctermfg=9 ctermbg=NONE cterm=NONE,bold,italic term=NONE,bold,italic
 
-    highlight clear lspInformationHighlight
-    highlight LspInformationText guifg=#fff176 guibg=NONE gui=NONE,italic ctermfg=11 ctermbg=NONE cterm=NONE,italic term=NONE,italic
-    highlight clear LspInformationLine
+    highlight DiagnosticUnderlineInfo guisp=#fff176 gui=undercurl cterm=undercurl term=undercurl
+    highlight DiagnosticInfo guifg=#fff176 guibg=NONE gui=NONE,italic ctermfg=11 ctermbg=NONE cterm=NONE,italic term=NONE,italic
 
-    highlight clear LspHintHighlight
-    highlight LspHintText guifg=#37474f guibg=NONE gui=NONE,italic ctermfg=8 ctermbg=NONE cterm=NONE,italic term=NONE,italic
-    highlight clear LspHintLine
+    highlight DiagnosticUnderlineHint guisp=#37474f gui=undercurl cterm=undercurl term=undercurl
+    highlight DiagnosticHint guifg=#37474f guibg=NONE gui=NONE,italic ctermfg=8 ctermbg=NONE cterm=NONE,italic term=NONE,italic
 endfunction
 "
 

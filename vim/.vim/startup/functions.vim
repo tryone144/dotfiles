@@ -1,12 +1,12 @@
 "
-" VIM
-" Personal Vim configuration
+" VIM / NEOVIM
+" Personal (neo)vim configuration
 "   custom functions
 "
 " file: ~/.vim/startup/functions.vim
-" v1.9 / 2020.01.05
+" v2.0 / 2023.05.24
 "
-" (c) 2020 Bernd Busse
+" (c) 2023 Bernd Busse
 "
 
 " NERDTree - open tree, highlight current Buffer in open tree or close tree
@@ -77,7 +77,6 @@ function! BB_GotoCharacter(cnt)
     endtry
 endfunction
 
-nnoremap <silent> gc :<C-u>if ! BB_GotoCharacter(v:count1 - 1)<Bar>echoerr 'No such position'<Bar>endif<Bar><CR>
 command! -nargs=0 -count=0 -bar GoChar :call BB_GotoCharacter("<count>" - 1)
 "
 

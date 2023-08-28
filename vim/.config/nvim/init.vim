@@ -1,13 +1,12 @@
 "
-" NEOVIM
-" Personal nvim configuration
-"   based on the main vim configuration
-"   plugin-management with 'vim-plug'
+" VIM / NEOVIM
+" Personal (neo)vim configuration
+"   configuration entry point
 "
-" file: ~/.config/nvim/init.vim
-" v0.9 / 2018.03.26
+" file: ~/.config/nvim/init.vim
+" v2.0 / 2023.05.24
 "
-" (c) 2018 Bernd Busse
+" (c) 2023 Bernd Busse
 "
 
 " Set classical vim compatible options
@@ -15,6 +14,11 @@ set runtimepath^=~/.vim runtimepath+=~/.vim/after
 let &packpath = &runtimepath
 
 " Load original .vimrc
-if !exists("g:vscode")
-    source ~/.vimrc
+source ~/.vimrc
+
+" nvim specific configuration (language server + autocomplete)
+if is_nvim && !in_vscode
+    lua require('diagnostic')
+    lua require('lsp')
+    lua require('treesitter')
 endif
