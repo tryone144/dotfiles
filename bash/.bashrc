@@ -99,11 +99,6 @@ function _update_ps1() {
 }
 export PROMPT_COMMAND=_update_ps1
 
-# Archey3 greeting (too cumbersome)
-#if [[ ! -n ${NO_ARCHEY+found} ]] && [[ -n ${DISPLAY} || -n ${SSH_CONNECTION} || -n ${TMUX} ]]; then
-#    archey3 --config=~/.config/archey3.cfg
-#fi
-
 # Change interactive shell to /bin/fish
 if [[ -z "${NO_FISH+found}" ]] && [[ -z "${BASH_EXECUTION_STRING}" ]] && [[ -n "${DISPLAY}" || -n "${SSH_CONNECTION}" ]]; then
     exec /bin/fish
