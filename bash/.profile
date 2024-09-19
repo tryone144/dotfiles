@@ -30,3 +30,8 @@ export SDL_VIDEO_FULLSCREEN_HEAD=0
 
 # Do no use fancy GTK dialog for SSH/GitHub passwords
 unset SSH_ASKPASS
+
+# Export gnome-keyring control and ssh-agent
+runtime_dir="${XDG_RUNTIME_DIR:-/run/user/${UID}}"
+export GNOME_KEYRING_CONTROL="${runtime_dir}/keyring/control"
+export SSH_AUTH_SOCK="${runtime_dir}/gcr/ssh"
