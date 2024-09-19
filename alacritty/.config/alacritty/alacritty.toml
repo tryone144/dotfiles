@@ -1,0 +1,90 @@
+live_config_reload = true
+
+[bell]
+animation = "EaseOut"
+color = "#ffa74d"
+duration = 0
+
+[colors]
+draw_bold_text_with_bright_colors = true
+
+[colors.bright]
+black = "#37474f"
+blue = "#81d4fa"
+cyan = "#26a69a"
+green = "#9ccc65"
+magenta = "#e91e63"
+red = "#ffa74d"
+white = "#eceff1"
+yellow = "#fff176"
+
+[colors.normal]
+black = "#263238"
+blue = "#03a9f4"
+cyan = "#009688"
+green = "#8bc34a"
+magenta = "#ad1457"
+red = "#ff9800"
+white = "#cfd8dc"
+yellow = "#ffeb3b"
+
+[colors.primary]
+background = "#263238"
+bright_foreground = "#fafafa"
+foreground = "#efeff1"
+
+[cursor]
+unfocused_hollow = true
+
+[cursor.style]
+blinking = "On"
+shape = "Block"
+
+[font]
+size = 10.0
+
+[font.bold]
+family = "Hack"
+style = "Bold"
+
+[font.bold_italic]
+family = "Hack"
+style = "Bold Italic"
+
+[font.italic]
+family = "Hack"
+style = "Italic"
+
+[font.normal]
+family = "Hack"
+style = "Regular"
+
+[font.offset]
+x = 0
+y = 0
+
+[[keyboard.bindings]]
+action = "SpawnNewInstance"
+key = "T"
+mods = "Control|Shift"
+
+[scrolling]
+history = 16384
+multiplier = 3
+
+[window]
+decorations_theme_variant = "Dark"
+opacity = 0.7
+startup_mode = "Windowed"
+
+[window.class]
+general = "Alacritty"
+instance = "alacritty"
+
+[window.dimensions]
+columns = 81
+lines = 24
+
+[window.padding]
+x = 2
+y = 2
