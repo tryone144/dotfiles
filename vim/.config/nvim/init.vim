@@ -22,3 +22,8 @@ if is_nvim && !in_vscode
     lua require('lsp')
     lua require('treesitter')
 endif
+
+" vscode specific configuration (keybindings)
+if is_nvim && in_vscode
+    lua require('vscode')
+endif

@@ -96,6 +96,9 @@ lspconfig.rust_analyzer.setup(coq.lsp_ensure_capabilities({
   cmd = { "rustup", "run", "stable", "rust-analyzer" },
   settings = {
     ['rust-analyzer'] = {
+      checkOnSave = {
+        allTargets = false,
+      },
       completion = {
         autoimport = { enable = true },
         autoself = { enable = true },

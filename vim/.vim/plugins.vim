@@ -9,9 +9,8 @@
 " (c) 2023 Bernd Busse
 "
 
-call plug#begin('~/.vim/plugged')
-
 if !in_vscode
+    call plug#begin('~/.vim/plugged')
 
     " ============ Syntax ============
     " gas - GNU assembler syntax highlight
@@ -65,11 +64,16 @@ if !in_vscode
     Plug 'junegunn/fzf.vim'
 
     if is_nvim
+        " plenary.nvim - global utilities for lua scripting
+        Plug 'nvim-lua/plenary.nvim'
+
         " nvim-lspconfig - language server configuration
         Plug 'neovim/nvim-lspconfig'
 
         " nvim-treesitter - advanced parsing and highlighting
         Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
+
+        Plug 'saecki/crates.nvim', { 'tag': 'v0.4.0', 'on': ['BufRead Cargo.toml'] }
 
         " coq - fast autocomlete
         Plug 'ms-jpq/coq_nvim', {'branch': 'coq'}
@@ -83,9 +87,8 @@ if !in_vscode
     " Codeium - AI powered autocomplete
     Plug 'Exafunction/codeium.vim'
 
+    call plug#end()
 endif
-
-call plug#end()
 
 if !in_vscode
 

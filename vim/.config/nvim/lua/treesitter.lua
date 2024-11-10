@@ -9,9 +9,13 @@
 -- (c) 2023 Bernd Busse
 --
 
+-- enable treesitter highlighting
 require('nvim-treesitter.configs').setup {
   highlight = {
     enable = true,
     disable = { "rust" }
   },
 }
+
+-- add mdx support with markdown parser
+vim.treesitter.language.register('mdx', 'typescript')
