@@ -5,8 +5,6 @@
 # (sourced by lightdm and .xinitrc)
 #   needs: [dex]
 #          [argyllcms]
-#          [dunst]
-#          [compton]
 #
 # file: ~/.xprofile
 # v1.5 / 2019.05.15
@@ -19,38 +17,19 @@ export WM_SCRIPTS="${HOME}/.local/share/wmscripts/"
 export PATH="${PATH}:${WM_SCRIPTS%/}"
 
 # set gnome-control-center variable
-export XDG_CURRENT_PROFILE=GNOME
+export XDG_CURRENT_DESKTOP=gnome
 
 # set wm config locations
 export AWESOME_CONFIG="${HOME}/.config/awesome/"
-export HLWM_CONFIG="${HOME}/.config/herbstluftwm/"
 export I3_CONFIG="${HOME}/.config/i3/"
 
-# load autostart applications
-case ${DESKTOP_SESSION} in
-    *"awesomewm")
-        dex -ae MATE
-        export $(gnome-keyring-daemon -s)
-        ;;
-    *"herbstluftwm")
-        dex -ae MATE
-        export $(gnome-keyring-daemon -s)
-        ;;
-    *"i3")
-        dex -ae MATE
-        export $(gnome-keyring-daemon -s)
-        ;;
-    *)
-        ;;
-esac
-
-# start urxvt daemon
-#urxvtd -q -f -o
+# forward session id to systemd units
+systemctl --user import-environment XDG_SESSION_ID WM_SCRIPTS
 
 # load Xresources
 xrdb -merge -I${HOME} ~/.Xresources
 
-# set primary display, if not allready set
+# set primary display, if not already set
 xrandr -d ${DISPLAY} --query | grep -e 'primary' &> /dev/null
 if [[ ${?} == 1 ]]; then
     monitor="$(xrandr -d ${DISPLAY} --query | grep -e ' connected '| cut -d' ' -f1)"
@@ -62,6 +41,6 @@ unclutter --timeout 2 --jitter 20 --exclude-root --ignore-scrolling --fork
 
 # set display calibration profiles
 if [[ ${HOSTNAME} == "sachnix" ]]; then
-    dispwin -d 2 -I ~/.local/share/colord/DELL\ U2410\ -\ 20150506.icc &
-    dispwin -d 1 -I ~/.local/share/colord/SAMSUNG\ SyncMaster245B\ -\ 20150506.icc &
+    dispwin -d 1 -I ~/.local/share/colord/DELL\ U2410\ -\ 20150506.icc &
+    dispwin -d 2 -I ~/.local/share/colord/SAMSUNG\ SyncMaster245B\ -\ 20150506.icc &
 fi

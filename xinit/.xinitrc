@@ -27,17 +27,9 @@ case ${session} in
         export DESKTOP_SESSION="awesomewm"
         export WM_EXEC="${exe:-/usr/bin/awesome}"
         ;;
-    "herbstluftwm")
-        export DESKTOP_SESSION="herbstluftwm"
-        export WM_EXEC="${exe:-/usr/bin/herbstluftwm}"
-        ;;
     "i3")
         export DESKTOP_SESSION="i3"
         export WM_EXEC="${exe:-/usr/bin/i3}"
-        ;;
-    "xmonad")
-        export DESKTOP_SESSION="xmonad"
-        export WM_EXEC="${exe:-/usr/bin/xmonad}"
         ;;
     "lxqt")
         export DESKTOP_SESSION="lxqt"

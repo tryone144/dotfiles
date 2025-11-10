@@ -14,7 +14,8 @@
 #include ".Xresources.d/sxiv"
 
 /* xcursor */
-Xcursor.theme: Breeze_Default
+Xcursor.theme: breeze_cursors
+Xcursor.size: 24
 
 /* correct non-HiDPI scaling */
 Xft.dpi: 96
