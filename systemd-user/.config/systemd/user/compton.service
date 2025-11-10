@@ -3,7 +3,7 @@ Description=X Window Compositor
 
 [Service]
 Type=simple
-ExecStart=/usr/bin/compton --dbus
+ExecStart=/usr/bin/picom --config /home/bernd/proj/development/picom/picom.conf --blur-method dual_kawase --blur-strength 5 --no-frame-pacing --dbus
 KillMode=mixed
 KillSignal=SIGINT
 

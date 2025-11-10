@@ -1,0 +1,8 @@
+[Unit]
+Description=Session locking
+PartOf=i3.target
+
+[Service]
+Type=simple
+# import XDG_SESSION_ID and WM_SCRIPTS prior to launching the user session
+ExecStart=/usr/bin/xss-lock --transfer-sleep-lock -s ${XDG_SESSION_ID} -- ${WM_SCRIPTS}/lockscreen

@@ -30,32 +30,32 @@ set $beamer-vga     DP2
 set $beamer-hdmi    HDMI1
 
 # workspaces
-# workspace 1: Terminal     # \uF136
-set $ws_1           1
-# workspace 2: Chromium     # \uF22F
-set $ws_2           2
-# workspace 3: Hash         # \uF2FA
-set $ws_3           3
-# workspace 4: Tag          # \uF35A
-set $ws_4           4
-# workspace 5: Screen       # \uF2DF
-set $ws_5           5
-# workspace 6
-set $ws_6           6
-# workspace 7
-set $ws_7           7
-# workspace 8
-set $ws_8           8
-# workspace 9: Telegram     # \uF33E
-set $ws_9           9
-# workspace 10: Music       # \uF46C
-set $ws_0           10
+# workspace 1: Terminal     # \uF120
+set $ws_1           1
+# workspace 2: Webbrowser   # \uF268
+set $ws_2           2
+# workspace 3: Code Editor  # \uF550
+set $ws_3           3
+# workspace 4: Preview      # \uF02B
+set $ws_4           4
+# workspace 5: Scratch 1    # \uF0C6
+set $ws_5           5
+# workspace 6: Scratch 2    # \uF303
+set $ws_6           6
+# workspace 7: Monitor      # \uF828
+set $ws_7           7
+# workspace 8: Conference   # \uF590
+set $ws_8           8
+# workspace 9: Email / IM   # \uF1D8
+set $ws_9           9
+# workspace 10: Music       # \uF001
+set $ws_0           10
 
 workspace $ws_1 output $left-mon $notebook
 workspace $ws_7 output $right-mon $notebook
 workspace $ws_8 output $right-mon $notebook
 workspace $ws_9 output $right-mon $notebook
-workspace $ws_10 output $right-mon $notebook
+workspace $ws_0 output $right-mon $notebook
 
 
 #################
@@ -71,7 +71,6 @@ bindsym $mod+Shift+q    exec --no-startup-id ${WM_SCRIPTS}/poweroff.sh
 bindsym $mod+Shift+x    exec --no-startup-id ${WM_SCRIPTS}/poweroff.sh
 # show i3bar with systray
 bindsym $mod+t          bar mode toggle tray
-bindsym $mod+b          bar mode toggle backup
 
 
 ##################
@@ -93,7 +92,7 @@ exec --no-startup-id i3-msg 'exec --no-startup-id alacritty -e htop; exec --no-s
 #############
 
 # start terminal emulator
-bindsym $mod+Return     exec alacritty
+bindsym $mod+Return     exec --no-startup-id alacritty
 
 # common applications
 bindsym $mod+n          exec firefox
@@ -103,8 +102,8 @@ bindsym --release $mod+d        exec --no-startup-id "rofi -theme launcher -show
 bindsym --release $mod+Shift+d  exec --no-startup-id "rofi -theme launcher -show run"
 
 # lock screen
-bindsym --release $mod+Shift+Delete exec --no-startup-id ${WM_SCRIPTS}/locker.sh
-bindsym --release $mod+l            exec --no-startup-id ${WM_SCRIPTS}/locker.sh
+bindsym --release $mod+Shift+Delete exec --no-startup-id loginctl lock-session
+bindsym --release $mod+l            exec --no-startup-id loginctl lock-session
 
 # blank screen (dpms)
 bindsym --release $mod+Shift+l      exec --no-startup-id sleep 1 && xset dpms force off
@@ -288,6 +287,12 @@ for_window [class="^TelegramDesktop$" instance="^telegram-desktop$"] move window
 for_window [class="^Pavucontrol$" instance="^pavucontrol$"] move window to workspace $ws_0
 for_window [class="^cantata$"] move window to workspace $ws_0
 
+# make gnu color picker floating
+for_window [class="^gpick$" instance="^Gpick$"] floating enable, resize set 1000 480
+
+# center ghidra dialogs on the current workspace screen
+for_window [class="^ghidra-Ghidra$" window_type=dialog] floating enable, move position center
+
 # make minecraft floating
 for_window [class="net-minecraft-bootstrap-Bootstrap"] floating enable
 for_window [class="^Minecraft" instance="^Minecraft"] floating enable
@@ -297,36 +302,40 @@ for_window [class="^Steam$" title="^Friends List"] floating enable, move window 
 for_window [class="^Steam$" title="^Steam Guard"] floating enable, move window to workspace current
 
 # make firefox about floating
-for_window [class="^firefox$" window_role="^About"] floating enable, move window to workspace current
+for_window [class="^firefox$" title="^About"] floating enable, move window to workspace current
 # make firefox picture-in-picture window floating and sticky
 for_window [class="^firefox$" window_role="^PictureInPicture$"] floating enable, sticky enable
 
 # make zoom notifications floating
-for_window [class="^zoom $" title="^zoom$"] floating enable
-no_focus [class="^zoom $" title="^zoom$"]
+for_window [class="^zoom$" instance="^zoom$" title="^zoom$"] floating enable, move window to workspace current
+for_window [class="^zoom$" instance="^zoom$" title="^Zoom Workplace - Free account$"] floating disable
+for_window [class="^zoom$" instance="^zoom$" title="^Zoom Workplace - Kostenfreies Konto$"] floating disable
+no_focus [class="^zoom$" instance="^zoom$" title="^zoom$"]
 
 
 #########
 ## BAR ##
 #########
 
-# Start i3bar to display a workspace- and status-bar backup
+# Start i3bar to display a workspace- and status-bar
 bar {
-    id                          backup
-    status_command              j4status
-
-    mode                        hide
-    hidden_state                hide
+    id                          panel
     position                    top
-    modifier                    none
+
+    #i3bar_command               /home/bernd/development/i3/build/i3bar --transparency
+    i3bar_command               i3bar --transparency
+    status_command              exec ${I3_CONFIG}/statusbar.sh
 
     workspace_buttons           yes
     strip_workspace_numbers     yes
+    workspace_min_width         24
     tray_output                 none
 
-    font                        pango:Ubuntu Mono 10
+    font                        pango:Source Code Pro, Font Awesome 7 Free, Font Awesome 7 Brands, FontAwesome 9
+    # add 1px extra horizontal padding, needs patched i3bar to remove the vertical 1px padding
+    padding                     0 1
     colors {
-        background              #0C0C0C
+        background              #00000000
         statusline              #FFFFFF
         separator               #1793D1
 
@@ -335,28 +344,17 @@ bar {
     }
 }
 
-# Start lemonbar to display a workspace- and status-bar
-bar {
-    id                  status
-    position            top
-
-    i3bar_command       exec ${I3_CONFIG}/lemonbar.sh
-}
-
 # Start i3bar to display the systray icons when needed
 bar {
-    id                  tray
-    output              $left-mon
-    output              $notebook
+    id                      tray
+    output                  primary
 
-    mode                hide
-    hidden_state        hide
-    position            bottom
-    modifier            none
+    mode                    hide
+    hidden_state            hide
+    position                bottom
+    modifier                none
 
-    workspace_buttons   no
-    tray_output         primary
-
-    font                pango:Ubuntu Mono 10
+    workspace_buttons       no
+    binding_mode_indicator  no
+    tray_output             primary
 }
-

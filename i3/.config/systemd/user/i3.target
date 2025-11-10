@@ -6,3 +6,4 @@ Wants=redshift.service
 Wants=compton.service
 Wants=dunst.service
 Wants=xsettingsd.service
+Wants=xss-lock.service
