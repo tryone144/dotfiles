@@ -79,13 +79,16 @@ if !in_vscode
         Plug 'ms-jpq/coq_nvim', {'branch': 'coq'}
         Plug 'ms-jpq/coq.artifacts', {'branch': 'artifacts'}
         Plug 'ms-jpq/coq.thirdparty', {'branch': '3p'}
+
+        " floating input
+        Plug 'liangxianzhe/floating-input.nvim'
     endif
 
     " ale - async syntax checking and linting
     "Plug 'dense-analysis/ale'
 
     " Codeium - AI powered autocomplete
-    Plug 'Exafunction/codeium.vim'
+    Plug 'Exafunction/windsurf.vim'
 
     call plug#end()
 endif

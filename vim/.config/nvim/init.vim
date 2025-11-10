@@ -25,5 +25,5 @@ endif
 
 " vscode specific configuration (keybindings)
 if is_nvim && in_vscode
-    lua require('vscode')
+    lua require('vscode_conf')
 endif

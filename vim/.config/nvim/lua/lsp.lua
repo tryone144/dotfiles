@@ -42,6 +42,11 @@ vim.g.coq_settings = {
   }
 }
 
+-- nicer UI
+vim.ui.input = function(opts, on_confirm)
+  require('floating-input').input(opts, on_confirm, { boarder = "rounded" })
+end
+
 local coq = require('coq')
 
 -- Extra completion sources
@@ -50,23 +55,24 @@ require('coq_3p') {
 }
 
 -- Setup language servers
-local lspconfig = require('lspconfig')
-
-lspconfig.ccls.setup(coq.lsp_ensure_capabilities({
+vim.lsp.config("ccls", coq.lsp_ensure_capabilities({
   filetypes = { "c", "cpp", "objc", "objcpp", "cuda" },
   init_options = {
     cache = { directory = "/tmp/ccls-cache" },
   }
 }))
+vim.lsp.enable("ccls")
 
 --lspconfig.denols.setup(coq.lsp_ensure_capabilities({}))
-lspconfig.tsserver.setup(coq.lsp_ensure_capabilities({
-}))
+vim.lsp.config("ts_ls", coq.lsp_ensure_capabilities({}))
+vim.lsp.config("biome", coq.lsp_ensure_capabilities({}))
 vim.g.markdown_fenced_languages = {
   "ts=typescript"
 }
+vim.lsp.enable("ts_ls")
+vim.lsp.enable("biome")
 
-lspconfig.pylsp.setup(coq.lsp_ensure_capabilities({
+vim.lsp.config("pylsp", coq.lsp_ensure_capabilities({
   settings = {
     pylsp = {
       configurationSources = { "flake8" },
@@ -92,7 +98,7 @@ lspconfig.pylsp.setup(coq.lsp_ensure_capabilities({
   }
 }))
 
-lspconfig.rust_analyzer.setup(coq.lsp_ensure_capabilities({
+vim.lsp.config("rust_analyzer", coq.lsp_ensure_capabilities({
   cmd = { "rustup", "run", "stable", "rust-analyzer" },
   settings = {
     ['rust-analyzer'] = {
@@ -113,8 +119,9 @@ lspconfig.rust_analyzer.setup(coq.lsp_ensure_capabilities({
     }
   }
 }))
+vim.lsp.enable("rust_analyzer")
 
-lspconfig.wgsl_analyzer.setup(coq.lsp_ensure_capabilities({
+vim.lsp.config("wgsl_analyzer", coq.lsp_ensure_capabilities({
   command = "wgsl_analyzer",
   filetypes = { "wgsl" },
 }))

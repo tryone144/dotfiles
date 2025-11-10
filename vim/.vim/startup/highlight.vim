@@ -27,6 +27,12 @@ function! BB_UpdateColorschemeHighlights()
 
     highlight DiagnosticUnderlineHint guisp=#37474f gui=undercurl cterm=undercurl term=undercurl
     highlight DiagnosticHint guifg=#37474f guibg=NONE gui=NONE,italic ctermfg=8 ctermbg=NONE cterm=NONE,italic term=NONE,italic
+
+    " fixed floating windows
+    highlight NormalFloat NONE
+    highlight link NormalFloat Pmenu
+    highlight FloatBorder guifg=#676e95 guibg=#343b51 ctermfg=146 ctermbg=60
+    highlight FloatTitle guifg=#c3e88d guibg=#343b51 ctermfg=2, ctermbg=60
 endfunction
 "
 
