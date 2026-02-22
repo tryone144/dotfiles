@@ -19,6 +19,9 @@ if !in_vscode
     " arm-syntax - armv7 syntax highlight
     Plug 'ARM9/arm-syntax-vim'
 
+    " nim - nim syntax highlight and indentation rules
+    Plug 'alaviss/nim.nvim'
+
     " pug - Pug template highlight
     Plug 'digitaltoad/vim-pug'
 

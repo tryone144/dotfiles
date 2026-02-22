@@ -10,7 +10,7 @@
 --
 
 -- enable treesitter highlighting
-require('nvim-treesitter.configs').setup {
+require('nvim-treesitter').setup {
   highlight = {
     enable = true,
     disable = { "rust" }
