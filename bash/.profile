@@ -16,6 +16,8 @@ __NODE_BIN="${HOME}/.node_modules/bin"
 [[ "${PATH}" = *"${__NODE_BIN}"* ]] || export PATH="$__NODE_BIN:$PATH"
 __RUST_BIN="${HOME}/.cargo/bin"
 [[ "${PATH}" = *"${__RUST_BIN}"* ]] || export PATH="$__RUST_BIN:$PATH"
+__NIM_BIN="${HOME}/.nimble/bin"
+[[ "${PATH}" = *"${__NIM_BIN}"* ]] || export PATH="$__NIM_BIN:$PATH"
 __USER_BIN="${HOME}/.local/bin"
 [[ "${PATH}" = *"${__USER_BIN}"* ]] || export PATH="$__USER_BIN:$PATH"
 
